@@ -1,0 +1,14 @@
+{
+  "name": "ut",
+  "version": "0.0.2",
+  "description": "ut is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Santiago Nieto",
+  "license": "ISC"
+}
