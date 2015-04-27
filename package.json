@@ -1,6 +1,6 @@
 {
   "name": "ut",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "ut is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.",
   "main": "index.js",
   "directories": {

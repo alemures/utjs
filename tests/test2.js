@@ -1,21 +1,8 @@
 var ut = require("../lib/ut");
+var log = ut.logger;
 
-var object1 = {
-    a: [1,2,3],
-    b: { c: 4, d: [5,6]},
-    e: 'Hello, World!',
-    f: [true, false],
-    g: { h: 2.332, i: 6e-4 }
-};
+log.debug('hola');
+log.info(1);
+log.warn([true,1, '2']);
+log.error({a:true, b: 1, c: '2'});
 
-var object2 = {
-    a: [1,2,3],
-    b: { c: 4, d: [5,6]},
-    e: 'Hello, World!',
-    f: [true, false],
-    g: { h: 2.332, i: 6e-4 }
-};
-
-ut.test(function() {
-    console.log(ut.compareObject(object1, object2, true))
-}, 1, 'CompareObject');
