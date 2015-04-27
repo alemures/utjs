@@ -12,3 +12,5 @@ log.debug([12,3]);
 log.debug(1,2,3,4,{a:true, b: 1, c: '2'}, [true,1, '2']);
 
 log.debug("The number is not correct", 1, "bye");
+
+log.error(new Error('Hola').stack);
