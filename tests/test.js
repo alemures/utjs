@@ -142,11 +142,11 @@ var randomNumber = ut.randomNumber(1, 1000);
 var finalLength = 5;
 ut.test(function(){
     if(printResult) {
-        console.log(ut.padding(randomNumber, '-', finalLength));
+        console.log(ut.paddingLeft(randomNumber, '-', finalLength));
     } else {
-        ut.padding(randomNumber, '-', finalLength);
+        ut.paddingLeft(randomNumber, '-', finalLength);
     }
-},times, 'padding()');
+},times, 'paddingLeft()');
 
 var randomNumber2 = ut.randomNumber(100, 1000000);
 ut.test(function(){
