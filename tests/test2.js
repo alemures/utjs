@@ -1,5 +1,6 @@
 var ut = require('../lib/ut');
 
-console.log(ut.paddingLeft('Alejandro', '*', 30));
-console.log(ut.paddingRight('Alejandro', '*', 30));
-console.log(ut.createPadding('<<<<', 50));
+console.log(ut.paddingLeft('Alejandro', '_', 51));
+console.log(ut.paddingRight('Alejandro', '_', 51));
+console.log(ut.paddingBoth('Alejandro', '_', 51));
+console.log(ut.repeat('<', 50));
