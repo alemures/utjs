@@ -5,8 +5,20 @@
   "main": "index.js",
   "files": ["index.js", "logger.js", "lib"],
   "scripts": {
-    "test": "node tests/test.js"
+    "start": "node index.js",
+    "test": "mocha test/*.js",
+    "watch": "nodemon index.js --watch index.js --watch lib/*.js",
+    "jshint": "jshint index.js lib/*.js test/*.js",
+    "jscs": "jscs index.js lib/*.js test/*.js",
+    "check": "npm run test && npm run jshint && npm run jscs"
   },
   "author": "Alejandro Santiago Nieto",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "jscs": "^2.0.0",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5",
+    "nodemon": "^1.4.0"
+  }
 }
