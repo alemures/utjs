@@ -15,5 +15,6 @@ describe('ut', function() {
       chai.expect(ut.getMiddleNumber(a, b, c)).to.be.equal(c);
     });
   });
+
   // TODO...
 });

@@ -1,6 +1,6 @@
 {
   "name": "ut",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ut is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.",
   "main": "index.js",
   "files": ["index.js", "logger.js", "lib"],
@@ -10,6 +10,7 @@
     "watch": "nodemon index.js --watch index.js --watch lib/*.js",
     "jshint": "jshint index.js lib/*.js test/*.js",
     "jscs": "jscs index.js lib/*.js test/*.js",
+    "jscs:fix": "jscs --fix index.js lib/*.js test/*.js",
     "check": "npm run test && npm run jshint && npm run jscs"
   },
   "author": "Alejandro Santiago Nieto",
