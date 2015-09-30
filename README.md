@@ -37,6 +37,7 @@ function getMiddleNumber(a, b, c)
 
 // Object
 function mergeObjects(dest, source)
+function updateObject(dest, value, path)
 function randomObject(lengths, keyGenerator, valueGenerator)
 function objectChunk(object, chunkSize)
 function cloneObject(object)
