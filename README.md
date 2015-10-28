@@ -17,6 +17,7 @@ function concatArrays(dest, source)
 function copyArray(array)
 function clearArray(array)
 function randomArray(length, dataGenerator)
+function intersectSorted(a, b)
 
 // Arguments
 function argumentsToArray(args)
