@@ -30,6 +30,8 @@ function paddingRight(string, pad, length)
 function paddingBoth(string, pad, length)
 function repeat(string, times)
 function replaceAll(string, substr, newSubstr, ignoreCase)
+function startsWith(string, prefix)
+function endsWith(string, suffix)
 
 // Number
 function numberToString(number)
@@ -65,5 +67,18 @@ function inRange(val, min, max)
 #### Objects
 ```
 // Logging
-var logger = {}
+var logger = {
+  DEBUG: 1
+  INFO: 2
+  WARN: 3
+  ERROR: 4
+
+  setLogLevel: function(logLevel)
+  setUsingDate: function(usingDate)
+
+  debug: function(/* arg1, arg2, argN */)
+  info: function(/* arg1, arg2, argN */)
+  warn: function(/* arg1, arg2, argN */)
+  error: function(/* arg1, arg2, argN */)
+}
 ```
