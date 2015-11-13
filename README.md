@@ -3,6 +3,18 @@ utjs
 
 utjs is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.
 
+#### Install
+```
+npm install utjs
+```
+
+#### Usage
+```
+var ut = require('utjs');
+var number = ut.randomNumber(1, 10);
+console.log(number);
+```
+
 #### Functions
 ```
 // Date
