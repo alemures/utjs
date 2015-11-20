@@ -49,6 +49,8 @@ function endsWith(string, suffix)
 function numberToString(number)
 function randomNumber(min, max)
 function getMiddleNumber(a, b, c)
+function decimalToInt(decimal)
+function numDigits(integer)
 
 // Object
 function mergeObjects(dest, source)
