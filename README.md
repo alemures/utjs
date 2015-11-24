@@ -60,7 +60,7 @@ function objectChunk(object, chunkSize)
 function cloneObject(object)
 function get(object, path, def)
 function equals(x, y, strict)
-function groupBy(data, keys)
+function groupBy(data, keys, iteratee)
 
 // Type
 function isNumeric(value)
