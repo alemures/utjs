@@ -99,3 +99,6 @@ var logger = {
   error: function(/* arg1, arg2, argN */)
 }
 ```
+
+## jsdoc
+http://alemures.github.io/utjs/
