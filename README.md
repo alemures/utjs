@@ -45,6 +45,7 @@ function repeat(string, times)
 function replaceAll(string, substr, newSubstr, ignoreCase)
 function startsWith(string, prefix)
 function endsWith(string, suffix)
+function escapeRegExp(string)
 
 // Number
 function numberToString(number)
