@@ -31,6 +31,7 @@ function copyArray(array)
 function clearArray(array)
 function randomArray(length, dataGenerator)
 function intersectSorted(a, b)
+function spliceOne(array, index)
 
 // Arguments
 function argumentsToArray(args)
