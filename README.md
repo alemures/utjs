@@ -64,6 +64,7 @@ function cloneObject(object)
 function get(object, path, def)
 function equals(x, y, strict)
 function groupBy(data, keys, iteratee)
+function objectLength(object)
 
 // Type
 function isNumeric(value)
