@@ -82,6 +82,9 @@ function logN(base, value)
 // Miscellaneous
 function test(fn, times, name)
 function inRange(val, min, max)
+function copyFunction(func, name)
+function copyPrototype(ctor, superCtor)
+function hardInherits(ctor, superCtor)
 ```
 
 #### Objects
