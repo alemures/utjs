@@ -472,19 +472,13 @@
   }
 
   /**
-   * A regex to escape regular expresion characters.
-   * @type {RegExp}
-   */
-  var ESCAPE_REG_EXP = /[-\/\\^$*+?.()|[\]{}]/g;
-
-  /**
    * Escapes a regex expresion string.
    * @param  {String} string The string to be escaped.
    * @return {String}        The escaped string.
    * @global
    */
   function escapeRegExp(string) {
-    return string.replace(ESCAPE_REG_EXP, '\\$&amp;');
+    return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&amp;');
   }
 
   // Number
@@ -1034,86 +1028,6 @@
     return false;
   }
 
-  /**
-   * A counter to create unique function names.
-   * @type {Number}
-   */
-  var _copyFunctionCounter = 0;
-
-  /**
-   * Perform a full copy of the given function (THIS IS NOT A REFERENCE).
-   * @param  {Function} func The function to copy.
-   * @param  {String} [name] The name for the new copied function.
-   * @return {Function}      The new copied function.
-   * @global
-   */
-  function copyFunction(func, name) {
-    name = name !== undefined ? name : '_copiedFunct';
-
-    var funcName = name + '_' + (++_copyFunctionCounter);
-    var funcString = func.toString();
-    var funcFinal = 'function ' + funcName + funcString.substring(funcString.indexOf('('));
-    var copy = null;
-
-    /*jshint evil:true*/
-    eval('copy = ' + funcFinal + ';');
-    /*jshint evil:false*/
-
-    return copy;
-  }
-
-  /**
-   * Perform a full copy of all the elements in superCtor.prototype
-   * to ctor.prototype.
-   * @param  {Function} ctor      The destiny function.
-   * @param  {Function} superCtor The source function.
-   * @global
-   */
-  function copyPrototype(ctor, superCtor) {
-    var superCtorProto = superCtor.prototype;
-    var ctorProto = ctor.prototype;
-
-    for (var name in superCtorProto) {
-      if (isFunction(superCtorProto[name])) {
-        ctorProto[name] = copyFunction(superCtorProto[name], name);
-      } else {
-        ctorProto[name] = superCtorProto[name];
-      }
-    }
-  }
-
-  /**
-   * Perform a hardInherits from superCtor to ctor. This function has
-   * the same behaviour than util.inherits() except it's performing a
-   * full copy of all the functions instead of copy just the references.
-   * @param  {Function} ctor      Constructor function which needs to
-   *                              inherit the prototype.
-   * @param  {Function} superCtor Constructor function to inherit
-   *                              prototype from.
-   * @throws {TypeError} Will error if either constructor is null, or if
-   *                     the super constructor lacks a prototype.
-   * @global
-   */
-  function hardInherits(ctor, superCtor) {
-    if (ctor === undefined || ctor === null) {
-      throw new TypeError('The constructor to "inherits" must not be ' +
-                          'null or undefined');
-    }
-
-    if (superCtor === undefined || superCtor === null) {
-      throw new TypeError('The super constructor to "inherits" must not ' +
-                          'be null or undefined');
-    }
-
-    if (superCtor.prototype === undefined) {
-      throw new TypeError('The super constructor to "inherits" must ' +
-                          'have a prototype');
-    }
-
-    ctor.super_ = superCtor;
-    copyPrototype(ctor, superCtor);
-  }
-
   // Logging
 
   /**
@@ -1315,9 +1229,6 @@
 
   global.test = test;
   global.inRange = inRange;
-  global.copyFunction = copyFunction;
-  global.copyPrototype = copyPrototype;
-  global.hardInherits = hardInherits;
 
   global.logger = logger;
 
@@ -1332,13 +1243,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#copyFunction">copyFunction</a></li><li><a href="global.html#copyPrototype">copyPrototype</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#hardInherits">hardInherits</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 08 2016 17:07:34 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jan 26 2016 09:58:55 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>
