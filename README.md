@@ -65,6 +65,7 @@ function get(object, path, def)
 function equals(x, y, strict)
 function groupBy(data, keys, iteratee)
 function objectLength(object)
+function cloneDate(date)
 
 // Type
 function isNumeric(value)
@@ -75,6 +76,8 @@ function isObject(value)
 function isPlainObject(value)
 function isBoolean(value)
 function isFunction(value)
+function isRegExp(value)
+function isDate(value)
 
 // Math
 function logN(base, value)
