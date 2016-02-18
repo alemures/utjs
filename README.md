@@ -78,6 +78,7 @@ function isBoolean(value)
 function isFunction(value)
 function isRegExp(value)
 function isDate(value)
+function isDateString(value)
 
 // Math
 function logN(base, value)
