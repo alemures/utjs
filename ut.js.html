@@ -33,7 +33,7 @@
  *
  * @author Alejandro Santiago Nieto
  */
-(function() {
+(function () {
 
   var isNode = false;
   var global;
@@ -48,7 +48,7 @@
     window.ut = {
       process: {
         stdout: {
-          write: function(string) {
+          write: function (string) {
             var length = string.length;
             if (string[length - 1] === '\n') {
               string = string.substring(0, length - 1);
@@ -126,12 +126,12 @@
    */
   function arrayChunk(array, chunkSize) {
     var size = array.length;
-    var tempArray = [];
+    var tempArray = new Array(Math.ceil(size / chunkSize));
     var i;
     var j;
 
     for (i = 0, j = 0; j &lt; size; j += chunkSize, i++) {
-      tempArray[i] = array.slice(j, j + chunkSize);
+      tempArray[i] = copyArray(array, j, j + chunkSize);
     }
 
     return tempArray;
@@ -222,24 +222,31 @@
   /**
    * Shallow copy of an array.
    * @param  {Array} array The array to copy.
+   * @param {Number} [start] The start inclusive index.
+   * @param {Number} [end] The end exclusive index.
    * @return {Array}       The copied array.
    * @global
    */
-  function copyArray(array) {
-    var length = array.length;
+  function copyArray(array, start, end) {
+    var arrayLength = array.length;
 
-    if (length === 1) {
-      return [array[0]];
-    } else if (length &lt; 50) {
-      var copy = new Array(length);
-      for (var i = 0; i &lt; length; i++) {
-        copy[i] = array[i];
+    start = start !== undefined ? start : 0;
+    end = end !== undefined ? Math.min(end, arrayLength) : arrayLength;
+
+    var copyLength = end - start;
+
+    if (copyLength === 1) {
+      return [array[start]];
+    } else if (copyLength &lt; 27) {
+      var copy = new Array(copyLength);
+      for (var i = 0; i &lt; copyLength; i++) {
+        copy[i] = array[i + start];
       }
 
       return copy;
     }
 
-    return array.slice();
+    return array.slice(start, end);
   }
 
   /**
@@ -333,7 +340,12 @@
    * @global
    */
   function argumentsToArray(args) {
-    return Array.prototype.slice.call(args);
+    var copy = new Array(args.length);
+    for (var i = 0; i &lt; args.length; i++) {
+      copy[i] = args[i];
+    }
+
+    return copy;
   }
 
   // String
@@ -520,7 +532,8 @@
 
   /**
    * Get the number of digits in a number.
-   * http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript/28203456#28203456
+   * http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript/
+   * 28203456#28203456
    *
    * @param  {Number} integer The integer.
    * @param  {Number} base    The base of the number.
@@ -551,26 +564,36 @@
    * @global
    */
   function mergeObjects(dest, source) {
-    var key;
+    var i;
 
-    for (key in source) {
-      if (isPlainObject(source[key])) {
-        if (!isPlainObject(dest[key])) {
-          dest[key] = {};
-        }
-
-        mergeObjects(dest[key], source[key]);
-      } else if (isArray(source[key])) {
-        if (!isArray(dest[key])) {
-          dest[key] = [];
-        }
-
-        mergeObjects(dest[key], source[key]);
-      } else if (isDate(source[key])) {
-        dest[key] = cloneDate(source[key]);
-      } else {
-        dest[key] = source[key];
+    if (isPlainObject(source)) {
+      for (i in source) {
+        _mergeObjects(dest, source, i);
       }
+    } else if (isArray(source)) {
+      for (i = 0; i &lt; source.length; i++) {
+        _mergeObjects(dest, source, i);
+      }
+    }
+  }
+
+  function _mergeObjects(dest, source, i) {
+    if (isPlainObject(source[i])) {
+      if (!isPlainObject(dest[i])) {
+        dest[i] = {};
+      }
+
+      mergeObjects(dest[i], source[i]);
+    } else if (isArray(source[i])) {
+      if (!isArray(dest[i])) {
+        dest[i] = new Array(source[i].length);
+      }
+
+      mergeObjects(dest[i], source[i]);
+    } else if (isDate(source[i])) {
+      dest[i] = cloneDate(source[i]);
+    } else {
+      dest[i] = source[i];
     }
   }
 
@@ -928,7 +951,7 @@
    * @function
    * @global
    */
-  var isArray = Array.isArray || function(value) {
+  var isArray = Array.isArray || function (value) {
     return typeof value === 'object' &amp;&amp;
         Object.prototype.toString.call(value) === '[object Array]';
   };
@@ -999,6 +1022,22 @@
    */
   function isDate(value) {
     return isObject(value) &amp;&amp; Object.prototype.toString.call(value) === '[object Date]';
+  }
+
+  /**
+   * If is a string value representing a date. The string should be in a format
+   * recognized by the Date.parse().
+   * @param  {*}  value The value.
+   * @return {Boolean}       If is a valid date string or not.
+   * @global
+   */
+  function isDateString(value) {
+    if (!isString(value)) {
+      return false;
+    }
+
+    var date = new Date(value);
+    return !isNaN(date.getTime());
   }
 
   // Math
@@ -1109,7 +1148,7 @@
      * @param {Number} logLevel The new log level.
      * @memberOf logger
      */
-    setLogLevel: function(logLevel) {
+    setLogLevel: function (logLevel) {
       this._logLevel = logLevel;
     },
 
@@ -1118,7 +1157,7 @@
      * @param {Boolean} usingDate If using date or not.
      * @memberOf logger
      */
-    setUsingDate: function(usingDate) {
+    setUsingDate: function (usingDate) {
       this._usingDate = usingDate;
     },
 
@@ -1127,7 +1166,7 @@
      * @param {...*} arg The arguments
      * @memberOf logger
      */
-    debug: function() {
+    debug: function () {
       if (this._checkLogLevel(1)) {
         this._out.write(this._createHeader('[DEBUG] ') + this._createbody(arguments));
       }
@@ -1138,7 +1177,7 @@
      * @param {...*} arg The arguments
      * @memberOf logger
      */
-    info: function() {
+    info: function () {
       if (this._checkLogLevel(2)) {
         this._out.write(this._createHeader('[INFO]  ') + this._createbody(arguments));
       }
@@ -1149,7 +1188,7 @@
      * @param {...*} arg The arguments
      * @memberOf logger
      */
-    warn: function() {
+    warn: function () {
       if (this._checkLogLevel(3)) {
         this._out.write(this._createHeader('[WARN]  ') + this._createbody(arguments));
       }
@@ -1160,13 +1199,13 @@
      * @param {...*} arg The arguments
      * @memberOf logger
      */
-    error: function() {
+    error: function () {
       if (this._checkLogLevel(4)) {
         this._out.write(this._createHeader('[ERROR] ') + this._createbody(arguments));
       }
     },
 
-    _createHeader: function(label) {
+    _createHeader: function (label) {
       if (this._usingDate) {
         return now() + ' ' + label;
       }
@@ -1174,7 +1213,7 @@
       return label;
     },
 
-    _createbody: function(args) {
+    _createbody: function (args) {
       if (args.length > 0) {
         var data = '';
         var length = args.length;
@@ -1202,7 +1241,7 @@
       return '\n';
     },
 
-    _checkLogLevel: function(methodLogLevel) {
+    _checkLogLevel: function (methodLogLevel) {
       return this._logLevel &lt;= methodLogLevel;
     }
   };
@@ -1263,6 +1302,7 @@
   global.isFunction = isFunction;
   global.isRegExp = isRegExp;
   global.isDate = isDate;
+  global.isDateString = isDateString;
 
   global.logN = logN;
 
@@ -1282,13 +1322,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Feb 13 2016 16:07:14 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Feb 21 2016 15:44:23 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>
