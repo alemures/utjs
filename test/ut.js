@@ -6,9 +6,9 @@ var chai = require('chai');
 
 var ut = require('../lib/ut');
 
-describe('utjs', function() {
-  describe('getMiddleNumber()', function() {
-    it('should be the middle number', function() {
+describe('utjs', function () {
+  describe('getMiddleNumber()', function () {
+    it('should be the middle number', function () {
       var a = 44;
       var b = -55;
       var c = 25;
