@@ -99,6 +99,7 @@ var logger = {
 
   setLogLevel: function(logLevel)
   setUsingDate: function(usingDate)
+  setPrettify: function (prettify)
 
   debug: function(/* arg1, arg2, argN */)
   info: function(/* arg1, arg2, argN */)
