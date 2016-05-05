@@ -54,6 +54,8 @@ function randomNumber(min, max)
 function getMiddleNumber(a, b, c)
 function numDigits(integer, base)
 function isInteger(number)
+function isNaN(number)
+function isNaNOrInfinity(number)
 
 // Object
 function mergeObjects(dest, source)
