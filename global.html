@@ -201,7 +201,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line297">line 297</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line395">line 395</a>
     </li></ul></dd>
     
 
@@ -416,6 +416,517 @@
     <dd>
         
 <span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="binaryInsert"><span class="type-signature"></span>binaryInsert<span class="signature">(value, array, rejectDuplicates<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Inserts a value into a sorted array using an iterative binary search to find
+the insertion index. 'rejectDuplicates' defines the behaviour when the value
+that will be inserted is already in the array.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The value to insert.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>array</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The array.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rejectDuplicates</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Specify if duplicated values will be rejected.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line296">line 296</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="binarySearch"><span class="type-signature"></span>binarySearch<span class="signature">(value, array, left<span class="signature-attributes">opt</span>, right<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Find a value into a sorted array using an iterative binary search.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The value.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>array</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The array.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>left</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">The left index.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>right</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    array.length - 1
+                
+                </td>
+            
+
+            <td class="description last">The right index.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line333">line 333</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The index if the value was found or -1.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
 
 
     </dd>
@@ -664,7 +1175,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line684">line 684</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line793">line 793</a>
     </li></ul></dd>
     
 
@@ -1532,7 +2043,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line427">line 427</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line525">line 525</a>
     </li></ul></dd>
     
 
@@ -1621,6 +2132,8 @@ compare the structure and values if string is true.
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -1654,6 +2167,10 @@ compare the structure and values if string is true.
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">The first object.</td>
         </tr>
@@ -1684,6 +2201,10 @@ compare the structure and values if string is true.
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The second object.</td>
@@ -1717,6 +2238,12 @@ compare the structure and values if string is true.
                 </td>
             
 
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
             
 
             <td class="description last">If strict comparation or not.</td>
@@ -1760,7 +2287,7 @@ compare the structure and values if string is true.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line735">line 735</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line844">line 844</a>
     </li></ul></dd>
     
 
@@ -1913,7 +2440,7 @@ compare the structure and values if string is true.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line438">line 438</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line536">line 536</a>
     </li></ul></dd>
     
 
@@ -1966,7 +2493,7 @@ compare the structure and values if string is true.
 
     
 
-    <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">(object, path, def)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">(object, path, def<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {*}</span></h4>
 
     
 
@@ -1997,6 +2524,8 @@ compare the structure and values if string is true.
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -2022,6 +2551,14 @@ compare the structure and values if string is true.
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -2045,6 +2582,14 @@ compare the structure and values if string is true.
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -2067,6 +2612,16 @@ compare the structure and values if string is true.
             
             </td>
 
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -2112,7 +2667,7 @@ compare the structure and values if string is true.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line698">line 698</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line807">line 807</a>
     </li></ul></dd>
     
 
@@ -2311,7 +2866,7 @@ compare the structure and values if string is true.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line473">line 473</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line571">line 571</a>
     </li></ul></dd>
     
 
@@ -2374,8 +2929,8 @@ compare the structure and values if string is true.
     Group an array of objects using the values of a list of keys.
 Ej:
 <pre>
-  var v = [{lang:'spanish', age: 2}, {lang:'spanish', age:5}, {lang:'english', age:25}]
-  ut.groupBy(v, ['lang'], function(obj) { return obj.age; })
+  var array = [{lang:'spanish', age: 2}, {lang:'spanish', age:5}, {lang:'english', age:25}]
+  ut.groupBy(array, ['lang'], function(obj) { return obj.age; })
   return -> { spanish: [ 2, 5 ], english: [ 25 ] }
 </pre>
 </div>
@@ -2544,7 +3099,7 @@ Ej:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line811">line 811</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line920">line 920</a>
     </li></ul></dd>
     
 
@@ -2632,6 +3187,8 @@ Ej:
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -2674,6 +3231,10 @@ Ej:
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">The value.</td>
         </tr>
@@ -2707,6 +3268,12 @@ Ej:
             
 
             
+                <td class="default">
+                
+                    -Infinity
+                
+                </td>
+            
 
             <td class="description last">Min inclusive value.</td>
         </tr>
@@ -2739,6 +3306,12 @@ Ej:
                 </td>
             
 
+            
+                <td class="default">
+                
+                    Infinity
+                
+                </td>
             
 
             <td class="description last">Max inclusive value.</td>
@@ -2782,7 +3355,7 @@ Ej:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1051">line 1051</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1160">line 1160</a>
     </li></ul></dd>
     
 
@@ -2835,7 +3408,7 @@ Ej:
 
     
 
-    <h4 class="name" id="intersectSorted"><span class="type-signature"></span>intersectSorted<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id="intersectSorted"><span class="type-signature"></span>intersectSorted<span class="signature">(array1, array2)</span><span class="type-signature"> &rarr; {Array}</span></h4>
 
     
 
@@ -2878,7 +3451,7 @@ Ej:
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>array1</code></td>
             
 
             <td class="type">
@@ -2901,7 +3474,7 @@ Ej:
 
         <tr>
             
-                <td class="name"><code>b</code></td>
+                <td class="name"><code>array2</code></td>
             
 
             <td class="type">
@@ -3111,7 +3684,7 @@ Ej:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line917">line 917</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1026">line 1026</a>
     </li></ul></dd>
     
 
@@ -3264,7 +3837,7 @@ Ej:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line954">line 954</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1063">line 1063</a>
     </li></ul></dd>
     
 
@@ -3417,7 +3990,7 @@ Ej:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line986">line 986</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1095">line 1095</a>
     </li></ul></dd>
     
 
@@ -3571,7 +4144,7 @@ recognized by the Date.parse().
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line997">line 997</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1106">line 1106</a>
     </li></ul></dd>
     
 
@@ -3724,7 +4297,7 @@ recognized by the Date.parse().
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line966">line 966</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1075">line 1075</a>
     </li></ul></dd>
     
 
@@ -3877,7 +4450,7 @@ recognized by the Date.parse().
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line500">line 500</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line598">line 598</a>
     </li></ul></dd>
     
 
@@ -4030,7 +4603,7 @@ recognized by the Date.parse().
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line510">line 510</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line608">line 608</a>
     </li></ul></dd>
     
 
@@ -4184,7 +4757,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line521">line 521</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line619">line 619</a>
     </li></ul></dd>
     
 
@@ -4337,7 +4910,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line892">line 892</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1001">line 1001</a>
     </li></ul></dd>
     
 
@@ -4490,7 +5063,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line882">line 882</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line991">line 991</a>
     </li></ul></dd>
     
 
@@ -4643,7 +5216,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line928">line 928</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1037">line 1037</a>
     </li></ul></dd>
     
 
@@ -4796,7 +5369,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line939">line 939</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1048">line 1048</a>
     </li></ul></dd>
     
 
@@ -4949,7 +5522,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line976">line 976</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1085">line 1085</a>
     </li></ul></dd>
     
 
@@ -5102,7 +5675,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line904">line 904</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1013">line 1013</a>
     </li></ul></dd>
     
 
@@ -5278,7 +5851,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1015">line 1015</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1124">line 1124</a>
     </li></ul></dd>
     
 
@@ -5460,7 +6033,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line533">line 533</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line642">line 642</a>
     </li></ul></dd>
     
 
@@ -5695,7 +6268,7 @@ Taken from http://jacksondunstan.com/articles/983
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line450">line 450</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line548">line 548</a>
     </li></ul></dd>
     
 
@@ -5873,7 +6446,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line489">line 489</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line587">line 587</a>
     </li></ul></dd>
     
 
@@ -6049,7 +6622,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line658">line 658</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line767">line 767</a>
     </li></ul></dd>
     
 
@@ -6202,7 +6775,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line855">line 855</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line964">line 964</a>
     </li></ul></dd>
     
 
@@ -6401,7 +6974,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line370">line 370</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line468">line 468</a>
     </li></ul></dd>
     
 
@@ -6600,7 +7173,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line346">line 346</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line444">line 444</a>
     </li></ul></dd>
     
 
@@ -6799,7 +7372,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line358">line 358</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line456">line 456</a>
     </li></ul></dd>
     
 
@@ -7171,7 +7744,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line461">line 461</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line559">line 559</a>
     </li></ul></dd>
     
 
@@ -7400,7 +7973,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line618">line 618</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line727">line 727</a>
     </li></ul></dd>
     
 
@@ -7553,7 +8126,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line314">line 314</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line412">line 412</a>
     </li></ul></dd>
     
 
@@ -7592,6 +8165,159 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     <dd>
         
 <span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeDuplicates"><span class="type-signature"></span>removeDuplicates<span class="signature">(array)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Returns a new array without duplicates values.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>array</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The array with duplications.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line378">line 378</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    New array without duplications.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
 
 
     </dd>
@@ -7729,7 +8455,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line383">line 383</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line481">line 481</a>
     </li></ul></dd>
     
 
@@ -7817,6 +8543,8 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -7850,6 +8578,10 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">The string.</td>
         </tr>
@@ -7881,6 +8613,10 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">The substring to be replaced.</td>
         </tr>
@@ -7911,6 +8647,10 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The String that replaces the substr param.</td>
@@ -7944,6 +8684,12 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
                 </td>
             
 
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
             
 
             <td class="description last">If ignore case or not.</td>
@@ -7987,7 +8733,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line404">line 404</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line502">line 502</a>
     </li></ul></dd>
     
 
@@ -8040,7 +8786,7 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
 
     
 
-    <h4 class="name" id="sort"><span class="type-signature"></span>sort<span class="signature">(v)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="sort"><span class="type-signature"></span>sort<span class="signature">(array)</span><span class="type-signature"></span></h4>
 
     
 
@@ -8050,13 +8796,13 @@ http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
     Iterative quick sort using a random pivot.
 Benchmarks with 1.000.000 items:
   Random strings 10 characters:
-    ut.sort(v) = 736ms, v.sort() = 1483ms
+    ut.sort(array) = 736ms, array.sort() = 1483ms
   Random numbers:
-    ut.sort(v) = 131ms, v.sort() = 324ms
+    ut.sort(array) = 131ms, array.sort() = 324ms
   Ascending sorted numbers:
-    ut.sort(v) = 85ms, v.sort() = 297ms
+    ut.sort(array) = 85ms, array.sort() = 297ms
   Descending sorted numbers:
-    ut.sort(v) = 92ms, v.sort() = 294ms
+    ut.sort(array) = 92ms, array.sort() = 294ms
 </div>
 
 
@@ -8092,7 +8838,7 @@ Benchmarks with 1.000.000 items:
 
         <tr>
             
-                <td class="name"><code>v</code></td>
+                <td class="name"><code>array</code></td>
             
 
             <td class="type">
@@ -8304,7 +9050,7 @@ algorithm was taken from the core of Node.js.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line281">line 281</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line279">line 279</a>
     </li></ul></dd>
     
 
@@ -8458,7 +9204,7 @@ algorithm was taken from the core of Node.js.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line416">line 416</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line514">line 514</a>
     </li></ul></dd>
     
 
@@ -8611,7 +9357,7 @@ algorithm was taken from the core of Node.js.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line334">line 334</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line432">line 432</a>
     </li></ul></dd>
     
 
@@ -8664,7 +9410,7 @@ algorithm was taken from the core of Node.js.
 
     
 
-    <h4 class="name" id="swap"><span class="type-signature"></span>swap<span class="signature">(v, i, j)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="swap"><span class="type-signature"></span>swap<span class="signature">(array, from, to)</span><span class="type-signature"></span></h4>
 
     
 
@@ -8707,7 +9453,7 @@ algorithm was taken from the core of Node.js.
 
         <tr>
             
-                <td class="name"><code>v</code></td>
+                <td class="name"><code>array</code></td>
             
 
             <td class="type">
@@ -8730,7 +9476,7 @@ algorithm was taken from the core of Node.js.
 
         <tr>
             
-                <td class="name"><code>i</code></td>
+                <td class="name"><code>from</code></td>
             
 
             <td class="type">
@@ -8746,14 +9492,14 @@ algorithm was taken from the core of Node.js.
 
             
 
-            <td class="description last">First index.</td>
+            <td class="description last">From index.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>j</code></td>
+                <td class="name"><code>to</code></td>
             
 
             <td class="type">
@@ -8769,7 +9515,7 @@ algorithm was taken from the core of Node.js.
 
             
 
-            <td class="description last">Second index.</td>
+            <td class="description last">To index.</td>
         </tr>
 
     
@@ -8876,6 +9622,8 @@ algorithm was taken from the core of Node.js.
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -8908,6 +9656,10 @@ algorithm was taken from the core of Node.js.
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The function to execute.</td>
@@ -8942,6 +9694,12 @@ algorithm was taken from the core of Node.js.
             
 
             
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
 
             <td class="description last">How many times to execute.</td>
         </tr>
@@ -8974,6 +9732,12 @@ algorithm was taken from the core of Node.js.
                 </td>
             
 
+            
+                <td class="default">
+                
+                    ''
+                
+                </td>
             
 
             <td class="description last">A name to be used in the log string.</td>
@@ -9017,7 +9781,7 @@ algorithm was taken from the core of Node.js.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1030">line 1030</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line1139">line 1139</a>
     </li></ul></dd>
     
 
@@ -9040,6 +9804,160 @@ algorithm was taken from the core of Node.js.
 
 
 
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="truncateNumber"><span class="type-signature"></span>truncateNumber<span class="signature">(number)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Truncates the number. This method is as fast as "number | 0" but it's
+able to handle correctly numbers greater than 2^31 or lower than -2^31.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>number</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The number to be truncated.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line630">line 630</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The truncated number.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -9194,7 +10112,7 @@ algorithm was taken from the core of Node.js.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line574">line 574</a>
+        <a href="ut.js.html">ut.js</a>, <a href="ut.js.html#line683">line 683</a>
     </li></ul></dd>
     
 
@@ -9236,13 +10154,13 @@ algorithm was taken from the core of Node.js.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#binaryInsert">binaryInsert</a></li><li><a href="global.html#binarySearch">binarySearch</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#truncateNumber">truncateNumber</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 17 2016 16:26:53 GMT+0100 (IST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Sep 02 2016 14:00:31 GMT+0100 (IST)
 </footer>
 
 <script> prettyPrint(); </script>

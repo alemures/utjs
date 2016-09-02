@@ -125,46 +125,46 @@
    * Iterative quick sort using a random pivot.
    * Benchmarks with 1.000.000 items:
    *   Random strings 10 characters:
-   *     ut.sort(v) = 736ms, v.sort() = 1483ms
+   *     ut.sort(array) = 736ms, array.sort() = 1483ms
    *   Random numbers:
-   *     ut.sort(v) = 131ms, v.sort() = 324ms
+   *     ut.sort(array) = 131ms, array.sort() = 324ms
    *   Ascending sorted numbers:
-   *     ut.sort(v) = 85ms, v.sort() = 297ms
+   *     ut.sort(array) = 85ms, array.sort() = 297ms
    *   Descending sorted numbers:
-   *     ut.sort(v) = 92ms, v.sort() = 294ms
-   * @param  {Array} v The array to sort.
+   *     ut.sort(array) = 92ms, array.sort() = 294ms
+   * @param  {Array} array The array to sort.
    * @global
    */
-  function sort(v) {
+  function sort(array) {
     var beg = [];
     var end = [];
     var i = 0;
-    var L;
-    var R;
+    var left;
+    var right;
     var piv;
 
     beg[0] = 0;
-    end[0] = v.length;
+    end[0] = array.length;
     while (i >= 0) {
-      L = beg[i];
-      R = end[i] - 1;
-      if (L &lt; R) {
-        swap(v, L, randomNumber(L, R));
-        piv = v[L];
-        while (L &lt; R) {
-          while (v[R] >= piv &amp;&amp; L &lt; R) { R--; }
+      left = beg[i];
+      right = end[i] - 1;
+      if (left &lt; right) {
+        swap(array, left, randomNumber(left, right));
+        piv = array[left];
+        while (left &lt; right) {
+          while (array[right] >= piv &amp;&amp; left &lt; right) { right--; }
 
-          if (L &lt; R) { v[L++] = v[R]; }
+          if (left &lt; right) { array[left++] = array[right]; }
 
-          while (v[L] &lt;= piv &amp;&amp; L &lt; R) { L++; }
+          while (array[left] &lt;= piv &amp;&amp; left &lt; right) { left++; }
 
-          if (L &lt; R) { v[R--] = v[L]; }
+          if (left &lt; right) { array[right--] = array[left]; }
         }
 
-        v[L] = piv;
-        beg[i + 1] = L + 1;
+        array[left] = piv;
+        beg[i + 1] = left + 1;
         end[i + 1] = end[i];
-        end[i++] = L;
+        end[i++] = left;
         if (end[i] - beg[i] > end[i - 1] - beg[i - 1]) {
           swap(beg, i, i - 1);
           swap(end, i, i - 1);
@@ -177,15 +177,15 @@
 
   /**
    * Swap the two values in an array.
-   * @param  {Array} v The array.
-   * @param  {Number} i First index.
-   * @param  {Number} j Second index.
+   * @param  {Array} array The array.
+   * @param  {Number} from From index.
+   * @param  {Number} to To index.
    * @global
    */
-  function swap(v, i, j) {
-    var aux = v[i];
-    v[i] = v[j];
-    v[j] = aux;
+  function swap(array, from, to) {
+    var aux = array[from];
+    array[from] = array[to];
+    array[to] = aux;
   }
 
   /**
@@ -267,32 +267,30 @@
 
   /**
    * Intersect two sorted arrays.
-   * @param  {Array} a The first array.
-   * @param  {Array} b The second array.
-   * @return {Array}   The interected array.
+   * @param  {Array} array1 The first array.
+   * @param  {Array} array2 The second array.
+   * @return {Array} The interected array.
    * @global
    */
-  function intersectSorted(a, b) {
-    var aLength = a.length;
-    var bLength = b.length;
-    var ai = 0;
-    var bi = 0;
+  function intersectSorted(array1, array2) {
+    var i1 = 0;
+    var i2 = 0;
     var result = [];
     var last;
 
-    while (ai &lt; aLength &amp;&amp; bi &lt; bLength) {
-      if (a[ai] &lt; b[bi]) {
-        ai++;
-      } else if (a[ai] > b[bi]) {
-        bi++;
+    while (i1 &lt; array1.length &amp;&amp; i2 &lt; array2.length) {
+      if (array1[i1] &lt; array2[i2]) {
+        i1++;
+      } else if (array1[i1] > array2[i2]) {
+        i2++;
       } else {
-        if (a[ai] !== last) {
-          last = a[ai];
+        if (array1[i1] !== last) {
+          last = array1[i1];
           result.push(last);
         }
 
-        ai++;
-        bi++;
+        i1++;
+        i2++;
       }
     }
 
@@ -312,6 +310,106 @@
     }
 
     array.pop();
+  }
+
+  /**
+   * Inserts a value into a sorted array using an iterative binary search to find
+   * the insertion index. 'rejectDuplicates' defines the behaviour when the value
+   * that will be inserted is already in the array.
+   * @param  {Number|String} value                   The value to insert.
+   * @param  {Array}         array                   The array.
+   * @param  {Boolean}      [rejectDuplicates=false] Specify if duplicated values will be rejected.
+   * @global
+   */
+  function binaryInsert(value, array, rejectDuplicates) {
+    /*jshint bitwise: false*/
+    rejectDuplicates = rejectDuplicates || false;
+
+    var left = 0;
+    var right = array.length - 1;
+    var middle;
+
+    while (left &lt;= right) {
+      middle = (left + right) / 2 | 0;
+      if (array[middle] > value) {
+        right = middle - 1;
+        continue;
+      }
+
+      left = middle + 1;
+      if (array[middle] === value) {
+        if (rejectDuplicates) {
+          return;
+        } else {
+          break;
+        }
+      }
+    }
+
+    array.splice(left, 0, value);
+  }
+
+  /**
+   * Find a value into a sorted array using an iterative binary search.
+   * @param  {Number|String} value The value.
+   * @param  {Array} array The array.
+   * @param  {Number} [left=0] The left index.
+   * @param  {Number} [right=array.length - 1] The right index.
+   * @return {Number} The index if the value was found or -1.
+   * @global
+   */
+  function binarySearch(value, array, left, right) {
+    /*jshint bitwise: false*/
+
+    if (left === undefined) {
+      left = 0;
+    } else {
+      left = left | 0;
+      if (left &lt; 0 || left >= array.length) {
+        throw new RangeError('Invalid left index');
+      }
+    }
+
+    if (right === undefined) {
+      right = array.length - 1;
+    } else {
+      right = right | 0;
+      if (right &lt; left || right >= array.length) {
+        throw new RangeError('Invalid right index');
+      }
+    }
+
+    var middle;
+
+    while (left &lt;= right) {
+      middle = (left + right) / 2 | 0;
+      if (array[middle] > value) {
+        right = middle - 1;
+        continue;
+      }
+
+      left = middle + 1;
+      if (array[middle] === value) {
+        return middle;
+      }
+    }
+
+    return -1;
+  }
+
+  /**
+   * Returns a new array without duplicates values.
+   * @param  {Array} array The array with duplications.
+   * @return {Array}       New array without duplications.
+   * @global
+   */
+  function removeDuplicates(array) {
+    var array2 = [];
+    for (var i = 0; i &lt; array.length; i++) {
+      binaryInsert(array[i], array2, true);
+    }
+
+    return array2;
   }
 
   // Arguments
@@ -425,7 +523,7 @@
    * @param  {String} string     The string.
    * @param  {String} substr     The substring to be replaced.
    * @param  {String} newSubstr  The String that replaces the substr param.
-   * @param  {Boolean} [ignoreCase] If ignore case or not.
+   * @param  {Boolean} [ignoreCase=false] If ignore case or not.
    * @return {String}            The final string.
    * @global
    */
@@ -548,6 +646,17 @@
    */
   function isNaNOrInfinity(number) {
     return (number * 0) !== 0;
+  }
+
+  /**
+   * Truncates the number. This method is as fast as "number | 0" but it's
+   * able to handle correctly numbers greater than 2^31 or lower than -2^31.
+   * @param  {Number} number The number to be truncated.
+   * @return {Number}        The truncated number.
+   * @global
+   */
+  function truncateNumber(number) {
+    return number - number % 1;
   }
 
   // Object
@@ -719,8 +828,8 @@
    * Get the value using a path in an object.
    * @param  {Object} object The object.
    * @param  {String} path   The path.
-   * @param  {*} def    Value to return if no value is found in path.
-   * @return {*}        The found value in path.
+   * @param  {*} [def=undefined] Value to return if no value is found in path.
+   * @return {*} The found value in path.
    * @global
    */
   function get(object, path, def) {
@@ -756,7 +865,7 @@
    * compare the structure and values if string is true.
    * @param  {Object} x      The first object.
    * @param  {Object} y      The second object.
-   * @param  {Boolean} [strict] If strict comparation or not.
+   * @param  {Boolean} [strict=false] If strict comparation or not.
    * @return {Boolean}        If the objects are equal or not.
    * @global
    */
@@ -826,8 +935,8 @@
    * Group an array of objects using the values of a list of keys.
    * Ej:
    * &lt;pre>
-   *   var v = [{lang:'spanish', age: 2}, {lang:'spanish', age:5}, {lang:'english', age:25}]
-   *   ut.groupBy(v, ['lang'], function(obj) { return obj.age; })
+   *   var array = [{lang:'spanish', age: 2}, {lang:'spanish', age:5}, {lang:'english', age:25}]
+   *   ut.groupBy(array, ['lang'], function(obj) { return obj.age; })
    *   return -> { spanish: [ 2, 5 ], english: [ 25 ] }
    * &lt;/pre>
    * @param  {Object[]} data    An array of objects.
@@ -836,7 +945,7 @@
    * @return {Object}          The grouped object.
    * @global
    */
-  function groupBy(data, keys, iteratee) {
+  function groupBy(array, keys, iteratee) {
     var result = {};
     var lastKeyIndex = keys.length - 1;
     var obj;
@@ -845,8 +954,8 @@
     var keyValue;
     var resultPointer;
 
-    for (var i = 0; i &lt; data.length; i++) {
-      obj = data[i];
+    for (var i = 0; i &lt; array.length; i++) {
+      obj = array[i];
 
       pointer = obj;
       resultPointer = result;
@@ -955,7 +1064,7 @@
    */
   function isObject(value) {
     var type = typeof value;
-    return !!value &amp;&amp; type === 'object';
+    return type === 'object' &amp;&amp; value !== null;
   }
 
   /**
@@ -965,7 +1074,7 @@
    * @global
    */
   function isPlainObject(value) {
-    if (isObject(value) &amp;&amp; value !== null) {
+    if (isObject(value)) {
       var proto = Object.getPrototypeOf(value);
       return proto === Object.prototype || proto === null;
     }
@@ -1002,7 +1111,7 @@
    * @global
    */
   function isRegExp(value) {
-    return isObject(value) &amp;&amp; Object.prototype.toString.call(value) === '[object RegExp]';
+    return value instanceof RegExp;
   }
 
   /**
@@ -1012,7 +1121,7 @@
    * @global
    */
   function isDate(value) {
-    return isObject(value) &amp;&amp; Object.prototype.toString.call(value) === '[object Date]';
+    return value instanceof Date;
   }
 
   /**
@@ -1051,8 +1160,8 @@
   /**
    * Execute a function N times and print the execution time.
    * @param  {Function} fn    The function to execute.
-   * @param  {Number}   [times] How many times to execute.
-   * @param  {String}   [name]  A name to be used in the log string.
+   * @param  {Number}   [times=1] How many times to execute.
+   * @param  {String}   [name='']  A name to be used in the log string.
    * @global
    */
   function test(fn, times, name) {
@@ -1071,8 +1180,8 @@
   /**
    * Check if a value is inside of a given range.
    * @param  {Number|String|Array|Object} val The value.
-   * @param  {Number} [min] Min inclusive value.
-   * @param  {Number} [max] Max inclusive value.
+   * @param  {Number} [min=-Infinity] Min inclusive value.
+   * @param  {Number} [max=Infinity] Max inclusive value.
    * @return {Boolean}     If the value is inside of the given range or not.
    * @global
    */
@@ -1271,6 +1380,9 @@
   global.randomArray = randomArray;
   global.intersectSorted = intersectSorted;
   global.spliceOne = spliceOne;
+  global.binaryInsert = binaryInsert;
+  global.binarySearch = binarySearch;
+  global.removeDuplicates = removeDuplicates;
 
   global.argumentsToArray = argumentsToArray;
 
@@ -1292,6 +1404,7 @@
   global.isInteger = isInteger;
   global.isNaN = isNaN;
   global.isNaNOrInfinity = isNaNOrInfinity;
+  global.truncateNumber = truncateNumber;
 
   global.mergeObjects = mergeObjects;
   global.updateObject = updateObject;
@@ -1334,13 +1447,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#binaryInsert">binaryInsert</a></li><li><a href="global.html#binarySearch">binarySearch</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#truncateNumber">truncateNumber</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 17 2016 16:26:53 GMT+0100 (IST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Sep 02 2016 14:00:31 GMT+0100 (IST)
 </footer>
 
 <script> prettyPrint(); </script>
