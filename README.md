@@ -24,14 +24,17 @@ function now()
 
 // Array
 function arrayChunk(array, chunkSize)
-function sort(v)
-function swap(v, i, j)
+function sort(array)
+function swap(array, from, to)
 function concatArrays(dest, source)
-function copyArray(array, start, end)
+function copyArray(array, [start=0], [end=array.length-1])
 function clearArray(array)
-function randomArray(length, dataGenerator)
-function intersectSorted(a, b)
+function randomArray(length, [dataGenerator=_defaultDataGenerator])
+function intersectSorted(array1, array2)
 function spliceOne(array, index)
+function binaryInsert(value, array, [rejectDuplicates=false])
+function binarySearch(value, array, [left=0], [right=array.length-1])
+function removeDuplicates(array)
 
 // Arguments
 function argumentsToArray(args)
@@ -43,7 +46,7 @@ function paddingLeft(string, pad, length)
 function paddingRight(string, pad, length)
 function paddingBoth(string, pad, length)
 function repeat(string, times)
-function replaceAll(string, substr, newSubstr, ignoreCase)
+function replaceAll(string, substr, newSubstr, [ignoreCase=false])
 function startsWith(string, prefix)
 function endsWith(string, suffix)
 function escapeRegExp(string)
@@ -56,16 +59,18 @@ function numDigits(integer, base)
 function isInteger(number)
 function isNaN(number)
 function isNaNOrInfinity(number)
+function truncateNumber(number)
 
 // Object
 function mergeObjects(dest, source)
 function updateObject(dest, value, path)
-function randomObject(lengths, keyGenerator, valueGenerator)
+function randomObject(lengths, [keyGenerator=_defaultKeyGenerator],
+                      [valueGenerator=_defaultValueGenerator])
 function objectChunk(object, chunkSize)
 function cloneObject(original)
-function get(object, path, def)
-function equals(x, y, strict)
-function groupBy(data, keys, iteratee)
+function get(object, path, [def=undefined])
+function equals(x, y, [strict=false])
+function groupBy(array, keys, [iteratee])
 function objectLength(object)
 function cloneDate(date)
 
@@ -86,8 +91,8 @@ function isDateString(value)
 function logN(base, value)
 
 // Miscellaneous
-function test(fn, times, name)
-function inRange(val, min, max)
+function test(fn, [times=1], [name=''])
+function inRange(val, [min=-Infinity], [max=Infinity])
 ```
 
 #### Objects

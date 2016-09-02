@@ -87,9 +87,81 @@ describe('utjs', function () {
     });
   });
 
+  describe('binaryInsert()', function () {
+    it('should insert 10 numbers in a sorted array', function () {
+      var arr = ut.randomArray(100);
+      var copy = ut.copyArray(arr);
+      var toInsert = ut.randomArray(10);
+
+      ut.sort(arr);
+      ut.concatArrays(copy, toInsert);
+      ut.sort(copy);
+
+      for (var i = 0; i < 10; i++) {
+        ut.binaryInsert(toInsert[i], arr);
+      }
+
+      expect(arr).to.have.lengthOf(110);
+      expect(arr).to.be.eql(copy);
+    });
+
+    it('should insert 10 numbers in a sorted array rejecting duplicates', function () {
+      var arr = ut.removeDuplicates(ut.randomArray(100));
+      var copy = ut.copyArray(arr);
+      var toInsert = ut.randomArray(10);
+
+      ut.sort(arr);
+      ut.concatArrays(copy, toInsert);
+      copy = ut.removeDuplicates(copy);
+      ut.sort(copy);
+
+      for (var i = 0; i < 10; i++) {
+        ut.binaryInsert(toInsert[i], arr, true);
+      }
+
+      expect(arr).to.be.eql(copy);
+    });
+  });
+
+  describe('binarySearch()', function () {
+    it('should find a item in a sorted array', function () {
+      var arr = ut.randomArray(100);
+      var item = arr[0];
+      ut.sort(arr);
+
+      expect(ut.binarySearch(item, arr)).to.be.above(-1);
+    });
+
+    it('shouldn\'t find a missing item in a sorted array', function () {
+      var arr = ut.randomArray(100);
+      var missingItem = 1000;
+      ut.sort(arr);
+
+      expect(ut.binarySearch(missingItem, arr)).to.be.equal(-1);
+    });
+  });
+
+  describe('removeDuplicates()', function () {
+    it('should return a new array without duplicated values', function () {
+      var arr = [1, 2, 5, 1, 6, 7, 1, 5];
+      expect(ut.removeDuplicates(arr)).to.have.eql([1, 2, 5, 6, 7]);
+    });
+  });
+
+  // Number
+
   describe('getMiddleNumber()', function () {
     it('should be the middle number', function () {
       expect(ut.getMiddleNumber(44, -55, 25)).to.be.equal(25);
+    });
+  });
+
+  describe('truncateNumber()', function () {
+    it('should truncate the number', function () {
+      expect(ut.truncateNumber(3.14)).to.be.equal(3);
+      expect(ut.truncateNumber(3000000000.14)).to.be.equal(3000000000);
+      expect(ut.truncateNumber(-3.14)).to.be.equal(-3);
+      expect(ut.truncateNumber(-3000000000.14)).to.be.equal(-3000000000);
     });
   });
 });
