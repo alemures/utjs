@@ -51,6 +51,13 @@ describe('utjs', function () {
       ut.sort(arr);
       expect(arr).to.be.eql(['aa', 'b', 'bb', 'c', 'tt', 'ttt']);
     });
+
+    it('should sort the array of objects', function () {
+      var arr = [{ age: 25 }, { age: 22 }, { age: 26 }, { age: 18 }];
+      ut.sort(arr, function (a, b) { return a.age - b.age; });
+
+      expect(arr).to.be.eql([{ age: 18 }, { age: 22 }, { age: 25 }, { age: 26 }]);
+    });
   });
 
   describe('swap()', function () {
