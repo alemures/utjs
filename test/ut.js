@@ -94,6 +94,39 @@ describe('utjs', function () {
     });
   });
 
+  describe('randomArray()', function () {
+    it('should create a random array of numbers', function () {
+      var arr = ut.randomArray(10);
+      expect(arr[0]).to.be.a('number');
+      expect(arr).to.have.lengthOf(10);
+    });
+
+    it('should create a random array of strings', function () {
+      var arr = ut.randomArray(10, function () { return ut.randomString(10); });
+
+      expect(arr[0]).to.be.a('string');
+      expect(arr).to.have.lengthOf(10);
+    });
+  });
+
+  describe('intersectSorted()', function () {
+    it('should intersect two sorted arrays of numbers', function () {
+      var arr1 = [2, 6, 7, 9, 10];
+      var arr2 = [5, 7, 8, 10, 12];
+      var intersection = ut.intersectSorted(arr1, arr2);
+      expect(intersection).to.be.eql([7, 10]);
+    });
+
+    it('should intersect two sorted arrays of objects', function () {
+      var arr1 = [{ a: 2 }, { a: 6 }, { a: 7 }, { a: 9 }, { a: 10 }];
+      var arr2 = [{ a: 5 }, { a: 7 }, { a: 8 }, { a: 10 }, { a: 12 }];
+
+      var intersection = ut.intersectSorted(arr1, arr2, function (a, b) { return a.a - b.a; });
+
+      expect(intersection).to.be.eql([{ a: 7 }, { a: 10 }]);
+    });
+  });
+
   describe('binaryInsert()', function () {
     it('should insert 10 numbers in a sorted array', function () {
       var arr = ut.randomArray(100);
