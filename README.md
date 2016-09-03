@@ -24,7 +24,7 @@ function now()
 
 // Array
 function arrayChunk(array, chunkSize)
-function sort(array)
+function sort(array, [comparator])
 function swap(array, from, to)
 function concatArrays(dest, source)
 function copyArray(array, [start=0], [end=array.length])
