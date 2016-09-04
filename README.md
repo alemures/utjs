@@ -32,9 +32,9 @@ function clearArray(array)
 function randomArray(length, [dataGenerator=_defaultDataGenerator])
 function intersectSorted(array1, array2, [comparator])
 function spliceOne(array, index)
-function binaryInsert(value, array, [rejectDuplicates=false])
-function binarySearch(value, array, [left=0], [right=array.length-1])
-function removeDuplicates(array)
+function binaryInsert(value, array, [comparator], [rejectDuplicates=false])
+function binarySearch(value, array, [comparator], [left=0], [right=array.length-1])
+function removeDuplicatesSorted(array, [comparator])
 
 // Arguments
 function argumentsToArray(args)
