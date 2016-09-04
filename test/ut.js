@@ -127,6 +127,14 @@ describe('utjs', function () {
     });
   });
 
+  describe('spliceOne()', function () {
+    it('should remove one element', function () {
+      var arr = [1, 2, 3, 4];
+      ut.spliceOne(arr, 2);
+      expect(arr).to.be.eql([1, 2, 4]);
+    });
+  });
+
   describe('binaryInsert()', function () {
     it('should insert 10 numbers in a sorted array', function () {
       var arr = ut.randomArray(100);
@@ -161,10 +169,17 @@ describe('utjs', function () {
 
       expect(arr).to.be.eql(copy);
     });
+
+    it('should insert 1 object in a sorted array of objects', function () {
+      var arr = [{ a: 1 }, { a: 4 }, { a: 5 }, { a: 9 }];
+      ut.binaryInsert({ a: 8 }, arr, function (a, b) { return a.a - b.a; });
+
+      expect(arr).to.be.eql([{ a: 1 }, { a: 4 }, { a: 5 }, { a: 8 }, { a: 9 }]);
+    });
   });
 
   describe('binarySearch()', function () {
-    it('should find a item in a sorted array', function () {
+    it('should find an item in a sorted array', function () {
       var arr = ut.randomArray(100);
       var item = arr[0];
       ut.sort(arr);
@@ -179,12 +194,23 @@ describe('utjs', function () {
 
       expect(ut.binarySearch(missingItem, arr)).to.be.equal(-1);
     });
+
+    it('should find an object in a sorted array of objects', function () {
+      var arr = [{ a: 1 }, { a: 4 }, { a: 5 }, { a: 9 }];
+      expect(ut.binarySearch({ a: 5 }, arr, function (a, b) { return a.a - b.a; })).to.be.above(-1);
+    });
   });
 
   describe('removeDuplicates()', function () {
     it('should return a new array without duplicated values', function () {
       var arr = [1, 2, 5, 1, 6, 7, 1, 5];
       expect(ut.removeDuplicates(arr)).to.have.eql([1, 2, 5, 6, 7]);
+    });
+
+    it('should return a new array of objects without duplicated values', function () {
+      var arr = [{ a: 9 }, { a: 1 }, { a: 5 }, { a: 8 }, { a: 4 }, { a: 5 }, { a: 9 }];
+      expect(ut.removeDuplicates(arr, function (a, b) { return a.a - b.a; })).to.have.eql(
+          [{ a: 1 }, { a: 4 }, { a: 5 }, { a: 8 }, { a: 9 }]);
     });
   });
 
