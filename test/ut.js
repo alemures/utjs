@@ -160,12 +160,11 @@ describe('utjs', function () {
       var copy = ut.copyArray(arr);
       var toInsert = ut.randomArray(10);
 
-      ut.sort(arr);
       ut.concatArrays(copy, toInsert);
       ut.sort(copy);
       ut.removeDuplicatesSorted(copy);
 
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < toInsert.length; i++) {
         ut.binaryInsert(toInsert[i], arr, true);
       }
 
@@ -205,19 +204,16 @@ describe('utjs', function () {
 
   describe('removeDuplicatesSorted()', function () {
     it('should return a new array without duplicated values', function () {
-      var arr = [1, 2, 5, 1, 6, 7, 1, 5];
-      ut.sort(arr);
+      var arr = [1, 1, 1, 2, 2, 5, 6];
       ut.removeDuplicatesSorted(arr);
-      expect(arr).to.have.eql([1, 2, 5, 6, 7]);
+      expect(arr).to.have.eql([1, 2, 5, 6]);
     });
 
     it('should return a new array of objects without duplicated values', function () {
-      var arr = [{ a: 9 }, { a: 1 }, { a: 5 }, { a: 8 }, { a: 4 }, { a: 5 }, { a: 9 }];
-      ut.sort(arr, function (a, b) { return a.a - b.a; });
-
+      var arr = [{ a: 1 }, { a: 1 }, { a: 1 }, { a: 2 }, { a: 2 }, { a: 5 }, { a: 6 }];
       ut.removeDuplicatesSorted(arr, function (a, b) { return a.a - b.a; });
 
-      expect(arr).to.have.eql([{ a: 1 }, { a: 4 }, { a: 5 }, { a: 8 }, { a: 9 }]);
+      expect(arr).to.have.eql([{ a: 1 }, { a: 2 }, { a: 5 }, { a: 6 }]);
     });
   });
 
