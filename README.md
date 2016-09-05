@@ -86,6 +86,7 @@ function isFunction(value)
 function isRegExp(value)
 function isDate(value)
 function isDateString(value)
+function isValidNumber(value)
 
 // Math
 function logN(base, value)
