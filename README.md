@@ -34,7 +34,6 @@ function intersectSorted(array1, array2, [comparator])
 function spliceOne(array, index)
 function binaryInsert(value, array, [comparator], [rejectDuplicates=false])
 function binarySearch(value, array, [comparator], [left=0], [right=array.length-1])
-function removeDuplicatesSorted(array, [comparator])
 
 // Arguments
 function argumentsToArray(args)

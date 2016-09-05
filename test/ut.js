@@ -154,21 +154,14 @@ describe('utjs', function () {
     });
 
     it('should insert 10 numbers in a sorted array rejecting duplicates', function () {
-      var arr = ut.randomArray(100);
-      ut.sort(arr);
-      ut.removeDuplicatesSorted(arr);
-      var copy = ut.copyArray(arr);
-      var toInsert = ut.randomArray(10);
-
-      ut.concatArrays(copy, toInsert);
-      ut.sort(copy);
-      ut.removeDuplicatesSorted(copy);
+      var arr = [1, 2, 3, 4, 5];
+      var toInsert = [0, 2, 4, 6];
 
       for (var i = 0; i < toInsert.length; i++) {
         ut.binaryInsert(toInsert[i], arr, true);
       }
 
-      expect(arr).to.be.eql(copy);
+      expect(arr).to.be.eql([0, 1, 2, 3, 4, 5, 6]);
     });
 
     it('should insert 1 object in a sorted array of objects', function () {
@@ -199,21 +192,6 @@ describe('utjs', function () {
     it('should find an object in a sorted array of objects', function () {
       var arr = [{ a: 1 }, { a: 4 }, { a: 5 }, { a: 9 }];
       expect(ut.binarySearch({ a: 5 }, arr, function (a, b) { return a.a - b.a; })).to.be.above(-1);
-    });
-  });
-
-  describe('removeDuplicatesSorted()', function () {
-    it('should return a new array without duplicated values', function () {
-      var arr = [1, 1, 1, 2, 2, 5, 6];
-      ut.removeDuplicatesSorted(arr);
-      expect(arr).to.have.eql([1, 2, 5, 6]);
-    });
-
-    it('should return a new array of objects without duplicated values', function () {
-      var arr = [{ a: 1 }, { a: 1 }, { a: 1 }, { a: 2 }, { a: 2 }, { a: 5 }, { a: 6 }];
-      ut.removeDuplicatesSorted(arr, function (a, b) { return a.a - b.a; });
-
-      expect(arr).to.have.eql([{ a: 1 }, { a: 2 }, { a: 5 }, { a: 6 }]);
     });
   });
 
