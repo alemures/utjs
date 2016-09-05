@@ -1,3 +1,5 @@
+/* jshint expr: true */
+
 'use strict';
 
 var describe = require('mocha').describe;
@@ -192,6 +194,87 @@ describe('utjs', function () {
     it('should find an object in a sorted array of objects', function () {
       var arr = [{ a: 1 }, { a: 4 }, { a: 5 }, { a: 9 }];
       expect(ut.binarySearch({ a: 5 }, arr, function (a, b) { return a.a - b.a; })).to.be.above(-1);
+    });
+  });
+
+  // Arguments
+
+  describe('argumentsToArray()', function () {
+    it('should return an array', function () {
+      test(1, 2, 3);
+      function test() {
+        expect(ut.argumentsToArray(arguments)).to.be.eql([1, 2, 3]);
+      }
+    });
+  });
+
+  // String
+
+  describe('randomString()', function () {
+    it('should return a random string', function () {
+      expect(ut.randomString(10)).to.match(/[a-z]{10}/);
+    });
+  });
+
+  describe('stringToNumber()', function () {
+    it('should return a number', function () {
+      expect(ut.stringToNumber('3.14')).to.be.equal(3.14);
+    });
+
+    it('should return a number', function () {
+      expect(ut.stringToNumber('not a number')).to.be.NaN;
+    });
+  });
+
+  describe('paddingLeft()', function () {
+    it('should return a string with a left padding', function () {
+      expect(ut.paddingLeft('TITLE', '=', '8')).to.be.equal('===TITLE');
+    });
+  });
+
+  describe('paddingRight()', function () {
+    it('should return a string with a right padding', function () {
+      expect(ut.paddingRight('TITLE', '=', '8')).to.be.equal('TITLE===');
+    });
+  });
+
+  describe('paddingBoth()', function () {
+    it('should return a string with a padding in both sides', function () {
+      expect(ut.paddingBoth('TITLE', '=', '11')).to.be.equal('===TITLE===');
+    });
+  });
+
+  describe('repeat()', function () {
+    it('should return a string repeated 3 times', function () {
+      expect(ut.repeat('asd', 3)).to.be.equal('asdasdasd');
+    });
+  });
+
+  describe('replaceAll()', function () {
+    it('should replace all ocurrences of + by -', function () {
+      expect(ut.replaceAll('15 + 5 + 5 = 5', '+', '-')).to.be.equal('15 - 5 - 5 = 5');
+    });
+
+    it('should replace all ocurrences of a ignoring the case by *', function () {
+      expect(ut.replaceAll(' = aaAAaa = ', 'a', 'b', true)).to.be.equal(' = bbbbbb = ');
+    });
+  });
+
+  describe('startsWith()', function () {
+    it('should return true if string starts by The', function () {
+      expect(ut.startsWith('The car', 'The')).to.be.true;
+    });
+  });
+
+  describe('endsWith()', function () {
+    it('should return true if string ends by the', function () {
+      expect(ut.endsWith('Car the', 'the')).to.be.true;
+    });
+  });
+
+  describe('escapeRegExp()', function () {
+    it('should return a escaped regex expression string', function () {
+      expect(ut.escapeRegExp('^[a-z]+$')).to.be.equal('\\^\\[a\\-z\\]\\+\\$');
     });
   });
 
