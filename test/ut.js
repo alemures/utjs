@@ -50,7 +50,8 @@ describe('utjs', function () {
       ut.sort(arr);
       expect(arr).to.be.eql([1, 2, 4, 5]);
       arr = ['b', 'ttt', 'c', 'bb', 'aa', 'tt'];
-      ut.sort(arr);
+      ut.sort(arr, function (a, b) { return a > b ? 1 : b > a ? -1 : 0; });
+
       expect(arr).to.be.eql(['aa', 'b', 'bb', 'c', 'tt', 'ttt']);
     });
 
@@ -59,6 +60,15 @@ describe('utjs', function () {
       ut.sort(arr, function (a, b) { return a.age - b.age; });
 
       expect(arr).to.be.eql([{ age: 18 }, { age: 22 }, { age: 25 }, { age: 26 }]);
+    });
+
+    it('should sort only the given range in the array', function () {
+      var arr = [4, 2, 5, 1];
+      ut.sort(arr, 2);
+      expect(arr).to.be.eql([4, 2, 1, 5]);
+      arr = [4, 2, 5, 1];
+      ut.sort(arr, 1, arr.length - 1);
+      expect(arr).to.be.eql([4, 1, 2, 5]);
     });
   });
 
