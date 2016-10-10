@@ -339,6 +339,36 @@ describe('utjs', function () {
     });
   });
 
+  describe('mergeObjects()', function () {
+    it('should merge two objects replacing duplicates keys', function () {
+      var dest = { a: 1, b: '2', c: false };
+      var source = { c: true, d: null };
+      ut.mergeObjects(dest, source);
+      expect(dest).to.be.eql({ a: 1, b: '2', c: true, d: null });
+    });
+
+    it('should merge two objects with arrays', function () {
+      var dest = { a: [2, 4, 6, 8] };
+      var source = { a: [1, 3, 5] };
+      ut.mergeObjects(dest, source);
+      expect(dest).to.be.eql({ a: [1, 3, 5, 8] });
+    });
+
+    it('should merge two objects with inner objects', function () {
+      var dest = { a: { b: { d: 'Hello', f: 'Bye' } } };
+      var source = { a: { b: { d: [{ e: 15 }], f: { g: 'Hello' } } } };
+      ut.mergeObjects(dest, source);
+      expect(dest).to.be.eql({ a: { b: { d: [{ e: 15 }], f: { g: 'Hello' } } } });
+    });
+
+    it('should merge two objects with dates', function () {
+      var dest = { a: 'a', b: new Date('2015-01-01') };
+      var source = { a: 'a', b: new Date('2016-06-06'), c: false };
+      ut.mergeObjects(dest, source);
+      expect(dest).to.be.eql({ a: 'a', b: new Date('2016-06-06'), c: false });
+    });
+  });
+
   describe('truncateNumber()', function () {
     it('should truncate the number', function () {
       expect(ut.truncateNumber(3.14)).to.be.equal(3);
