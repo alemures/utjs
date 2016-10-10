@@ -205,6 +205,14 @@ describe('utjs', function () {
       var arr = [{ a: 1 }, { a: 4 }, { a: 5 }, { a: 9 }];
       expect(ut.binarySearch({ a: 5 }, arr, function (a, b) { return a.a - b.a; })).to.be.above(-1);
     });
+
+    it('should work using a default numeric comparator if omitted', function () {
+      var arr = ut.randomArray(100);
+      var item = arr[0];
+      ut.sort(arr);
+
+      expect(ut.binarySearch(item, arr, 0, arr.length - 1)).to.be.above(-1);
+    });
   });
 
   // Arguments
@@ -293,6 +301,41 @@ describe('utjs', function () {
   describe('getMiddleNumber()', function () {
     it('should be the middle number', function () {
       expect(ut.getMiddleNumber(44, -55, 25)).to.be.equal(25);
+    });
+  });
+
+  describe('numDigits()', function () {
+    it('should get the number of digits of an integer', function () {
+      expect(ut.numDigits(50000)).to.be.equal(5);
+    });
+
+    it('should get the number of digits of an integer in a different base', function () {
+      expect(ut.numDigits(50000, 8)).to.be.equal(6);
+    });
+  });
+
+  describe('isInteger()', function () {
+    it('should return true for valid integers', function () {
+      expect(ut.isInteger(25)).to.be.true;
+    });
+
+    it('should return false for decimal numbers', function () {
+      expect(ut.isInteger(25.02)).to.be.false;
+    });
+  });
+
+  describe('isNaN()', function () {
+    it('should return true for NaN values', function () {
+      expect(ut.isNaN(NaN)).to.be.true;
+      expect(ut.isNaNOrInfinity(ut.stringToNumber('a'))).to.be.true;
+    });
+  });
+
+  describe('isNaNOrInfinity()', function () {
+    it('should return true for NaN or undefined values', function () {
+      expect(ut.isNaNOrInfinity(NaN)).to.be.true;
+      expect(ut.isNaNOrInfinity(undefined)).to.be.true;
+      expect(ut.isNaNOrInfinity(ut.stringToNumber('a'))).to.be.true;
     });
   });
 
