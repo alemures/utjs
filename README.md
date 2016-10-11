@@ -103,6 +103,7 @@ var logger = {
   INFO: 2
   WARN: 3
   ERROR: 4
+  NONE: Number.MAX_VALUE
 
   setLogLevel: function(logLevel)
   setUsingDate: function(usingDate)
