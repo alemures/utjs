@@ -22,14 +22,14 @@ describe('utjs', function () {
   describe('dateToString()', function () {
     it('should match the regex', function () {
       expect(ut.dateToString(new Date())).to
-          .match(/\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}/);
+          .match(/\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}/);
     });
   });
 
   describe('now()', function () {
     it('should match the regex', function () {
       expect(ut.now()).to
-          .match(/\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\.\d{3}/);
+          .match(/\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\.\d{3}/);
     });
   });
 

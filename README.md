@@ -18,8 +18,8 @@ console.log(number);
 #### Functions
 ```
 // Date
-function dateToMysql(date)
-function dateToString(date)
+function dateToMysql([date])
+function dateToString([date])
 function now()
 
 // Array
