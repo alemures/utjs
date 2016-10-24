@@ -13,23 +13,32 @@ describe('utjs', function () {
   // Date
 
   describe('dateToMysql()', function () {
+    var regex = /\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}/;
+
     it('should match the regex', function () {
-      expect(ut.dateToMysql(new Date())).to
-          .match(/\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}/);
+      expect(ut.dateToMysql()).to.match(regex);
+    });
+
+    it('should match the regex with provided date', function () {
+      expect(ut.dateToMysql(new Date())).to.match(regex);
     });
   });
 
   describe('dateToString()', function () {
+    var regex = /\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}/;
+
     it('should match the regex', function () {
-      expect(ut.dateToString(new Date())).to
-          .match(/\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}/);
+      expect(ut.dateToString()).to.match(regex);
+    });
+
+    it('should match the regex with provided date', function () {
+      expect(ut.dateToString(new Date())).to.match(regex);
     });
   });
 
   describe('now()', function () {
     it('should match the regex', function () {
-      expect(ut.now()).to
-          .match(/\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\.\d{3}/);
+      expect(ut.now()).to.match(/\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\.\d{3}/);
     });
   });
 
