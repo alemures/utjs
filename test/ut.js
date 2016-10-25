@@ -57,27 +57,27 @@ describe('utjs', function () {
     it('should sort the array', function () {
       var arr = [4, 2, 5, 1];
       ut.sort(arr);
-      expect(arr).to.be.eql([1, 2, 4, 5]);
+      expect(arr).to.be.deep.equal([1, 2, 4, 5]);
       arr = ['b', 'ttt', 'c', 'bb', 'aa', 'tt'];
       ut.sort(arr, function (a, b) { return a > b ? 1 : b > a ? -1 : 0; });
 
-      expect(arr).to.be.eql(['aa', 'b', 'bb', 'c', 'tt', 'ttt']);
+      expect(arr).to.be.deep.equal(['aa', 'b', 'bb', 'c', 'tt', 'ttt']);
     });
 
     it('should sort the array of objects', function () {
       var arr = [{ age: 25 }, { age: 22 }, { age: 26 }, { age: 18 }];
       ut.sort(arr, function (a, b) { return a.age - b.age; });
 
-      expect(arr).to.be.eql([{ age: 18 }, { age: 22 }, { age: 25 }, { age: 26 }]);
+      expect(arr).to.be.deep.equal([{ age: 18 }, { age: 22 }, { age: 25 }, { age: 26 }]);
     });
 
     it('should sort only the given range in the array', function () {
       var arr = [4, 2, 5, 1];
       ut.sort(arr, 2);
-      expect(arr).to.be.eql([4, 2, 1, 5]);
+      expect(arr).to.be.deep.equal([4, 2, 1, 5]);
       arr = [4, 2, 5, 1];
       ut.sort(arr, 1, arr.length - 1);
-      expect(arr).to.be.eql([4, 1, 2, 5]);
+      expect(arr).to.be.deep.equal([4, 1, 2, 5]);
     });
   });
 
@@ -85,7 +85,7 @@ describe('utjs', function () {
     it('should swap the array indexes', function () {
       var arr = [4, 2, 5, 1];
       ut.swap(arr, 1, 3);
-      expect(arr).to.be.eql([4, 1, 5, 2]);
+      expect(arr).to.be.deep.equal([4, 1, 5, 2]);
     });
   });
 
@@ -94,7 +94,7 @@ describe('utjs', function () {
       var arr1 = [1, 2, 3, 4];
       var arr2 = [5, 6, 7, 8];
       ut.concatArrays(arr1, arr2);
-      expect(arr1).to.be.eql([1, 2, 3, 4, 5, 6, 7, 8]);
+      expect(arr1).to.be.deep.equal([1, 2, 3, 4, 5, 6, 7, 8]);
     });
   });
 
@@ -103,7 +103,7 @@ describe('utjs', function () {
       var arr = [1, 2, 3, 4];
       var copy = ut.copyArray(arr);
       expect(arr).to.not.be.equal(copy);
-      expect(arr).to.be.eql(copy);
+      expect(arr).to.be.deep.equal(copy);
     });
   });
 
@@ -135,7 +135,7 @@ describe('utjs', function () {
       var arr1 = [2, 6, 7, 9, 10];
       var arr2 = [5, 7, 8, 10, 12];
       var intersection = ut.intersectSorted(arr1, arr2);
-      expect(intersection).to.be.eql([7, 10]);
+      expect(intersection).to.be.deep.equal([7, 10]);
     });
 
     it('should intersect two sorted arrays of objects', function () {
@@ -144,7 +144,7 @@ describe('utjs', function () {
 
       var intersection = ut.intersectSorted(arr1, arr2, function (a, b) { return a.a - b.a; });
 
-      expect(intersection).to.be.eql([{ a: 7 }, { a: 10 }]);
+      expect(intersection).to.be.deep.equal([{ a: 7 }, { a: 10 }]);
     });
   });
 
@@ -152,7 +152,7 @@ describe('utjs', function () {
     it('should remove one element', function () {
       var arr = [1, 2, 3, 4];
       ut.spliceOne(arr, 2);
-      expect(arr).to.be.eql([1, 2, 4]);
+      expect(arr).to.be.deep.equal([1, 2, 4]);
     });
   });
 
@@ -171,7 +171,7 @@ describe('utjs', function () {
       }
 
       expect(arr).to.have.lengthOf(110);
-      expect(arr).to.be.eql(copy);
+      expect(arr).to.be.deep.equal(copy);
     });
 
     it('should insert 10 numbers in a sorted array rejecting duplicates', function () {
@@ -182,14 +182,14 @@ describe('utjs', function () {
         ut.binaryInsert(toInsert[i], arr, true);
       }
 
-      expect(arr).to.be.eql([0, 1, 2, 3, 4, 5, 6]);
+      expect(arr).to.be.deep.equal([0, 1, 2, 3, 4, 5, 6]);
     });
 
     it('should insert 1 object in a sorted array of objects', function () {
       var arr = [{ a: 1 }, { a: 4 }, { a: 5 }, { a: 9 }];
       ut.binaryInsert({ a: 8 }, arr, function (a, b) { return a.a - b.a; });
 
-      expect(arr).to.be.eql([{ a: 1 }, { a: 4 }, { a: 5 }, { a: 8 }, { a: 9 }]);
+      expect(arr).to.be.deep.equal([{ a: 1 }, { a: 4 }, { a: 5 }, { a: 8 }, { a: 9 }]);
     });
   });
 
@@ -230,7 +230,7 @@ describe('utjs', function () {
     it('should return an array', function () {
       test(1, 2, 3);
       function test() {
-        expect(ut.argumentsToArray(arguments)).to.be.eql([1, 2, 3]);
+        expect(ut.argumentsToArray(arguments)).to.be.deep.equal([1, 2, 3]);
       }
     });
   });
@@ -353,28 +353,104 @@ describe('utjs', function () {
       var dest = { a: 1, b: '2', c: false };
       var source = { c: true, d: null };
       ut.mergeObjects(dest, source);
-      expect(dest).to.be.eql({ a: 1, b: '2', c: true, d: null });
+      expect(dest).to.be.deep.equal({ a: 1, b: '2', c: true, d: null });
     });
 
     it('should merge two objects with arrays', function () {
       var dest = { a: [2, 4, 6, 8] };
       var source = { a: [1, 3, 5] };
       ut.mergeObjects(dest, source);
-      expect(dest).to.be.eql({ a: [1, 3, 5, 8] });
+      expect(dest).to.be.deep.equal({ a: [1, 3, 5, 8] });
     });
 
     it('should merge two objects with inner objects', function () {
       var dest = { a: { b: { d: 'Hello', f: 'Bye' } } };
       var source = { a: { b: { d: [{ e: 15 }], f: { g: 'Hello' } } } };
       ut.mergeObjects(dest, source);
-      expect(dest).to.be.eql({ a: { b: { d: [{ e: 15 }], f: { g: 'Hello' } } } });
+      expect(dest).to.be.deep.equal({ a: { b: { d: [{ e: 15 }], f: { g: 'Hello' } } } });
     });
 
     it('should merge two objects with dates', function () {
       var dest = { a: 'a', b: new Date('2015-01-01') };
       var source = { a: 'a', b: new Date('2016-06-06'), c: false };
       ut.mergeObjects(dest, source);
-      expect(dest).to.be.eql({ a: 'a', b: new Date('2016-06-06'), c: false });
+      expect(dest).to.be.deep.equal({ a: 'a', b: new Date('2016-06-06'), c: false });
+    });
+  });
+
+  describe('updateObject()', function () {
+    it('should update a number in an inner object', function () {
+      var dest = { a: { b: 0 } };
+      ut.updateObject(dest, 1, 'a.b');
+      expect(dest.a.b).to.be.equals(1);
+    });
+
+    it('should update a full array', function () {
+      var dest = { a: { b: [1, 2, 3] } };
+      ut.updateObject(dest, [4, 5], 'a.b');
+      expect(dest.a.b).to.be.deep.equal([4, 5]);
+    });
+
+    it('should update an item array', function () {
+      var dest = { a: { b: [1, 2, 3] } };
+      ut.updateObject(dest, 25, 'a.b[1]');
+      expect(dest.a.b).to.be.deep.equal([1, 25, 3]);
+    });
+  });
+
+  describe('randomObject()', function () {
+    it('should return a random object using default generators', function () {
+      var rand = ut.randomObject([5, 5]);
+      var keys = Object.keys(rand);
+      expect(rand).to.be.an('object');
+      expect(keys.length).to.be.equal(5);
+      expect(Object.keys(rand[keys[0]]).length).to.be.equal(5);
+    });
+  });
+
+  describe('objectChunk()', function () {
+    it('should return an array with the chunked object', function () {
+      var object = { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7 };
+      var length = Object.keys(object).length;
+
+      for (var i = 1; i <= length; i++) {
+        var chunks = ut.objectChunk(object, i);
+        expect(chunks).to.be.an('array');
+        expect(chunks).to.have.lengthOf(Math.ceil(Object.keys(object).length / i));
+      }
+    });
+  });
+
+  describe('cloneObject()', function () {
+    it('should return a deeply cloned object', function () {
+      var orig = { a: 1, b: 2, c: { d: 3, e: [4] } };
+      var clone = ut.cloneObject(orig);
+      expect(clone).to.not.be.equal(orig);
+      expect(clone).to.be.deep.equal(orig);
+    });
+
+    it('should return a deeply cloned array', function () {
+      var orig = [{ d: 3, e: [4] }, { d: 5, e: [6] }];
+      var clone = ut.cloneObject(orig);
+      expect(clone).to.not.be.equal(orig);
+      expect(clone).to.be.deep.equal(orig);
+    });
+  });
+
+  describe('get()', function () {
+    it('should return the value in the path', function () {
+      var object = { a: 1, b: 2, c: { d: 3, e: [4] } };
+      expect(ut.get(object, '')).to.be.equal(object);
+      expect(ut.get(object, 'c')).to.be.deep.equal({ d: 3, e: [4] });
+      expect(ut.get(object, 'c.d')).to.be.equal(3);
+      expect(ut.get(object, 'c.e[0]')).to.be.equal(4);
+    });
+
+    it('should return the default value', function () {
+      var object = { a: 1, b: 2, c: { d: 3, e: [4] } };
+      expect(ut.get(object, 'a.d')).to.be.undefined;
+      expect(ut.get(object, 'a.f', null)).to.be.null;
+      expect(ut.get(object, 'a.h', false)).to.be.equal(false);
     });
   });
 
