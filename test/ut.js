@@ -224,6 +224,18 @@ describe('utjs', function () {
     });
   });
 
+  describe('randomArrayItem()', function () {
+    it('should return a random value within the array', function () {
+      var array = [1, 5, 66, 100];
+      expect(ut.randomArrayItem(array)).to.be.oneOf(array);
+    });
+
+    it('should return a random value within the array within the sliced bounds', function () {
+      var array = [1, 5, 66, 100, 101];
+      expect(ut.randomArrayItem(array, 2, array.length)).to.be.oneOf(array.slice(2, array.length));
+    });
+  });
+
   // Arguments
 
   describe('argumentsToArray()', function () {

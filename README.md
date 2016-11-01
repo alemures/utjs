@@ -35,6 +35,7 @@ function intersectSorted(array1, array2, [comparator=_numericComparator])
 function spliceOne(array, index)
 function binaryInsert(value, array, [comparator=_numericComparator], [rejectDuplicates=false])
 function binarySearch(value, array, [comparator=_numericComparator], [left=0], [right=array.length-1])
+function randomArrayItem(array, [start=0], [end=array.length])
 
 // Arguments
 function argumentsToArray(args)
@@ -72,6 +73,9 @@ function get(object, path, [def=undefined])
 function equals(x, y, [strict=false])
 function groupBy(array, keys, [iteratee])
 function objectLength(object)
+
+// Boolean
+function randomBoolean()
 
 // Type
 function isNumeric(value)
