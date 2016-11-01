@@ -466,6 +466,39 @@ describe('utjs', function () {
     });
   });
 
+  describe('equals()', function () {
+    it('should return true validating cloned objects', function () {
+      var o1 = { };
+      var o2 = { a: 1, b: '2', c: true, d: null, e: undefined, f: NaN };
+      var o3 = { a: { b: [{ c: 1 }, { c: 2 }] } };
+
+      expect(ut.equals(o1, ut.cloneObject(o1))).to.be.true;
+      expect(ut.equals(o2, ut.cloneObject(o2))).to.be.true;
+      expect(ut.equals(o3, ut.cloneObject(o3))).to.be.true;
+    });
+
+    it('should return true validating primitives and references', function () {
+      var number = 1;
+      var string = '2';
+      var date = new Date();
+      var regex = new RegExp('a');
+
+      expect(ut.equals(number, 1)).to.be.true;
+      expect(ut.equals(string, '2')).to.be.true;
+      expect(ut.equals(date, date)).to.be.true;
+      expect(ut.equals(regex, regex)).to.be.true;
+    });
+
+    it('should return false validating different objects', function () {
+      expect(ut.equals({ }, { a: 1 })).to.be.false;
+      expect(ut.equals({ a: 1, b: '2' }, { a: 1, b: '3' })).to.be.false;
+      expect(ut.equals({ a: { b: [{ c: 1 }, { c: 2 }] } },
+                       { a: { b: [{ c: 3 }, { c: 2 }] } })).to.be.false;
+      expect(ut.equals(new Date(), new Date())).to.be.false;
+      expect(ut.equals([1, 2, 3], [1, 2, 3, 4])).to.be.false;
+    });
+  });
+
   describe('truncateNumber()', function () {
     it('should truncate the number', function () {
       expect(ut.truncateNumber(3.14)).to.be.equal(3);

@@ -70,7 +70,7 @@ function randomObject(lengths, [keyGenerator=_defaultKeyGenerator],
 function objectChunk(object, chunkSize)
 function cloneObject(original)
 function get(object, path, [def=undefined])
-function equals(x, y, [strict=false])
+function equals(value, other)
 function groupBy(array, keys, [iteratee])
 function objectLength(object)
 
