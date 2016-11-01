@@ -21,6 +21,7 @@ console.log(number);
 function dateToMysql([date])
 function dateToString([date])
 function now()
+function cloneDate(date)
 
 // Array
 function arrayChunk(array, chunkSize)
@@ -71,7 +72,6 @@ function get(object, path, [def=undefined])
 function equals(x, y, [strict=false])
 function groupBy(array, keys, [iteratee])
 function objectLength(object)
-function cloneDate(date)
 
 // Type
 function isNumeric(value)
@@ -91,7 +91,7 @@ function isValidNumber(value)
 function logN(base, value)
 
 // Miscellaneous
-function test(fn, [times=1], [name=''])
+function test(fn, [times=1], [label='Default label'])
 function inRange(val, [min=-Infinity], [max=Infinity])
 ```
 
