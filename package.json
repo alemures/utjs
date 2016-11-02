@@ -11,7 +11,7 @@
     "jscs": "jscs index.js lib/*.js test/*.js",
     "jscs:fix": "jscs --fix index.js lib/*.js test/*.js",
     "check": "npm test && npm run jshint && npm run jscs",
-    "doc": "rm -rf ./doc && jsdoc ./lib/ ./package.json ./README.md -d ./doc"
+    "doc": "jsdoc ./lib/ ./package.json ./README.md -d ./doc"
   },
   "author": "Alejandro Santiago Nieto",
   "license": "MIT",
