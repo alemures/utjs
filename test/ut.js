@@ -42,6 +42,16 @@ describe('utjs', function () {
     });
   });
 
+  describe('cloneDate', function () {
+    it('should clone a date object', function () {
+      var orig = new Date('2016-01-01');
+      var cloned = ut.cloneDate(orig);
+      orig.setDate(2);
+
+      expect(cloned).to.be.deep.equal(new Date('2016-01-01'));
+    });
+  });
+
   // Array
 
   describe('arrayChunk()', function () {
@@ -360,6 +370,15 @@ describe('utjs', function () {
     });
   });
 
+  describe('truncateNumber()', function () {
+    it('should truncate the number', function () {
+      expect(ut.truncateNumber(3.14)).to.be.equal(3);
+      expect(ut.truncateNumber(3000000000.14)).to.be.equal(3000000000);
+      expect(ut.truncateNumber(-3.14)).to.be.equal(-3);
+      expect(ut.truncateNumber(-3000000000.14)).to.be.equal(-3000000000);
+    });
+  });
+
   describe('mergeObjects()', function () {
     it('should merge two objects replacing duplicates keys', function () {
       var dest = { a: 1, b: '2', c: false };
@@ -499,12 +518,187 @@ describe('utjs', function () {
     });
   });
 
-  describe('truncateNumber()', function () {
-    it('should truncate the number', function () {
-      expect(ut.truncateNumber(3.14)).to.be.equal(3);
-      expect(ut.truncateNumber(3000000000.14)).to.be.equal(3000000000);
-      expect(ut.truncateNumber(-3.14)).to.be.equal(-3);
-      expect(ut.truncateNumber(-3000000000.14)).to.be.equal(-3000000000);
+  describe('groupBy', function () {
+    var people = [{ name: 'alex', age: 24, lang: 'spanish', country: 'spain' },
+        { name: 'fran', age: 23, lang: 'english', country: 'france' },
+        { name: 'alex', age: 30, lang: 'english', country: 'spain' },
+        { name: 'james', age: 35, country: 'france' }];
+
+    it('should group the objects by a single key', function () {
+      var grouped = ut.groupBy(people, 'country');
+      expect(grouped.spain).to.have.lengthOf(2);
+      expect(grouped.france).to.have.lengthOf(2);
+    });
+
+    it('should group the objects with a custom iteratee', function () {
+      var grouped = ut.groupBy(people, 'country', function (person) { return person.age; });
+
+      expect(grouped.spain).to.have.be.deep.equal([24, 30]);
+      expect(grouped.france).to.have.be.deep.equal([23, 35]);
+    });
+
+    it('should group the objects with multiple keys', function () {
+      var grouped = ut.groupBy(people, ['country', 'lang']);
+      expect(grouped.spain.spanish).to.have.lengthOf(1);
+      expect(grouped.spain.english).to.have.lengthOf(1);
+      expect(grouped.france.english).to.have.lengthOf(1);
+    });
+  });
+
+  describe('objectLength', function () {
+    it('should return the number of keys of the given object', function () {
+      expect(ut.objectLength({})).to.be.equal(0);
+      expect(ut.objectLength({ a: 1, b: 2, c: 3, d: 4, e: 5 })).to.be.equal(5);
+    });
+  });
+
+  describe('randomBoolean', function () {
+    it('should return a random boolean with chances of 50%', function () {
+      expect(ut.randomBoolean()).to.be.a('boolean');
+    });
+  });
+
+  describe('isNumeric', function () {
+    it('should return true for valid numbers even if they are in strings', function () {
+      expect(ut.isNumeric(1)).to.be.true;
+      expect(ut.isNumeric(1e+1)).to.be.true;
+      expect(ut.isNumeric(1.25)).to.be.true;
+      /* jshint -W053 */
+      expect(ut.isNumeric(new Number(25))).to.be.true;
+      expect(ut.isNumeric('1')).to.be.true;
+      expect(ut.isNumeric('1e+1')).to.be.true;
+      expect(ut.isNumeric('1.25')).to.be.true;
+      expect(ut.isNumeric(Infinity)).to.be.false;
+      expect(ut.isNumeric(NaN)).to.be.false;
+    });
+  });
+
+  describe('isNumber', function () {
+    it('should return true for valid numbers', function () {
+      expect(ut.isNumber(1)).to.be.true;
+      expect(ut.isNumber(1e+1)).to.be.true;
+      expect(ut.isNumber(1.25)).to.be.true;
+      /* jshint -W053 */
+      expect(ut.isNumber(new Number(25))).to.be.true;
+    });
+  });
+
+  describe('isString', function () {
+    it('should return true for valid strings', function () {
+      expect(ut.isString('')).to.be.true;
+      expect(ut.isString('Hello')).to.be.true;
+      /* jshint -W053 */
+      expect(ut.isString(new String('Hello, World!'))).to.be.true;
+    });
+  });
+
+  describe('isArray', function () {
+    it('should return true for valid arrays', function () {
+      expect(ut.isArray([])).to.be.true;
+      expect(ut.isArray([1, 2, 3])).to.be.true;
+    });
+  });
+
+  describe('isObject', function () {
+    it('should return true for valid objects', function () {
+      expect(ut.isObject({})).to.be.true;
+      expect(ut.isObject([])).to.be.true;
+      expect(ut.isObject(new Date())).to.be.true;
+      expect(ut.isObject(null)).to.be.false;
+    });
+  });
+
+  describe('isPlainObject', function () {
+    it('should return true for valid plain objects', function () {
+      expect(ut.isPlainObject({})).to.be.true;
+      expect(ut.isPlainObject([])).to.be.false;
+      expect(ut.isPlainObject(new Date())).to.be.false;
+      expect(ut.isPlainObject(null)).to.be.false;
+    });
+  });
+
+  describe('isBoolean', function () {
+    it('should return true for valid booleans', function () {
+      expect(ut.isBoolean(true)).to.be.true;
+      /* jshint -W053 */
+      expect(ut.isBoolean(new Boolean(false))).to.be.true;
+    });
+  });
+
+  describe('isFunction', function () {
+    it('should return true for valid functions', function () {
+      expect(ut.isFunction(function () {})).to.be.true;
+      /* jshint evil: true */
+      expect(ut.isFunction(new Function())).to.be.true;
+    });
+  });
+
+  describe('isRegExp', function () {
+    it('should return true for valid RegExp objects', function () {
+      expect(ut.isRegExp(/a/)).to.be.true;
+      expect(ut.isRegExp(new RegExp('a'))).to.be.true;
+    });
+  });
+
+  describe('isDate', function () {
+    it('should return true for valid Date objects', function () {
+      expect(ut.isDate(new Date())).to.be.true;
+    });
+  });
+
+  describe('isDateString', function () {
+    it('should return true for valid date strings', function () {
+      expect(ut.isDateString('2016-01-01')).to.be.true;
+      expect(ut.isDateString('2016/01/01')).to.be.true;
+      expect(ut.isDateString('')).to.be.false;
+      expect(ut.isDateString(1)).to.be.false;
+    });
+  });
+
+  describe('isValidNumber', function () {
+    it('should return true for valid numbers', function () {
+      expect(ut.isValidNumber(1.25)).to.be.true;
+      expect(ut.isValidNumber(Infinity)).to.be.false;
+      expect(ut.isValidNumber(NaN)).to.be.false;
+    });
+  });
+
+  describe('logN', function () {
+    it('should return the log n value', function () {
+      expect(ut.logN(10, 25)).to.be.closeTo(Math.log10(25), 0.0000000000000005);
+      expect(ut.logN(Math.E, 25)).to.be.closeTo(Math.log(25), 0.0000000000000005);
+      expect(ut.logN(2, 1024)).to.be.equal(10);
+    });
+  });
+
+  describe('inRange', function () {
+    it('should return true if the value is within the provided range', function () {
+      expect(ut.inRange(3, 1, 5)).to.be.true;
+      expect(ut.inRange('abc', 1, 5)).to.be.true;
+      expect(ut.inRange([1, 2, 3], 1, 5)).to.be.true;
+      expect(ut.inRange({ a: 1, b: 2, c: 3 }, 1, 5)).to.be.true;
+      expect(ut.inRange(new RegExp())).to.be.false;
+    });
+  });
+
+  describe('logger.setLogLevel', function () {
+    it('should set the log level', function () {
+      ut.logger.setLogLevel(ut.logger.WARN);
+      expect(ut.logger._logLevel).to.be.equal(ut.logger.WARN);
+    });
+  });
+
+  describe('logger.setUsingDate', function () {
+    it('should enable or disable the date in logs', function () {
+      ut.logger.setUsingDate(true);
+      expect(ut.logger._usingDate).to.be.equal(true);
+    });
+  });
+
+  describe('logger.setPrettify', function () {
+    it('should enable or disable the prettifying in logs', function () {
+      ut.logger.setPrettify(true);
+      expect(ut.logger._prettify).to.be.equal(true);
     });
   });
 });
