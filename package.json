@@ -1,22 +1,23 @@
 {
   "name": "utjs",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "utjs is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.",
   "main": "index.js",
   "files": ["index.js", "lib"],
   "scripts": {
-    "start": "node index.js",
     "test": "mocha test/*.js",
+    "test:cover": "istanbul cover _mocha test/*.js",
     "jshint": "jshint index.js lib/*.js test/*.js",
     "jscs": "jscs index.js lib/*.js test/*.js",
     "jscs:fix": "jscs --fix index.js lib/*.js test/*.js",
-    "check": "npm run test && npm run jshint && npm run jscs",
-    "doc": "rm -rf ./doc && jsdoc ./lib/ ./package.json ./README.md -d ./doc"
+    "check": "npm test && npm run jshint && npm run jscs",
+    "doc": "jsdoc ./lib/ ./package.json ./README.md -d ./doc"
   },
   "author": "Alejandro Santiago Nieto",
   "license": "MIT",
   "devDependencies": {
     "chai": "3.x.x",
+    "istanbul": "0.4.x",
     "jscs": "3.x.x",
     "jsdoc": "3.x.x",
     "jshint": "2.x.x",

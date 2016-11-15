@@ -18,23 +18,24 @@ console.log(number);
 #### Functions
 ```
 // Date
-function dateToMysql(date)
-function dateToString(date)
+function dateToMysql([date])
+function dateToString([date])
 function now()
+function cloneDate(date)
 
 // Array
 function arrayChunk(array, chunkSize)
-function sort(array)
+function sort(array, [comparator=_numericComparator], [left=0], [right=array.length-1])
 function swap(array, from, to)
 function concatArrays(dest, source)
-function copyArray(array, [start=0], [end=array.length-1])
+function copyArray(array, [start=0], [end=array.length])
 function clearArray(array)
 function randomArray(length, [dataGenerator=_defaultDataGenerator])
-function intersectSorted(array1, array2)
+function intersectSorted(array1, array2, [comparator=_numericComparator])
 function spliceOne(array, index)
-function binaryInsert(value, array, [rejectDuplicates=false])
-function binarySearch(value, array, [left=0], [right=array.length-1])
-function removeDuplicates(array)
+function binaryInsert(value, array, [comparator=_numericComparator], [rejectDuplicates=false])
+function binarySearch(value, array, [comparator=_numericComparator], [left=0], [right=array.length-1])
+function randomArrayItem(array, [start=0], [end=array.length])
 
 // Arguments
 function argumentsToArray(args)
@@ -55,7 +56,7 @@ function escapeRegExp(string)
 function numberToString(number)
 function randomNumber(min, max)
 function getMiddleNumber(a, b, c)
-function numDigits(integer, base)
+function numDigits(integer, [base=10])
 function isInteger(number)
 function isNaN(number)
 function isNaNOrInfinity(number)
@@ -69,10 +70,12 @@ function randomObject(lengths, [keyGenerator=_defaultKeyGenerator],
 function objectChunk(object, chunkSize)
 function cloneObject(original)
 function get(object, path, [def=undefined])
-function equals(x, y, [strict=false])
+function equals(value, other)
 function groupBy(array, keys, [iteratee])
 function objectLength(object)
-function cloneDate(date)
+
+// Boolean
+function randomBoolean()
 
 // Type
 function isNumeric(value)
@@ -86,12 +89,13 @@ function isFunction(value)
 function isRegExp(value)
 function isDate(value)
 function isDateString(value)
+function isValidNumber(value)
 
 // Math
 function logN(base, value)
 
 // Miscellaneous
-function test(fn, [times=1], [name=''])
+function test(fn, [times=1], [label='Default label'])
 function inRange(val, [min=-Infinity], [max=Infinity])
 ```
 
@@ -103,6 +107,7 @@ var logger = {
   INFO: 2
   WARN: 3
   ERROR: 4
+  NONE: Number.MAX_VALUE
 
   setLogLevel: function(logLevel)
   setUsingDate: function(usingDate)
