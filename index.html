@@ -26,7 +26,7 @@
     
 
 
-    <h3>utjs 1.5.4</h3>
+    <h3>utjs 2.0.0</h3>
 
 
 
@@ -47,20 +47,24 @@
 <h4>Install</h4><pre class="prettyprint source"><code>npm install utjs</code></pre><h4>Usage</h4><pre class="prettyprint source"><code>var ut = require('utjs');
 var number = ut.randomNumber(1, 10);
 console.log(number);</code></pre><h4>Functions</h4><pre class="prettyprint source"><code>// Date
-function dateToMysql(date)
-function dateToString(date)
+function dateToMysql([date])
+function dateToString([date])
 function now()
+function cloneDate(date)
 
 // Array
 function arrayChunk(array, chunkSize)
-function sort(v)
-function swap(v, i, j)
+function sort(array, [comparator=_numericComparator], [left=0], [right=array.length-1])
+function swap(array, from, to)
 function concatArrays(dest, source)
-function copyArray(array, start, end)
+function copyArray(array, [start=0], [end=array.length])
 function clearArray(array)
-function randomArray(length, dataGenerator)
-function intersectSorted(a, b)
+function randomArray(length, [dataGenerator=_defaultDataGenerator])
+function intersectSorted(array1, array2, [comparator=_numericComparator])
 function spliceOne(array, index)
+function binaryInsert(value, array, [comparator=_numericComparator], [rejectDuplicates=false])
+function binarySearch(value, array, [comparator=_numericComparator], [left=0], [right=array.length-1])
+function randomArrayItem(array, [start=0], [end=array.length])
 
 // Arguments
 function argumentsToArray(args)
@@ -72,7 +76,7 @@ function paddingLeft(string, pad, length)
 function paddingRight(string, pad, length)
 function paddingBoth(string, pad, length)
 function repeat(string, times)
-function replaceAll(string, substr, newSubstr, ignoreCase)
+function replaceAll(string, substr, newSubstr, [ignoreCase=false])
 function startsWith(string, prefix)
 function endsWith(string, suffix)
 function escapeRegExp(string)
@@ -81,22 +85,26 @@ function escapeRegExp(string)
 function numberToString(number)
 function randomNumber(min, max)
 function getMiddleNumber(a, b, c)
-function numDigits(integer, base)
+function numDigits(integer, [base=10])
 function isInteger(number)
 function isNaN(number)
 function isNaNOrInfinity(number)
+function truncateNumber(number)
 
 // Object
 function mergeObjects(dest, source)
 function updateObject(dest, value, path)
-function randomObject(lengths, keyGenerator, valueGenerator)
+function randomObject(lengths, [keyGenerator=_defaultKeyGenerator],
+                      [valueGenerator=_defaultValueGenerator])
 function objectChunk(object, chunkSize)
 function cloneObject(original)
-function get(object, path, def)
-function equals(x, y, strict)
-function groupBy(data, keys, iteratee)
+function get(object, path, [def=undefined])
+function equals(value, other)
+function groupBy(array, keys, [iteratee])
 function objectLength(object)
-function cloneDate(date)
+
+// Boolean
+function randomBoolean()
 
 // Type
 function isNumeric(value)
@@ -110,18 +118,20 @@ function isFunction(value)
 function isRegExp(value)
 function isDate(value)
 function isDateString(value)
+function isValidNumber(value)
 
 // Math
 function logN(base, value)
 
 // Miscellaneous
-function test(fn, times, name)
-function inRange(val, min, max)</code></pre><h4>Objects</h4><pre class="prettyprint source"><code>// Logging
+function test(fn, [times=1], [label='Default label'])
+function inRange(val, [min=-Infinity], [max=Infinity])</code></pre><h4>Objects</h4><pre class="prettyprint source"><code>// Logging
 var logger = {
   DEBUG: 1
   INFO: 2
   WARN: 3
   ERROR: 4
+  NONE: Number.MAX_VALUE
 
   setLogLevel: function(logLevel)
   setUsingDate: function(usingDate)
@@ -142,13 +152,13 @@ var logger = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#binaryInsert">binaryInsert</a></li><li><a href="global.html#binarySearch">binarySearch</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneDate">cloneDate</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#isValidNumber">isValidNumber</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomArrayItem">randomArrayItem</a></li><li><a href="global.html#randomBoolean">randomBoolean</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#truncateNumber">truncateNumber</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 17 2016 16:26:53 GMT+0100 (IST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Nov 15 2016 23:38:10 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
