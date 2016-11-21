@@ -260,8 +260,12 @@ describe('utjs', function () {
   // String
 
   describe('randomString()', function () {
-    it('should return a random string', function () {
-      expect(ut.randomString(10)).to.match(/[a-z]{10}/);
+    it('should return a random case sensitive alphanumeric string', function () {
+      expect(ut.randomString(10)).to.match(/[a-zA-Z0-9]{10}/);
+    });
+
+    it('should return a random case insensitive alphanumeric string', function () {
+      expect(ut.randomString(10, true)).to.match(/[a-z0-9]{10}/);
     });
   });
 

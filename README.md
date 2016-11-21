@@ -41,7 +41,7 @@ function randomArrayItem(array, [start=0], [end=array.length])
 function argumentsToArray(args)
 
 // String
-function randomString(size)
+function randomString(size, [caseInsensitive=false])
 function stringToNumber(string)
 function paddingLeft(string, pad, length)
 function paddingRight(string, pad, length)
