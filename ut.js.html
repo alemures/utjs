@@ -825,20 +825,18 @@ function get(object, path, def) {
   var tokens = path.replace(/\[/g, '.[').split('.');
   var tokensLength = tokens.length;
   var value = object;
-  var token;
-  var index;
 
   if (path === '') {
     return object;
   }
 
   for (var i = 0; i &lt; tokensLength &amp;&amp; value !== undefined; i++) {
-    token = tokens[i];
+    var token = tokens[i];
 
     if (value === null) {
       value = undefined;
     } else if (token[0] === '[') {
-      index = token.substring(1, token.length - 1);
+      var index = token.substring(1, token.length - 1);
       value = value[stringToNumber(index)];
     } else {
       value = value[tokens[i]];
@@ -916,21 +914,16 @@ function groupBy(array, keys, iteratee) {
 
   var result = {};
   var lastKeyIndex = keys.length - 1;
-  var obj;
-  var key;
-  var pointer;
-  var keyValue;
-  var resultPointer;
 
   for (var i = 0; i &lt; array.length; i++) {
-    obj = array[i];
+    var obj = array[i];
 
-    pointer = obj;
-    resultPointer = result;
+    var pointer = obj;
+    var resultPointer = result;
 
     for (var j = 0; j &lt; keys.length; j++) {
-      key = keys[j];
-      keyValue = pointer[key];
+      var key = keys[j];
+      var keyValue = pointer[key];
 
       if (keyValue === undefined) {
         break;
@@ -964,6 +957,47 @@ function objectLength(object) {
   }
 
   return length;
+}
+
+/**
+ * Empty the content of an object. It uses "delete" so the object will be converted into a
+ * hash table mode (slow properties).
+ * @see {@link toFastProperties}
+ * @param {Object} object The plain object to clear.
+ */
+function clearObject(object) {
+  for (var key in object) {
+    delete object[key];
+  }
+}
+
+/**
+ * Converts a deoptimized object (dictionary mode) into an optimized object (fast mode).
+ * Objects are deoptimized when you use them like a hash table like deleting properties. You
+ * can check it using the native function "%HasFastProperties(object)" running nodejs with
+ * the flag "--allow-natives-syntax". This code was taken from the module "bluebird".
+ * @param  {Object} object The object to optimize.
+ * @return {Object}        Reference to the same object.
+ */
+function toFastProperties(object) {
+  /*jshint -W027,-W061*/
+  function FakeConstructor() {}
+
+  FakeConstructor.prototype = object;
+
+  // petkaantonov: v8 slack tracking lasts for 8 constructioms
+  var l = 8;
+  while (l--) {
+    new FakeConstructor();
+  }
+
+  return object;
+
+  // Prevent the function from being optimized through dead code elimination
+  // or further optimizations. This code is never reached but even using eval
+  // in unreachable code causes v8 to not optimize functions.
+  /* istanbul ignore next*/
+  eval(object);
 }
 
 // Boolean
@@ -1370,6 +1404,8 @@ module.exports.get = get;
 module.exports.equals = equals;
 module.exports.groupBy = groupBy;
 module.exports.objectLength = objectLength;
+module.exports.clearObject = clearObject;
+module.exports.toFastProperties = toFastProperties;
 
 module.exports.randomBoolean = randomBoolean;
 
@@ -1402,13 +1438,13 @@ module.exports.logger = logger;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#binaryInsert">binaryInsert</a></li><li><a href="global.html#binarySearch">binarySearch</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#cloneDate">cloneDate</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#isValidNumber">isValidNumber</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomArrayItem">randomArrayItem</a></li><li><a href="global.html#randomBoolean">randomBoolean</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#truncateNumber">truncateNumber</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#binaryInsert">binaryInsert</a></li><li><a href="global.html#binarySearch">binarySearch</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#clearObject">clearObject</a></li><li><a href="global.html#cloneDate">cloneDate</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#isValidNumber">isValidNumber</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomArrayItem">randomArrayItem</a></li><li><a href="global.html#randomBoolean">randomBoolean</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#toFastProperties">toFastProperties</a></li><li><a href="global.html#truncateNumber">truncateNumber</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Mon Nov 21 2016 22:11:26 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Wed Nov 23 2016 22:01:06 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>
