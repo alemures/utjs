@@ -482,10 +482,11 @@ describe('utjs', function () {
     });
 
     it('should return the default value', function () {
-      var object = { a: 1, b: 2, c: { d: 3, e: [4] } };
+      var object = { a: 1, b: 2, c: { d: 3, e: [4] }, f: null };
       expect(ut.get(object, 'a.d')).to.be.undefined;
       expect(ut.get(object, 'a.f', null)).to.be.null;
       expect(ut.get(object, 'a.h', false)).to.be.equal(false);
+      expect(ut.get(object, 'f.a')).to.be.equal(undefined);
     });
   });
 
@@ -553,6 +554,26 @@ describe('utjs', function () {
     it('should return the number of keys of the given object', function () {
       expect(ut.objectLength({})).to.be.equal(0);
       expect(ut.objectLength({ a: 1, b: 2, c: 3, d: 4, e: 5 })).to.be.equal(5);
+    });
+  });
+
+  describe('clearObject', function () {
+    it('should clear the object', function () {
+      var object = { a: 1, b: 2, c: 3, d: 4 };
+      ut.clearObject(object);
+      expect(ut.objectLength(object)).to.be.equal(0);
+    });
+  });
+
+  describe('toFastProperties', function () {
+    // Requires nodejs to run with flag --allow-natives-syntax but its not possible at the moment
+    it('should convert an object in dictionary mode into fast mode', function () {
+      var object = { a: 1, b: 2 };
+      /*expect(eval('%HasFastProperties(object)')).to.be.true;*/
+      delete object.a;
+      /*expect(eval('%HasFastProperties(object)')).to.be.false;*/
+      ut.toFastProperties(object);
+      /*expect(eval('%HasFastProperties(object)')).to.be.true;*/
     });
   });
 
