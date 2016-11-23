@@ -73,6 +73,8 @@ function get(object, path, [def=undefined])
 function equals(value, other)
 function groupBy(array, keys, [iteratee])
 function objectLength(object)
+function clearObject(object)
+function toFastProperties(object)
 
 // Boolean
 function randomBoolean()
