@@ -331,6 +331,25 @@ describe('utjs', function () {
     });
   });
 
+  describe('isDateString', function () {
+    it('should return true for valid date strings', function () {
+      expect(ut.isDateString('2016-01-01')).to.be.true;
+      expect(ut.isDateString('2016/01/01')).to.be.true;
+      expect(ut.isDateString('')).to.be.false;
+    });
+  });
+
+  describe('isHexString', function () {
+    it('should return true for valid hexadecimal strings', function () {
+      expect(ut.isHexString('426E2C11')).to.be.true;
+      expect(ut.isHexString('426e2c11')).to.be.true;
+      expect(ut.isHexString('426e2c11x')).to.be.false;
+      expect(ut.isHexString('426exc111')).to.be.false;
+      expect(ut.isHexString('x426e2c11')).to.be.false;
+      expect(ut.isHexString('')).to.be.false;
+    });
+  });
+
   // Number
 
   describe('getMiddleNumber()', function () {
@@ -668,15 +687,6 @@ describe('utjs', function () {
   describe('isDate', function () {
     it('should return true for valid Date objects', function () {
       expect(ut.isDate(new Date())).to.be.true;
-    });
-  });
-
-  describe('isDateString', function () {
-    it('should return true for valid date strings', function () {
-      expect(ut.isDateString('2016-01-01')).to.be.true;
-      expect(ut.isDateString('2016/01/01')).to.be.true;
-      expect(ut.isDateString('')).to.be.false;
-      expect(ut.isDateString(1)).to.be.false;
     });
   });
 
