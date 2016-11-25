@@ -100,6 +100,7 @@ function logN(base, value)
 // Miscellaneous
 function test(fn, [times=1], [label='Default label'])
 function inRange(val, [min=-Infinity], [max=Infinity])
+function error([message], [constructor])
 ```
 
 #### Objects

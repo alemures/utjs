@@ -734,6 +734,28 @@ describe('utjs', function () {
     });
   });
 
+  describe('error', function () {
+    it('should return Error and CouchbaseError instances', function () {
+      function CouchbaseError(message) {
+        Error.call(this, message);
+      }
+
+      Object.setPrototypeOf(CouchbaseError.prototype, Error.prototype);
+
+      var error = ut.error('snap');
+      expect(error).to.be.instanceOf(Error);
+      expect(error.name).to.be.equal('Error');
+      expect(error.message).to.be.equal('snap');
+      expect(error.stack).to.exist;
+
+      var cbError = ut.error('snap', CouchbaseError);
+      expect(cbError).to.be.instanceOf(CouchbaseError);
+      expect(cbError.name).to.be.equal('CouchbaseError');
+      expect(cbError.message).to.be.equal('snap');
+      expect(cbError.stack).to.exist;
+    });
+  });
+
   describe('logger.setLogLevel', function () {
     it('should set the log level', function () {
       ut.logger.setLogLevel(ut.logger.WARN);
