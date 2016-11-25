@@ -735,24 +735,31 @@ describe('utjs', function () {
   });
 
   describe('error', function () {
-    it('should return Error and CouchbaseError instances', function () {
+    it('should return Error instances', function () {
+      var error = ut.error('snap');
+      expect(error).to.be.instanceOf(Error);
+      expect(error.name).to.be.equal('Error');
+      expect(error.message).to.be.equal('snap');
+      expect(error.stack).to.exist;
+    });
+
+    it('should return custom Error instances', function () {
       function CouchbaseError(message) {
         Error.call(this, message);
       }
 
       Object.setPrototypeOf(CouchbaseError.prototype, Error.prototype);
 
-      var error = ut.error('snap');
-      expect(error).to.be.instanceOf(Error);
-      expect(error.name).to.be.equal('Error');
-      expect(error.message).to.be.equal('snap');
-      expect(error.stack).to.exist;
-
       var cbError = ut.error('snap', CouchbaseError);
       expect(cbError).to.be.instanceOf(CouchbaseError);
       expect(cbError.name).to.be.equal('CouchbaseError');
       expect(cbError.message).to.be.equal('snap');
       expect(cbError.stack).to.exist;
+    });
+
+    it('should return a TypeError without message', function () {
+      var typeError = ut.error(TypeError);
+      expect(typeError).to.be.instanceOf(TypeError);
     });
   });
 
