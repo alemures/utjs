@@ -430,6 +430,13 @@ describe('utjs', function () {
       ut.mergeObjects(dest, source);
       expect(dest).to.be.deep.equal({ a: 'a', b: new Date('2016-06-06'), c: false });
     });
+
+    it('should merge two arrays', function () {
+      var dest = [1, 2, 3];
+      var source = [9, 2, 8, 3];
+      ut.mergeObjects(dest, source);
+      expect(dest).to.be.deep.equal([9, 2, 8, 3]);
+    });
   });
 
   describe('updateObject()', function () {
@@ -449,6 +456,12 @@ describe('utjs', function () {
       var dest = { a: { b: [1, 2, 3] } };
       ut.updateObject(dest, 25, 'a.b[1]');
       expect(dest.a.b).to.be.deep.equal([1, 25, 3]);
+    });
+
+    it('should update a single array', function () {
+      var dest = [1, 2, 3];
+      ut.updateObject(dest, 25, '[1]');
+      expect(dest).to.be.deep.equal([1, 25, 3]);
     });
   });
 
@@ -498,6 +511,7 @@ describe('utjs', function () {
       expect(ut.get(object, 'c')).to.be.deep.equal({ d: 3, e: [4] });
       expect(ut.get(object, 'c.d')).to.be.equal(3);
       expect(ut.get(object, 'c.e[0]')).to.be.equal(4);
+      expect(ut.get([1, 2, 3], '[1]')).to.be.equal(2);
     });
 
     it('should return the default value', function () {
@@ -514,10 +528,14 @@ describe('utjs', function () {
       var o1 = { };
       var o2 = { a: 1, b: '2', c: true, d: null, e: undefined, f: NaN };
       var o3 = { a: { b: [{ c: 1 }, { c: 2 }] } };
+      var o4 = [];
+      var o5 = [1, 2, 3];
 
       expect(ut.equals(o1, ut.cloneObject(o1))).to.be.true;
       expect(ut.equals(o2, ut.cloneObject(o2))).to.be.true;
       expect(ut.equals(o3, ut.cloneObject(o3))).to.be.true;
+      expect(ut.equals(o4, ut.cloneObject(o4))).to.be.true;
+      expect(ut.equals(o5, ut.cloneObject(o5))).to.be.true;
     });
 
     it('should return true validating primitives and references', function () {
