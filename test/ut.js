@@ -331,6 +331,25 @@ describe('utjs', function () {
     });
   });
 
+  describe('isDateString', function () {
+    it('should return true for valid date strings', function () {
+      expect(ut.isDateString('2016-01-01')).to.be.true;
+      expect(ut.isDateString('2016/01/01')).to.be.true;
+      expect(ut.isDateString('')).to.be.false;
+    });
+  });
+
+  describe('isHexString', function () {
+    it('should return true for valid hexadecimal strings', function () {
+      expect(ut.isHexString('426E2C11')).to.be.true;
+      expect(ut.isHexString('426e2c11')).to.be.true;
+      expect(ut.isHexString('426e2c11x')).to.be.false;
+      expect(ut.isHexString('426exc111')).to.be.false;
+      expect(ut.isHexString('x426e2c11')).to.be.false;
+      expect(ut.isHexString('')).to.be.false;
+    });
+  });
+
   // Number
 
   describe('getMiddleNumber()', function () {
@@ -411,6 +430,13 @@ describe('utjs', function () {
       ut.mergeObjects(dest, source);
       expect(dest).to.be.deep.equal({ a: 'a', b: new Date('2016-06-06'), c: false });
     });
+
+    it('should merge two arrays', function () {
+      var dest = [1, 2, 3];
+      var source = [9, 2, 8, 3];
+      ut.mergeObjects(dest, source);
+      expect(dest).to.be.deep.equal([9, 2, 8, 3]);
+    });
   });
 
   describe('updateObject()', function () {
@@ -430,6 +456,12 @@ describe('utjs', function () {
       var dest = { a: { b: [1, 2, 3] } };
       ut.updateObject(dest, 25, 'a.b[1]');
       expect(dest.a.b).to.be.deep.equal([1, 25, 3]);
+    });
+
+    it('should update a single array', function () {
+      var dest = [1, 2, 3];
+      ut.updateObject(dest, 25, '[1]');
+      expect(dest).to.be.deep.equal([1, 25, 3]);
     });
   });
 
@@ -479,6 +511,7 @@ describe('utjs', function () {
       expect(ut.get(object, 'c')).to.be.deep.equal({ d: 3, e: [4] });
       expect(ut.get(object, 'c.d')).to.be.equal(3);
       expect(ut.get(object, 'c.e[0]')).to.be.equal(4);
+      expect(ut.get([1, 2, 3], '[1]')).to.be.equal(2);
     });
 
     it('should return the default value', function () {
@@ -495,10 +528,14 @@ describe('utjs', function () {
       var o1 = { };
       var o2 = { a: 1, b: '2', c: true, d: null, e: undefined, f: NaN };
       var o3 = { a: { b: [{ c: 1 }, { c: 2 }] } };
+      var o4 = [];
+      var o5 = [1, 2, 3];
 
       expect(ut.equals(o1, ut.cloneObject(o1))).to.be.true;
       expect(ut.equals(o2, ut.cloneObject(o2))).to.be.true;
       expect(ut.equals(o3, ut.cloneObject(o3))).to.be.true;
+      expect(ut.equals(o4, ut.cloneObject(o4))).to.be.true;
+      expect(ut.equals(o5, ut.cloneObject(o5))).to.be.true;
     });
 
     it('should return true validating primitives and references', function () {
@@ -671,15 +708,6 @@ describe('utjs', function () {
     });
   });
 
-  describe('isDateString', function () {
-    it('should return true for valid date strings', function () {
-      expect(ut.isDateString('2016-01-01')).to.be.true;
-      expect(ut.isDateString('2016/01/01')).to.be.true;
-      expect(ut.isDateString('')).to.be.false;
-      expect(ut.isDateString(1)).to.be.false;
-    });
-  });
-
   describe('isValidNumber', function () {
     it('should return true for valid numbers', function () {
       expect(ut.isValidNumber(1.25)).to.be.true;
@@ -703,6 +731,35 @@ describe('utjs', function () {
       expect(ut.inRange([1, 2, 3], 1, 5)).to.be.true;
       expect(ut.inRange({ a: 1, b: 2, c: 3 }, 1, 5)).to.be.true;
       expect(ut.inRange(new RegExp())).to.be.false;
+    });
+  });
+
+  describe('error', function () {
+    it('should return Error instances', function () {
+      var error = ut.error('snap');
+      expect(error).to.be.instanceOf(Error);
+      expect(error.name).to.be.equal('Error');
+      expect(error.message).to.be.equal('snap');
+      expect(error.stack).to.exist;
+    });
+
+    it('should return custom Error instances', function () {
+      function CouchbaseError(message) {
+        Error.call(this, message);
+      }
+
+      Object.setPrototypeOf(CouchbaseError.prototype, Error.prototype);
+
+      var cbError = ut.error('snap', CouchbaseError);
+      expect(cbError).to.be.instanceOf(CouchbaseError);
+      expect(cbError.name).to.be.equal('CouchbaseError');
+      expect(cbError.message).to.be.equal('snap');
+      expect(cbError.stack).to.exist;
+    });
+
+    it('should return a TypeError without message', function () {
+      var typeError = ut.error(TypeError);
+      expect(typeError).to.be.instanceOf(TypeError);
     });
   });
 

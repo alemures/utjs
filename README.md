@@ -51,6 +51,8 @@ function replaceAll(string, substr, newSubstr, [ignoreCase=false])
 function startsWith(string, prefix)
 function endsWith(string, suffix)
 function escapeRegExp(string)
+function isDateString(string)
+function isHexString(string)
 
 // Number
 function numberToString(number)
@@ -90,7 +92,6 @@ function isBoolean(value)
 function isFunction(value)
 function isRegExp(value)
 function isDate(value)
-function isDateString(value)
 function isValidNumber(value)
 
 // Math
@@ -99,6 +100,7 @@ function logN(base, value)
 // Miscellaneous
 function test(fn, [times=1], [label='Default label'])
 function inRange(val, [min=-Infinity], [max=Infinity])
+function error([message], [constructor])
 ```
 
 #### Objects

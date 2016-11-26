@@ -1,6 +1,6 @@
 {
   "name": "utjs",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "utjs is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.",
   "main": "index.js",
   "files": ["index.js", "lib"],
