@@ -28,8 +28,6 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 
-// Date
-
 var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
     'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -37,6 +35,12 @@ var ALPHANUMERIC = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 
     'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
     'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
     'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+var ESCAPE_REG_EXP = /[-\/\\^$*+?.()|[\]{}]/g;
+var HEXADECIMAL = /^[0-9a-f]+$/i;
+var SQUARE_BRACKET = /\[/g;
+
+// Date
 
 /**
  * Date object to mysql date string.
@@ -565,7 +569,27 @@ function endsWith(string, suffix) {
  * @return {String}        The escaped string.
  */
 function escapeRegExp(string) {
-  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&amp;');
+  return string.replace(ESCAPE_REG_EXP, '\\$&amp;');
+}
+
+/**
+ * If is a string value representing a date. The string should be in a format
+ * recognized by the Date.parse().
+ * @param {String} string The string.
+ * @return {Boolean} If is a valid date string or not.
+ */
+function isDateString(string) {
+  var date = new Date(string);
+  return !isNaN(date.getTime());
+}
+
+/**
+ * Check whether a string represent a hexadecimal string or not.
+ * @param {String} string The string.
+ * @return {Boolean} If is a valid hexadecimal string or not.
+ */
+function isHexString(string) {
+  return HEXADECIMAL.test(string);
 }
 
 // Number
@@ -695,8 +719,8 @@ function _mergeObjects(dest, source, i) {
 }
 
 /**
- * Update an object key using a given path string.
- * @param  {Object} dest  The object to update.
+ * Update an object or array using a given path string.
+ * @param  {Object|Array} dest  The object or array to update.
  * @param  {*} value The value to place in path.
  * @param  {String} path  The path where to place the new value.
  */
@@ -815,25 +839,23 @@ function cloneObject(original) {
 
 /**
  * Get the value using a path in an object.
- * @param  {Object} object The object.
+ * @param  {Object|Array} object The object or array.
  * @param  {String} path   The path.
  * @param  {*} [def=undefined] Value to return if no value is found in path.
  * @return {*} The found value in path.
  */
 function get(object, path, def) {
   def = def !== undefined ? def : undefined;
-  var tokens = path.replace(/\[/g, '.[').split('.');
+  var tokens = path.replace(SQUARE_BRACKET, '.[').split('.');
   var tokensLength = tokens.length;
   var value = object;
-
-  if (path === '') {
-    return object;
-  }
 
   for (var i = 0; i &lt; tokensLength &amp;&amp; value !== undefined; i++) {
     var token = tokens[i];
 
-    if (value === null) {
+    if (token === '') {
+      continue;
+    } else if (value === null) {
       value = undefined;
     } else if (token[0] === '[') {
       var index = token.substring(1, token.length - 1);
@@ -851,8 +873,8 @@ function get(object, path, def) {
  * objects and arrays will be recursively iterated and primitive values and references
  * will be compared using the identity operator (===). Even though it's still a bit slower than
  * JSON.stringify(), this method works well with unsorted objects.
- * @param  {Object} value The first value.
- * @param  {Object} other The other value to compare against.
+ * @param  {Object|Array} value The first value.
+ * @param  {Object|Array} other The other value to compare against.
  * @return {Boolean} If the objects are equal or not.
  */
 function equals(value, other) {
@@ -1110,21 +1132,6 @@ function isDate(value) {
 }
 
 /**
- * If is a string value representing a date. The string should be in a format
- * recognized by the Date.parse().
- * @param  {*} value The value.
- * @return {Boolean} If is a valid date string or not.
- */
-function isDateString(value) {
-  if (!isString(value)) {
-    return false;
-  }
-
-  var date = new Date(value);
-  return !isNaN(date.getTime());
-}
-
-/**
  * If is a Number or not. NaN, Infinity or -Infinity aren't considered valid numbers.
  * @param  {*} value The value.
  * @return {Boolean} If is a Number or not.
@@ -1176,8 +1183,8 @@ function test(fn, times, label) {
  * @return {Boolean}     If the value is inside of the given range or not.
  */
 function inRange(val, min, max) {
-  min = isNumber(min) ? min : -Infinity;
-  max = isNumber(max) ? max : Infinity;
+  min = min !== undefined ? min : -Infinity;
+  max = max !== undefined ? max : Infinity;
 
   if (isNumber(val)) {
     return val >= min &amp;&amp; val &lt;= max;
@@ -1191,6 +1198,31 @@ function inRange(val, min, max) {
   }
 
   return false;
+}
+
+/**
+ * Fast error builder, it doesn't have a real stacktrace but is x10 faster than
+ * new Error().
+ * @param {String} [message] The error message.
+ * @param {Function} [constructor=Error] Optional constructor for custom errors.
+ * @return {Error} An Error instance.
+ */
+function error(message, constructor) {
+  if (isFunction(message)) {
+    constructor = message;
+    message = undefined;
+  }
+
+  message = message || '';
+  constructor = constructor || Error;
+
+  var object = {
+    name: constructor.name,
+    message: message,
+    stack: constructor.name + ': ' + message
+  };
+  Object.setPrototypeOf(object, constructor.prototype);
+  return object;
 }
 
 // Logging
@@ -1385,6 +1417,8 @@ module.exports.replaceAll = replaceAll;
 module.exports.startsWith = startsWith;
 module.exports.endsWith = endsWith;
 module.exports.escapeRegExp = escapeRegExp;
+module.exports.isDateString = isDateString;
+module.exports.isHexString = isHexString;
 
 module.exports.numberToString = numberToString;
 module.exports.randomNumber = randomNumber;
@@ -1419,13 +1453,13 @@ module.exports.isBoolean = isBoolean;
 module.exports.isFunction = isFunction;
 module.exports.isRegExp = isRegExp;
 module.exports.isDate = isDate;
-module.exports.isDateString = isDateString;
 module.exports.isValidNumber = isValidNumber;
 
 module.exports.logN = logN;
 
 module.exports.test = test;
 module.exports.inRange = inRange;
+module.exports.error = error;
 
 module.exports.logger = logger;
 </code></pre>
@@ -1438,13 +1472,13 @@ module.exports.logger = logger;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#binaryInsert">binaryInsert</a></li><li><a href="global.html#binarySearch">binarySearch</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#clearObject">clearObject</a></li><li><a href="global.html#cloneDate">cloneDate</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#isValidNumber">isValidNumber</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomArrayItem">randomArrayItem</a></li><li><a href="global.html#randomBoolean">randomBoolean</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#toFastProperties">toFastProperties</a></li><li><a href="global.html#truncateNumber">truncateNumber</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="logger.html">logger</a></li></ul><h3>Global</h3><ul><li><a href="global.html#argumentsToArray">argumentsToArray</a></li><li><a href="global.html#arrayChunk">arrayChunk</a></li><li><a href="global.html#binaryInsert">binaryInsert</a></li><li><a href="global.html#binarySearch">binarySearch</a></li><li><a href="global.html#clearArray">clearArray</a></li><li><a href="global.html#clearObject">clearObject</a></li><li><a href="global.html#cloneDate">cloneDate</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#concatArrays">concatArrays</a></li><li><a href="global.html#copyArray">copyArray</a></li><li><a href="global.html#dateToMysql">dateToMysql</a></li><li><a href="global.html#dateToString">dateToString</a></li><li><a href="global.html#endsWith">endsWith</a></li><li><a href="global.html#equals">equals</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#escapeRegExp">escapeRegExp</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMiddleNumber">getMiddleNumber</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#intersectSorted">intersectSorted</a></li><li><a href="global.html#isArray">isArray</a></li><li><a href="global.html#isBoolean">isBoolean</a></li><li><a href="global.html#isDate">isDate</a></li><li><a href="global.html#isDateString">isDateString</a></li><li><a href="global.html#isFunction">isFunction</a></li><li><a href="global.html#isHexString">isHexString</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isNaN">isNaN</a></li><li><a href="global.html#isNaNOrInfinity">isNaNOrInfinity</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#isPlainObject">isPlainObject</a></li><li><a href="global.html#isRegExp">isRegExp</a></li><li><a href="global.html#isString">isString</a></li><li><a href="global.html#isValidNumber">isValidNumber</a></li><li><a href="global.html#logN">logN</a></li><li><a href="global.html#mergeObjects">mergeObjects</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#numberToString">numberToString</a></li><li><a href="global.html#numDigits">numDigits</a></li><li><a href="global.html#objectChunk">objectChunk</a></li><li><a href="global.html#objectLength">objectLength</a></li><li><a href="global.html#paddingBoth">paddingBoth</a></li><li><a href="global.html#paddingLeft">paddingLeft</a></li><li><a href="global.html#paddingRight">paddingRight</a></li><li><a href="global.html#randomArray">randomArray</a></li><li><a href="global.html#randomArrayItem">randomArrayItem</a></li><li><a href="global.html#randomBoolean">randomBoolean</a></li><li><a href="global.html#randomNumber">randomNumber</a></li><li><a href="global.html#randomObject">randomObject</a></li><li><a href="global.html#randomString">randomString</a></li><li><a href="global.html#repeat">repeat</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#spliceOne">spliceOne</a></li><li><a href="global.html#startsWith">startsWith</a></li><li><a href="global.html#stringToNumber">stringToNumber</a></li><li><a href="global.html#swap">swap</a></li><li><a href="global.html#test">test</a></li><li><a href="global.html#toFastProperties">toFastProperties</a></li><li><a href="global.html#truncateNumber">truncateNumber</a></li><li><a href="global.html#updateObject">updateObject</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Wed Nov 23 2016 22:01:06 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Sat Nov 26 2016 18:36:05 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>
