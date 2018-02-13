@@ -507,7 +507,7 @@ describe('utjs', function () {
   describe('get()', function () {
     it('should return the value in the path', function () {
       var object = { a: 1, b: 2, c: { d: 3, e: [4] } };
-      expect(ut.get(object, '')).to.be.equal(object);
+      expect(ut.get(object, '')).to.be.undefined;
       expect(ut.get(object, 'c')).to.be.deep.equal({ d: 3, e: [4] });
       expect(ut.get(object, 'c.d')).to.be.equal(3);
       expect(ut.get(object, 'c.e[0]')).to.be.equal(4);
@@ -518,8 +518,9 @@ describe('utjs', function () {
       var object = { a: 1, b: 2, c: { d: 3, e: [4] }, f: null };
       expect(ut.get(object, 'a.d')).to.be.undefined;
       expect(ut.get(object, 'a.f', null)).to.be.null;
-      expect(ut.get(object, 'a.h', false)).to.be.equal(false);
-      expect(ut.get(object, 'f.a')).to.be.equal(undefined);
+      expect(ut.get(object, 'a.h', false)).to.be.false;
+      expect(ut.get(object, 'f.a')).to.be.undefined;
+      expect(ut.get(object, 'f.a', null)).to.be.null;
     });
   });
 
