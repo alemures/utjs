@@ -514,6 +514,15 @@ describe('utjs', function () {
       expect(ut.get([1, 2, 3], '[1]')).to.be.equal(2);
     });
 
+    it('should return the value in the path as array', function () {
+      var object = { a: 1, b: 2, c: { d: 3, e: [4] } };
+      expect(ut.get(object, [])).to.be.undefined;
+      expect(ut.get(object, ['c'])).to.be.deep.equal({ d: 3, e: [4] });
+      expect(ut.get(object, ['c', 'd'])).to.be.equal(3);
+      expect(ut.get(object, ['c', 'e', '0'])).to.be.equal(4);
+      expect(ut.get([1, 2, 3], ['1'])).to.be.equal(2);
+    });
+
     it('should return the default value', function () {
       var object = { a: 1, b: 2, c: { d: 3, e: [4] }, f: null };
       expect(ut.get(object, 'a.d')).to.be.undefined;
