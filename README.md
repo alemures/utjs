@@ -53,6 +53,7 @@ function endsWith(string, suffix)
 function escapeRegExp(string)
 function isDateString(string)
 function isHexString(string)
+function stringChunk(string, chunkSize)
 
 // Number
 function numberToString(number)

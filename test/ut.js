@@ -350,6 +350,15 @@ describe('utjs', function () {
     });
   });
 
+  describe('stringChunk()', function () {
+    it('should return the correct number of strings', function () {
+      expect(ut.stringChunk('', 2)).to.have.lengthOf(0);
+      expect(ut.stringChunk('A', 2)).to.have.lengthOf(1);
+      expect(ut.stringChunk('AA', 2)).to.have.lengthOf(1);
+      expect(ut.stringChunk('AAA', 2)).to.have.lengthOf(2);
+    });
+  });
+
   // Number
 
   describe('getMiddleNumber()', function () {
