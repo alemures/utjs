@@ -359,6 +359,16 @@ describe('utjs', function () {
     });
   });
 
+  describe('splitPath()', function () {
+    it('should return an array of tokens from a path', function () {
+      expect(ut.splitPath('')).to.deep.equal([]);
+      expect(ut.splitPath('name')).to.deep.equal(['name']);
+      expect(ut.splitPath('name.subname')).to.deep.equal(['name', 'subname']);
+      expect(ut.splitPath('[122].name.subname[11][22]'))
+        .to.deep.equal(['122', 'name', 'subname', '11', '22']);
+    });
+  });
+
   // Number
 
   describe('getMiddleNumber()', function () {

@@ -54,6 +54,7 @@ function escapeRegExp(string)
 function isDateString(string)
 function isHexString(string)
 function stringChunk(string, chunkSize)
+function splitPath(path)
 
 // Number
 function numberToString(number)
