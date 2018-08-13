@@ -350,6 +350,25 @@ describe('utjs', function () {
     });
   });
 
+  describe('stringChunk()', function () {
+    it('should return the correct number of strings', function () {
+      expect(ut.stringChunk('', 2)).to.have.lengthOf(0);
+      expect(ut.stringChunk('A', 2)).to.have.lengthOf(1);
+      expect(ut.stringChunk('AA', 2)).to.have.lengthOf(1);
+      expect(ut.stringChunk('AAA', 2)).to.have.lengthOf(2);
+    });
+  });
+
+  describe('splitPath()', function () {
+    it('should return an array of tokens from a path', function () {
+      expect(ut.splitPath('')).to.deep.equal([]);
+      expect(ut.splitPath('name')).to.deep.equal(['name']);
+      expect(ut.splitPath('name.subname')).to.deep.equal(['name', 'subname']);
+      expect(ut.splitPath('[122].name.subname[11][22]'))
+        .to.deep.equal(['122', 'name', 'subname', '11', '22']);
+    });
+  });
+
   // Number
 
   describe('getMiddleNumber()', function () {
@@ -512,6 +531,15 @@ describe('utjs', function () {
       expect(ut.get(object, 'c.d')).to.be.equal(3);
       expect(ut.get(object, 'c.e[0]')).to.be.equal(4);
       expect(ut.get([1, 2, 3], '[1]')).to.be.equal(2);
+    });
+
+    it('should return the value in the path as array', function () {
+      var object = { a: 1, b: 2, c: { d: 3, e: [4] } };
+      expect(ut.get(object, [])).to.be.undefined;
+      expect(ut.get(object, ['c'])).to.be.deep.equal({ d: 3, e: [4] });
+      expect(ut.get(object, ['c', 'd'])).to.be.equal(3);
+      expect(ut.get(object, ['c', 'e', '0'])).to.be.equal(4);
+      expect(ut.get([1, 2, 3], ['1'])).to.be.equal(2);
     });
 
     it('should return the default value', function () {
