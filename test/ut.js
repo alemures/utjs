@@ -115,6 +115,13 @@ describe('utjs', function () {
       expect(arr).to.not.be.equal(copy);
       expect(arr).to.be.deep.equal(copy);
     });
+
+    it('should copy the array with ranges', function () {
+      var arr = [1, 2, 3, 4];
+      var copy = ut.copyArray(arr, 1, 3);
+      expect(copy).to.not.be.equal(arr);
+      expect(copy).to.be.deep.equal([2, 3]);
+    });
   });
 
   describe('clearArray()', function () {
@@ -252,7 +259,9 @@ describe('utjs', function () {
     it('should return an array', function () {
       test(1, 2, 3);
       function test() {
-        expect(ut.argumentsToArray(arguments)).to.be.deep.equal([1, 2, 3]);
+        var args = ut.argumentsToArray(arguments);
+        expect(args).to.be.an('array');
+        expect(args).to.be.deep.equal([1, 2, 3]);
       }
     });
   });
