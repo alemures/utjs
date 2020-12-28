@@ -1,5 +1,3 @@
-/* jshint expr: true */
-
 'use strict';
 
 var describe = require('mocha').describe;
@@ -663,7 +661,6 @@ describe('utjs', function () {
       expect(ut.isNumeric(1)).to.be.true;
       expect(ut.isNumeric(1e+1)).to.be.true;
       expect(ut.isNumeric(1.25)).to.be.true;
-      /* jshint -W053 */
       expect(ut.isNumeric(new Number(25))).to.be.true;
       expect(ut.isNumeric('1')).to.be.true;
       expect(ut.isNumeric('1e+1')).to.be.true;
@@ -678,7 +675,6 @@ describe('utjs', function () {
       expect(ut.isNumber(1)).to.be.true;
       expect(ut.isNumber(1e+1)).to.be.true;
       expect(ut.isNumber(1.25)).to.be.true;
-      /* jshint -W053 */
       expect(ut.isNumber(new Number(25))).to.be.true;
     });
   });
@@ -687,7 +683,6 @@ describe('utjs', function () {
     it('should return true for valid strings', function () {
       expect(ut.isString('')).to.be.true;
       expect(ut.isString('Hello')).to.be.true;
-      /* jshint -W053 */
       expect(ut.isString(new String('Hello, World!'))).to.be.true;
     });
   });
@@ -720,7 +715,6 @@ describe('utjs', function () {
   describe('isBoolean', function () {
     it('should return true for valid booleans', function () {
       expect(ut.isBoolean(true)).to.be.true;
-      /* jshint -W053 */
       expect(ut.isBoolean(new Boolean(false))).to.be.true;
     });
   });
@@ -728,7 +722,6 @@ describe('utjs', function () {
   describe('isFunction', function () {
     it('should return true for valid functions', function () {
       expect(ut.isFunction(function () {})).to.be.true;
-      /* jshint evil: true */
       expect(ut.isFunction(new Function())).to.be.true;
     });
   });
