@@ -252,12 +252,13 @@ describe('utjs', () => {
 
   describe('argumentsToArray()', () => {
     it('should return an array', () => {
-      test(1, 2, 3);
       function test() {
+        // eslint-disable-next-line prefer-rest-params
         const args = ut.argumentsToArray(arguments);
         expect(args).to.be.an('array');
         expect(args).to.be.deep.equal([1, 2, 3]);
       }
+      test(1, 2, 3);
     });
   });
 

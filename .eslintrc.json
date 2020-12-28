@@ -5,6 +5,10 @@
   },
   "rules": {
     "no-plusplus": "off",
-    "no-bitwise": "off"
+    "no-bitwise": "off",
+    "no-nested-ternary": "off",
+    "no-underscore-dangle": "off",
+    "no-console": "off",
+    "no-use-before-define": ["error", { "functions": false }]
   }
 }
