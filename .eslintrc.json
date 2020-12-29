@@ -10,6 +10,7 @@
     "no-underscore-dangle": "off",
     "no-use-before-define": ["error", { "functions": false }],
     "no-param-reassign": "off",
-    "no-cond-assign": "off"
+    "no-cond-assign": "off",
+    "no-continue": "off"
   }
 }
