@@ -63,14 +63,16 @@ describe('utjs', () => {
       expect(arr).to.be.deep.equal([1, 2, 4, 5]);
       arr = ['b', 'ttt', 'c', 'bb', 'aa', 'tt'];
       ut.sort(arr, (a, b) => (a > b ? 1 : b > a ? -1 : 0));
-
       expect(arr).to.be.deep.equal(['aa', 'b', 'bb', 'c', 'tt', 'ttt']);
+      arr = ut.randomArray(100);
+      const sorted = arr.slice().sort((n1, n2) => n1 - n2);
+      ut.sort(arr);
+      expect(arr).to.be.deep.equal(sorted);
     });
 
     it('should sort the array of objects', () => {
       const arr = [{ age: 25 }, { age: 22 }, { age: 26 }, { age: 18 }];
       ut.sort(arr, (a, b) => a.age - b.age);
-
       expect(arr).to.be.deep.equal([{ age: 18 }, { age: 22 }, { age: 25 }, { age: 26 }]);
     });
 
@@ -163,6 +165,8 @@ describe('utjs', () => {
       const arr = [1, 2, 3, 4];
       ut.spliceOne(arr, 2);
       expect(arr).to.be.deep.equal([1, 2, 4]);
+      ut.spliceOne(arr, 0);
+      expect(arr).to.be.deep.equal([2, 4]);
     });
   });
 
@@ -243,6 +247,7 @@ describe('utjs', () => {
     it('should return a random value within the array within the sliced bounds', () => {
       const array = [1, 5, 66, 100, 101];
       expect(ut.randomArrayItem(array, 2, array.length)).to.be.oneOf(array.slice(2, array.length));
+      expect(ut.randomArrayItem(array, 2, 100)).to.be.oneOf(array.slice(2, array.length));
     });
   });
 
