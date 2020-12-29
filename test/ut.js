@@ -1,5 +1,3 @@
-const { describe } = require('mocha');
-const { it } = require('mocha');
 const { expect } = require('chai');
 
 const ut = require('../lib/ut');
