@@ -11,6 +11,7 @@
     "no-use-before-define": ["error", { "functions": false }],
     "no-param-reassign": "off",
     "no-cond-assign": "off",
-    "no-continue": "off"
+    "no-continue": "off",
+    "no-restricted-syntax": "off"
   }
 }
