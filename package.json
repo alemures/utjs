@@ -10,6 +10,7 @@
   "scripts": {
     "test": "mocha test/*.js",
     "test:cover": "nyc --reporter=lcov --reporter=text-summary npm test",
+    "benchmark": "node benchmark/index.js",
     "lint": "eslint index.js lib/*.js test/*.js",
     "lint:fix": "eslint index.js lib/*.js test/*.js --fix",
     "check": "npm test && npm run lint && npm outdated",
