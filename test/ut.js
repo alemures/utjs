@@ -492,6 +492,12 @@ describe('utjs', () => {
       ut.updateObject(dest, 25, '[1]');
       expect(dest).to.be.deep.equal([1, 25, 3]);
     });
+
+    it('should update with an array path', () => {
+      const dest = { a: { b: [1, 2, 3] } };
+      ut.updateObject(dest, 25, ['a', 'b', '1']);
+      expect(dest.a.b).to.be.deep.equal([1, 25, 3]);
+    });
   });
 
   describe('randomObject()', () => {

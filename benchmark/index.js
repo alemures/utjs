@@ -11,6 +11,8 @@ const suite = new Benchmark.Suite();
 // objectLength(suite);
 // objectLengthFastProperties(suite);
 // get(suite);
+// updateObject(suite);
+// copyArray(suite);
 
 suite.on('cycle', (event) => {
   console.log(String(event.target));
@@ -122,5 +124,34 @@ function get(suite) {
     _.get(obj, path);
   }).add('lodash get array', () => {
     _.get(obj, pathArr);
+  });
+}
+
+function updateObject(suite) {
+  const path = 'a.b[2].c';
+  const pathArr = ['a', 'b', '2', 'c'];
+
+  suite.add('ut.updateObject string', () => {
+    const obj = { a: { b: [1, 2, { c: true }] } };
+    ut.updateObject(obj, false, path);
+  }).add('ut.updateObject array', () => {
+    const obj = { a: { b: [1, 2, { c: true }] } };
+    ut.updateObject(obj, false, pathArr);
+  }).add('lodash set string', () => {
+    const obj = { a: { b: [1, 2, { c: true }] } };
+    _.set(obj, path, false);
+  }).add('lodash set array', () => {
+    const obj = { a: { b: [1, 2, { c: true }] } };
+    _.set(obj, pathArr, false);
+  });
+}
+
+function copyArray(suite) {
+  const arr = ut.randomArray(0);
+
+  suite.add('ut.copyArray', () => {
+    ut.copyArray(arr);
+  }).add('custom copyArray', () => {
+    arr.slice();
   });
 }
