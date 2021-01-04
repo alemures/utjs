@@ -29,15 +29,15 @@ function splitPath(suite) {
     let tokens = [];
 
     for (let j = 0; j < objs.length; j++) {
-      const o = objs[j]
+      const o = objs[j];
       if (o.endsWith(']')) {
         const i = o.indexOf('[');
-        const initialToken = o.substring(0, i)
-        tokens.push(initialToken)
+        const initialToken = o.substring(0, i);
+        tokens.push(initialToken);
         const token = o.substring(i + 1, o.length - 1).split('][');
         tokens = tokens.concat(token);
       } else {
-        tokens.push(o)
+        tokens.push(o);
       }
     }
 
