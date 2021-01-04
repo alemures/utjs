@@ -13,6 +13,8 @@ const suite = new Benchmark.Suite();
 // get(suite);
 // updateObject(suite);
 // copyArray(suite);
+// sort(suite);
+// concatArrays(suite);
 
 suite.on('cycle', (event) => {
   console.log(String(event.target));
@@ -128,30 +130,51 @@ function get(suite) {
 }
 
 function updateObject(suite) {
+  const obj = { a: { b: [1, 2, { c: true }] } };
   const path = 'a.b[2].c';
   const pathArr = ['a', 'b', '2', 'c'];
 
   suite.add('ut.updateObject string', () => {
-    const obj = { a: { b: [1, 2, { c: true }] } };
-    ut.updateObject(obj, false, path);
+    ut.updateObject(ut.cloneObject(obj), false, path);
   }).add('ut.updateObject array', () => {
-    const obj = { a: { b: [1, 2, { c: true }] } };
-    ut.updateObject(obj, false, pathArr);
+    ut.updateObject(ut.cloneObject(obj), false, pathArr);
   }).add('lodash set string', () => {
-    const obj = { a: { b: [1, 2, { c: true }] } };
-    _.set(obj, path, false);
+    _.set(ut.cloneObject(obj), path, false);
   }).add('lodash set array', () => {
-    const obj = { a: { b: [1, 2, { c: true }] } };
-    _.set(obj, pathArr, false);
+    _.set(ut.cloneObject(obj), pathArr, false);
   });
 }
 
 function copyArray(suite) {
-  const arr = ut.randomArray(0);
+  const arr = ut.randomArray(125);
 
   suite.add('ut.copyArray', () => {
     ut.copyArray(arr);
   }).add('custom copyArray', () => {
     arr.slice();
+  });
+}
+
+function sort(suite) {
+  const arr = ut.randomArray(125);
+
+  function _numericComparator(number1, number2) {
+    return number1 - number2;
+  }
+
+  suite.add('ut.sort', () => {
+    ut.sort(arr.slice());
+  }).add('custom sort', () => {
+    arr.slice().sort(_numericComparator);
+  });
+}
+
+function concatArrays(suite) {
+  const arr = ut.randomArray(125);
+
+  suite.add('ut.concatArrays', () => {
+    ut.concatArrays(arr.slice(), arr);
+  }).add('custom concatArrays', () => {
+    arr.slice().concat(arr);
   });
 }
