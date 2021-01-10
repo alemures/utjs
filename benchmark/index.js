@@ -1,6 +1,7 @@
 const Benchmark = require('benchmark');
 const _ = require('lodash');
 const ut = require('../index');
+const oldut = require('./ut');
 
 const suite = new Benchmark.Suite();
 
@@ -44,10 +45,39 @@ function splitPath(suite) {
     return tokens;
   }
 
+  function splitPath2(path) {
+    if (oldut.isArray(path)) {
+      return path;
+    }
+
+    var arr = [];
+    var first = 0;
+    for (var last = 0; last < path.length; last++) {
+      if (path[last] === '[' || path[last] === '.') {
+        if (first < last) {
+          arr.push(path.substring(first, last));
+        }
+
+        first = last + 1;
+      } else if (path[last] === ']') {
+        arr.push(path.substring(first, last));
+        first = last + 1;
+      }
+    }
+
+    if (first < last) {
+      arr.push(path.substring(first, last));
+    }
+
+    return arr;
+  }
+
   suite.add('ut.splitPath', () => {
     ut.splitPath(path);
   }).add('custom splitPath', () => {
     splitPath(path);
+  }).add('custom splitPath2', () => {
+    splitPath2(path);
   });
 }
 
@@ -137,7 +167,7 @@ function updateObject(suite) {
   suite.add('ut.updateObject string', () => {
     ut.updateObject(ut.cloneObject(obj), false, path);
   }).add('ut.updateObject array', () => {
-    ut.updateObject(ut.cloneObject(obj), false, pathArr);
+    oldut.updateObject(ut.cloneObject(obj), false, path);
   }).add('lodash set string', () => {
     _.set(ut.cloneObject(obj), path, false);
   }).add('lodash set array', () => {
