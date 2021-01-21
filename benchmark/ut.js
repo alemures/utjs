@@ -816,6 +816,8 @@ function get(obj, path, def) {
   return value !== undefined ? value : def;
 }
 
+module.exports._splitPath = _splitPath;
+
 function _splitPath(path) {
   if (isArray(path)) {
     return path;

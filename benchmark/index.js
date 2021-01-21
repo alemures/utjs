@@ -45,45 +45,18 @@ function splitPath(suite) {
     return tokens;
   }
 
-  function splitPath2(path) {
-    if (oldut.isArray(path)) {
-      return path;
-    }
-
-    var arr = [];
-    var first = 0;
-    for (var last = 0; last < path.length; last++) {
-      if (path[last] === '[' || path[last] === '.') {
-        if (first < last) {
-          arr.push(path.substring(first, last));
-        }
-
-        first = last + 1;
-      } else if (path[last] === ']') {
-        arr.push(path.substring(first, last));
-        first = last + 1;
-      }
-    }
-
-    if (first < last) {
-      arr.push(path.substring(first, last));
-    }
-
-    return arr;
-  }
-
-  suite.add('ut.splitPath', () => {
+  suite.add('current splitPath', () => {
     ut.splitPath(path);
+  }).add('old splitPath', () => {
+    oldut._splitPath(path);
   }).add('custom splitPath', () => {
     splitPath(path);
-  }).add('custom splitPath2', () => {
-    splitPath2(path);
   });
 }
 
 function stringToNumber(suite) {
   const string = '25532';
-  suite.add('ut.stringToNumber', () => {
+  suite.add('current stringToNumber', () => {
     ut.stringToNumber(string);
   }).add('custom stringToNumber', () => {
     Number(string);
@@ -92,7 +65,7 @@ function stringToNumber(suite) {
 
 function startsWith(suite) {
   const string = 'the beautiful string';
-  suite.add('ut.startsWith', () => {
+  suite.add('current startsWith', () => {
     ut.startsWith(string, 'the');
   }).add('custom startsWith', () => {
     string.startsWith('the');
@@ -108,7 +81,7 @@ function getMiddleNumber(suite) {
     return c;
   }
 
-  suite.add('ut.getMiddleNumber', () => {
+  suite.add('current getMiddleNumber', () => {
     ut.getMiddleNumber(a, b, c);
   }).add('custom getMiddleNumber', () => {
     getMiddleNumber(a, b, c);
@@ -122,7 +95,7 @@ function objectLength(suite) {
     return Object.keys(obj).length;
   }
 
-  suite.add('ut.objectLength', () => {
+  suite.add('current objectLength', () => {
     ut.objectLength(obj);
   }).add('custom objectLength', () => {
     objectLength(obj);
@@ -136,7 +109,7 @@ function objectLengthFastProperties(suite) {
     return Object.keys(obj).length;
   }
 
-  suite.add('ut.objectLength', () => {
+  suite.add('current objectLength', () => {
     ut.objectLength(obj);
   }).add('custom objectLength', () => {
     objectLength(obj);
@@ -148,9 +121,9 @@ function get(suite) {
   const path = 'a.b[2].c';
   const pathArr = ['a', 'b', '2', 'c'];
 
-  suite.add('ut.get string', () => {
+  suite.add('current get string', () => {
     ut.get(obj, path);
-  }).add('ut.get array', () => {
+  }).add('current get array', () => {
     ut.get(obj, pathArr);
   }).add('lodash get string', () => {
     _.get(obj, path);
@@ -164,21 +137,27 @@ function updateObject(suite) {
   const path = 'a.b[2].c';
   const pathArr = ['a', 'b', '2', 'c'];
 
-  suite.add('ut.updateObject string', () => {
+  suite.add('current updateObject string', () => {
     ut.updateObject(ut.cloneObject(obj), false, path);
-  }).add('ut.updateObject array', () => {
+  }).add('current updateObject array', () => {
+    ut.updateObject(ut.cloneObject(obj), false, path);
+  }).add('old updateObject string', () => {
     oldut.updateObject(ut.cloneObject(obj), false, path);
-  }).add('lodash set string', () => {
-    _.set(ut.cloneObject(obj), path, false);
-  }).add('lodash set array', () => {
-    _.set(ut.cloneObject(obj), pathArr, false);
-  });
+  }).add('old updateObject array', () => {
+    oldut.updateObject(ut.cloneObject(obj), false, path);
+  })
+    .add('lodash set string', () => {
+      _.set(ut.cloneObject(obj), path, false);
+    })
+    .add('lodash set array', () => {
+      _.set(ut.cloneObject(obj), pathArr, false);
+    });
 }
 
 function copyArray(suite) {
   const arr = ut.randomArray(125);
 
-  suite.add('ut.copyArray', () => {
+  suite.add('current copyArray', () => {
     ut.copyArray(arr);
   }).add('custom copyArray', () => {
     arr.slice();
@@ -192,7 +171,7 @@ function sort(suite) {
     return number1 - number2;
   }
 
-  suite.add('ut.sort', () => {
+  suite.add('current sort', () => {
     ut.sort(arr.slice());
   }).add('custom sort', () => {
     arr.slice().sort(_numericComparator);
@@ -202,7 +181,7 @@ function sort(suite) {
 function concatArrays(suite) {
   const arr = ut.randomArray(125);
 
-  suite.add('ut.concatArrays', () => {
+  suite.add('current concatArrays', () => {
     ut.concatArrays(arr.slice(), arr);
   }).add('custom concatArrays', () => {
     arr.slice().concat(arr);
