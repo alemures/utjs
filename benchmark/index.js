@@ -21,7 +21,7 @@ suite.on('cycle', (event) => {
   console.log(String(event.target));
 }).on('complete', () => {
   console.log(`Fastest is ${suite.filter('fastest').map('name')}`);
-}).run({ async: true });
+}).run();
 
 function splitPath(suite) {
   const path = 'a.b[2][2223332].zzxcsdf.ff[0].asf.ww[1][2][551].xx';
@@ -140,10 +140,8 @@ function updateObject(suite) {
   suite.add('current updateObject string', () => {
     ut.updateObject(ut.cloneObject(obj), false, path);
   }).add('current updateObject array', () => {
-    ut.updateObject(ut.cloneObject(obj), false, path);
+    ut.updateObject(ut.cloneObject(obj), false, pathArr);
   }).add('old updateObject string', () => {
-    oldut.updateObject(ut.cloneObject(obj), false, path);
-  }).add('old updateObject array', () => {
     oldut.updateObject(ut.cloneObject(obj), false, path);
   })
     .add('lodash set string', () => {
