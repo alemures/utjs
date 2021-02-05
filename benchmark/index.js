@@ -45,12 +45,23 @@ function splitPath(suite) {
     return tokens;
   }
 
+  function splitPath2(path) {
+    const objectPathRegex = /[^.[\]]+/g;
+    const pathArr = [];
+    let execResult;
+    while ((execResult = objectPathRegex.exec(path)) !== null) {
+      pathArr.push(execResult[0]);
+    }
+
+    return pathArr;
+  }
+
   suite.add('current splitPath', () => {
     ut.splitPath(path);
-  }).add('old splitPath', () => {
-    oldut._splitPath(path);
   }).add('custom splitPath', () => {
     splitPath(path);
+  }).add('custom splitPath2', () => {
+    splitPath2(path);
   });
 }
 
@@ -76,9 +87,9 @@ function getMiddleNumber(suite) {
   const a = 5, b = 3, c = 6;
 
   function getMiddleNumber(a, b, c) {
-    if (a > b && b > c || c > b && b > a) return b;
-    if (b > a && a > c || c > a && a > b) return a;
-    return c;
+    const max = Math.max(Math.max(a, b), c);
+    const min = Math.min(Math.min(a, b), c);
+    return a + b + c - max - min;
   }
 
   suite.add('current getMiddleNumber', () => {
