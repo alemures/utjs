@@ -10,16 +10,16 @@ npm install utjs
 
 #### Usage
 ```
-var ut = require('utjs');
-var number = ut.randomNumber(1, 10);
+const ut = require('utjs');
+const number = ut.randomNumber(1, 10);
 console.log(number);
 ```
 
 #### Functions
 ```
 // Date
-function dateToMysql([date])
-function dateToString([date])
+function dateToMysql([date=new Date()])
+function dateToString([date=new Date()])
 function now()
 function cloneDate(date)
 
@@ -102,7 +102,7 @@ function logN(base, value)
 // Miscellaneous
 function test(fn, [times=1], [label='Default label'])
 function inRange(val, [min=-Infinity], [max=Infinity])
-function error([message], [constructor])
+function error([message=''], [constructor=Error])
 ```
 
 #### Objects
