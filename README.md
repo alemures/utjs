@@ -126,5 +126,10 @@ var logger = {
 }
 ```
 
+#### Run benchmarks
+```
+npm run benchmark -- BENCHMARK_NAME
+```
+
 ## jsdoc
 http://alemures.github.io/utjs/
