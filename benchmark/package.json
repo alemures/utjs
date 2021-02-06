@@ -1,0 +1,9 @@
+{
+  "name": "utjs-benchmark",
+  "version": "1.0.0",
+  "description": "utjs benchmarks",
+  "dependencies": {
+    "benchmark": "^2.1.4",
+    "lodash": "^4.17.20"
+  }
+}

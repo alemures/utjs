@@ -10,16 +10,16 @@ npm install utjs
 
 #### Usage
 ```
-var ut = require('utjs');
-var number = ut.randomNumber(1, 10);
+const ut = require('utjs');
+const number = ut.randomNumber(1, 10);
 console.log(number);
 ```
 
 #### Functions
 ```
 // Date
-function dateToMysql([date])
-function dateToString([date])
+function dateToMysql([date=new Date()])
+function dateToString([date=new Date()])
 function now()
 function cloneDate(date)
 
@@ -53,6 +53,8 @@ function endsWith(string, suffix)
 function escapeRegExp(string)
 function isDateString(string)
 function isHexString(string)
+function stringChunk(string, chunkSize)
+function splitPath(path)
 
 // Number
 function numberToString(number)
@@ -100,7 +102,7 @@ function logN(base, value)
 // Miscellaneous
 function test(fn, [times=1], [label='Default label'])
 function inRange(val, [min=-Infinity], [max=Infinity])
-function error([message], [constructor])
+function error([message=''], [constructor=Error])
 ```
 
 #### Objects
@@ -122,6 +124,11 @@ var logger = {
   warn: function(/* arg1, arg2, argN */)
   error: function(/* arg1, arg2, argN */)
 }
+```
+
+#### Run benchmarks
+```
+npm run benchmark -- BENCHMARK_NAME
 ```
 
 ## jsdoc

@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb-base",
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "no-plusplus": "off",
+    "no-bitwise": "off",
+    "no-nested-ternary": "off",
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off",
+    "no-param-reassign": "off",
+    "no-cond-assign": "off",
+    "no-continue": "off",
+    "no-restricted-syntax": "off"
+  }
+}

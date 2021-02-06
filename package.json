@@ -1,6 +1,6 @@
 {
   "name": "utjs",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "utjs is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.",
   "main": "index.js",
   "files": [
@@ -9,22 +9,23 @@
   ],
   "scripts": {
     "test": "mocha test/*.js",
-    "test:cover": "istanbul cover _mocha test/*.js",
-    "jshint": "jshint index.js lib/*.js test/*.js",
-    "jscs": "jscs index.js lib/*.js test/*.js",
-    "jscs:fix": "jscs --fix index.js lib/*.js test/*.js",
-    "check": "npm test && npm run jshint && npm run jscs",
+    "test:cover": "nyc --reporter=lcov --reporter=text-summary npm test",
+    "benchmark": "node benchmark/index.js",
+    "lint": "eslint index.js lib/*.js test/*.js benchmark/*.js",
+    "lint:fix": "eslint index.js lib/*.js test/*.js benchmark/*.js --fix",
+    "check": "npm test && npm run lint && npm outdated",
     "doc": "jsdoc ./lib/ ./package.json ./README.md -d ./doc"
   },
   "author": "Alejandro Santiago Nieto",
   "license": "MIT",
   "devDependencies": {
-    "chai": "4.x.x",
-    "istanbul": "0.4.x",
-    "jscs": "3.x.x",
-    "jsdoc": "3.x.x",
-    "jshint": "2.x.x",
-    "mocha": "5.x.x"
+    "chai": "^4.3.0",
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "jsdoc": "^3.6.6",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0"
   },
   "repository": {
     "type": "git",
