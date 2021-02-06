@@ -84,7 +84,9 @@ function startsWith(suite) {
 }
 
 function getMiddleNumber(suite) {
-  const a = 5, b = 3, c = 6;
+  const a = 5;
+  const b = 3;
+  const c = 6;
 
   function getMiddleNumber(a, b, c) {
     const max = Math.max(Math.max(a, b), c);
