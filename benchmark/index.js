@@ -4,18 +4,28 @@ const ut = require('../index');
 const oldut = require('./ut');
 
 const suite = new Benchmark.Suite();
+const benchName = process.argv[2];
 
-// splitPath(suite);
-// stringToNumber(suite);
-// startsWith(suite);
-// getMiddleNumber(suite);
-// objectLength(suite);
-// objectLengthFastProperties(suite);
-// get(suite);
-// updateObject(suite);
-// copyArray(suite);
-// sort(suite);
-// concatArrays(suite);
+const benchmarks = {
+  splitPath,
+  stringToNumber,
+  startsWith,
+  getMiddleNumber,
+  objectLength,
+  objectLengthFastProperties,
+  get,
+  updateObject,
+  copyArray,
+  sort,
+  concatArrays,
+};
+
+if (benchmarks[benchName] !== undefined) {
+  benchmarks[benchName](suite);
+} else {
+  console.error(`Invalid benchmark name, valid names: ${Object.keys(benchmarks)}`);
+  process.exit(1);
+}
 
 suite.on('cycle', (event) => {
   console.log(String(event.target));
