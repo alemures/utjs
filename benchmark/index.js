@@ -18,6 +18,7 @@ const benchmarks = {
   copyArray,
   sort,
   concatArrays,
+  paddingBoth,
 };
 
 if (benchmarks[benchName] !== undefined) {
@@ -66,13 +67,39 @@ function splitPath(suite) {
     return pathArr;
   }
 
+  function splitPath3(origPath) {
+    const sep = '.';
+    let path = origPath.replace(/[.[]/g, sep);
+    path = path.replace(/\]/g, '');
+    path = path.startsWith(sep) ? path.substring(sep.length) : path;
+    return path.split(sep);
+  }
+
+  const rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+  const reEscapeChar = /\\(\\)?/g;
+  function lodashSplitPath(string) {
+    const result = [];
+    if (string.charCodeAt(0) === 46 /* . */) {
+      result.push('');
+    }
+    string.replace(rePropName, (match, number, quote, subString) => {
+      result.push(quote ? subString.replace(reEscapeChar, '$1') : (number || match));
+    });
+    return result;
+  }
+
   suite.add('current splitPath', () => {
     ut.splitPath(path);
   }).add('custom splitPath', () => {
     splitPath(path);
   }).add('custom splitPath2', () => {
     splitPath2(path);
-  });
+  }).add('custom splitPath3', () => {
+    splitPath3(path);
+  })
+    .add('lodashSplitPath', () => {
+      lodashSplitPath(path);
+    });
 }
 
 function stringToNumber(suite) {
@@ -206,5 +233,13 @@ function concatArrays(suite) {
     ut.concatArrays(arr.slice(), arr);
   }).add('custom concatArrays', () => {
     arr.slice().concat(arr);
+  });
+}
+
+function paddingBoth(suite) {
+  suite.add('current paddingBoth', () => {
+    ut.paddingBoth('string', '.', 19);
+  }).add('lodash pad', () => {
+    _.pad('string', 19, '.');
   });
 }

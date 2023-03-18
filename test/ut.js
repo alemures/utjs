@@ -382,6 +382,8 @@ describe('utjs', () => {
   describe('getMiddleNumber()', () => {
     it('should be the middle number', () => {
       expect(ut.getMiddleNumber(44, -55, 25)).to.be.equal(25);
+      expect(ut.getMiddleNumber(44, 25, -55)).to.be.equal(25);
+      expect(ut.getMiddleNumber(25, -55, 44)).to.be.equal(25);
     });
   });
 
@@ -593,7 +595,7 @@ describe('utjs', () => {
       const number = 1;
       const string = '2';
       const date = new Date();
-      const regex = new RegExp('a');
+      const regex = /a/;
 
       expect(ut.equals(number, 1)).to.be.true;
       expect(ut.equals(string, '2')).to.be.true;
@@ -604,8 +606,10 @@ describe('utjs', () => {
     it('should return false validating different objects', () => {
       expect(ut.equals({ }, { a: 1 })).to.be.false;
       expect(ut.equals({ a: 1, b: '2' }, { a: 1, b: '3' })).to.be.false;
-      expect(ut.equals({ a: { b: [{ c: 1 }, { c: 2 }] } },
-        { a: { b: [{ c: 3 }, { c: 2 }] } })).to.be.false;
+      expect(ut.equals(
+        { a: { b: [{ c: 1 }, { c: 2 }] } },
+        { a: { b: [{ c: 3 }, { c: 2 }] } },
+      )).to.be.false;
       expect(ut.equals(new Date(), new Date())).to.be.false;
       expect(ut.equals([1, 2, 3], [1, 2, 3, 4])).to.be.false;
     });
@@ -754,7 +758,7 @@ describe('utjs', () => {
   describe('isRegExp', () => {
     it('should return true for valid RegExp objects', () => {
       expect(ut.isRegExp(/a/)).to.be.true;
-      expect(ut.isRegExp(new RegExp('a'))).to.be.true;
+      expect(ut.isRegExp(/a/)).to.be.true;
     });
   });
 
