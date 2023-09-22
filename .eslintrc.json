@@ -1,17 +1,21 @@
 {
-  "extends": "airbnb-base",
-  "env": {
-    "node": true
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": true
   },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/strict",
+    "prettier"
+  ],
+  "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
-    "no-plusplus": "off",
-    "no-bitwise": "off",
-    "no-nested-ternary": "off",
-    "no-underscore-dangle": "off",
-    "no-use-before-define": "off",
-    "no-param-reassign": "off",
-    "no-cond-assign": "off",
-    "no-continue": "off",
-    "no-restricted-syntax": "off"
-  }
+    "prettier/prettier": "error",
+    "class-methods-use-this": "error",
+    "@typescript-eslint/strict-boolean-expressions": "error"
+  },
+  "ignorePatterns": ["node_modules", "dist", "coverage"]
 }
