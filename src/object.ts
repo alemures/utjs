@@ -1,12 +1,13 @@
-// Object
+import { splitPath } from './string';
+import { isArray, isPlainObject, isString } from './type';
 
 /**
  * Merge the source object into dest. This function only works for object,
  * arrays and primitive data types, references will be copied.
- * @param {Object|Array} dest The destiny object or array.
- * @param {Object|Array} source The source object or array.
+ * @param dest The destiny object or array.
+ * @param source The source object or array.
  */
-function mergeObjects(dest, source) {
+function mergeObjects(dest: object | unknown[], source: object | unknown[]) {
   if (isPlainObject(source)) {
     for (const i in source) {
       if (!Object.prototype.hasOwnProperty.call(source, i)) continue;
@@ -19,7 +20,11 @@ function mergeObjects(dest, source) {
   }
 }
 
-function _mergeObjects(dest, source, i) {
+function _mergeObjects(
+  dest: object | unknown[],
+  source: object | unknown[],
+  i: string | number
+) {
   if (isPlainObject(source[i])) {
     if (!isPlainObject(dest[i])) {
       dest[i] = {};
@@ -39,11 +44,15 @@ function _mergeObjects(dest, source, i) {
 
 /**
  * Update an object or array using a given path string.
- * @param {Object|Array} dest The object or array to update.
- * @param {*} value The value to place in path.
- * @param {String|Array} path The path where to place the new value.
+ * @param dest The object or array to update.
+ * @param value The value to place in path.
+ * @param path The path where to place the new value.
  */
-function updateObject(dest, value, path) {
+export function updateObject(
+  dest: object | unknown[],
+  value: unknown,
+  path: string | string[]
+) {
   const keys = isArray(path) ? path : splitPath(path);
   const parentPath = keys.slice(0, keys.length - 1);
 
@@ -70,7 +79,7 @@ function _defaultValueGenerator() {
  * @return {Object} The random object.
  */
 function randomObject(
-  lengths,
+  lengths: any,
   keyGenerator = _defaultKeyGenerator,
   valueGenerator = _defaultValueGenerator
 ) {
@@ -82,11 +91,11 @@ function randomObject(
 }
 
 function _randomObject(
-  lengths,
-  keyGenerator,
-  valueGenerator,
-  object,
-  actualDepth
+  lengths: string | any[],
+  keyGenerator: { (): any; (): any },
+  valueGenerator: { (): any; (): any },
+  object: { [x: string]: any },
+  actualDepth: number
 ) {
   const maxDepth = lengths.length;
 
@@ -113,7 +122,7 @@ function _randomObject(
  * @param {Number} chunkSize The max key number per chunk.
  * @return {Object[]} An array of chunks objects.
  */
-function objectChunk(object, chunkSize) {
+function objectChunk(object: { [x: string]: any }, chunkSize: number) {
   const chunks = [];
   let index = 0;
   let counter = 0;
@@ -136,11 +145,11 @@ function objectChunk(object, chunkSize) {
 
 /**
  * Deep copy of object or array.
- * @param {Object|Array} object The object or array.
- * @return {Object|Array} The cloned object.
+ * @param object The object or array.
+ * @return The cloned object.
  */
-function cloneObject(original) {
-  const clone = isArray(original) ? [] : {};
+export function cloneObject(original: object | unknown[]) {
+  const clone: object | unknown[] = isArray(original) ? [] : {};
   mergeObjects(clone, original);
   return clone;
 }
@@ -152,7 +161,7 @@ function cloneObject(original) {
  * @param {*} [def] Value to return if no value is found in path.
  * @return {*} The found value in path.
  */
-function get(obj, path, def) {
+function get(obj: any, path: any, def: undefined) {
   const keys = isArray(path) ? path : splitPath(path);
   let value = keys.length ? obj : undefined;
   for (let i = 0; i < keys.length && value !== undefined; i++) {
@@ -171,7 +180,10 @@ function get(obj, path, def) {
  * @param {Object|Array} other The other value to compare against.
  * @return {Boolean} If the objects are equal or not.
  */
-function equals(value, other) {
+function equals(
+  value: string | number | any[],
+  other: string | number | any[]
+) {
   if (value === other || (isNaN(value) && isNaN(other))) {
     return true;
   }
@@ -227,7 +239,11 @@ function equals(value, other) {
  * @param {Function} [iteratee] A function to modify the final grouped objects.
  * @return {Object} The grouped object.
  */
-function groupBy(array, keys, iteratee) {
+function groupBy(
+  array: string | any[],
+  keys: string | any[],
+  iteratee: (arg0: any) => any
+) {
   keys = isString(keys) ? [keys] : keys;
 
   const result = {};
@@ -264,10 +280,10 @@ function groupBy(array, keys, iteratee) {
 
 /**
  * Counts and returns the length of the given object.
- * @param {Object} object The object.
- * @return {Number} The length of the object.
+ * @param object The object.
+ * @return The length of the object.
  */
-function objectLength(object) {
+export function objectLength(object: object) {
   let length = 0;
   // eslint-disable-next-line no-unused-vars
   for (const i in object) {
@@ -284,9 +300,10 @@ function objectLength(object) {
  * @see {@link toFastProperties}
  * @param {Object} object The plain object to clear.
  */
-function clearObject(object) {
+export function clearObject(object: Record<string, unknown>) {
   for (const key in object) {
     if (!Object.prototype.hasOwnProperty.call(object, key)) continue;
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete object[key];
   }
 }
@@ -296,10 +313,10 @@ function clearObject(object) {
  * Objects are deoptimized when you use them like a hash table like deleting properties. You
  * can check it using the native function "%HasFastProperties(object)" running nodejs with
  * the flag "--allow-natives-syntax". This code was taken from the module "bluebird".
- * @param {Object} object The object to optimize.
- * @return {Object} Reference to the same object.
+ * @param object The object to optimize.
+ * @return Reference to the same object.
  */
-function toFastProperties(object) {
+export function toFastProperties(object: object) {
   function FakeConstructor() {}
 
   FakeConstructor.prototype = object;

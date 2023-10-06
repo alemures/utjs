@@ -1,12 +1,13 @@
-// Miscellaneous
+import { objectLength } from './object';
+import { isArray, isFunction, isNumber, isPlainObject, isString } from './type';
 
 /**
  * Execute a function N times and print the execution time.
- * @param {Function} fn The function to execute.
- * @param {Number} [times=1] How many times to execute.
- * @param {String} [label='Default label']  A label to be used in the log string.
+ * @param fn The function to execute.
+ * @param times How many times to execute. Defaults to 1.
+ * @param label A label to be used in the log string. Defaults to 'Default label'.
  */
-function test(fn, times = 1, label = 'Default label') {
+export function test(fn: DataGenerator, times = 1, label = 'Default label') {
   // eslint-disable-next-line no-console
   console.time(label);
 
@@ -20,12 +21,16 @@ function test(fn, times = 1, label = 'Default label') {
 
 /**
  * Check if a value is inside of a given range.
- * @param {Number|String|Array|Object} val The value.
- * @param {Number} [min=-Infinity] Min inclusive value.
- * @param {Number} [max=Infinity] Max inclusive value.
- * @return {Boolean} If the value is inside of the given range or not.
+ * @param val The value.
+ * @param min Min inclusive value. Defaults to -Infinity.
+ * @param max Max inclusive value. Defaults to Infinity.
+ * @return If the value is inside of the given range or not.
  */
-function inRange(val, min = -Infinity, max = Infinity) {
+export function inRange(
+  val: string | number | unknown[] | object,
+  min = -Infinity,
+  max = Infinity
+) {
   if (isNumber(val)) {
     return val >= min && val <= max;
   }
@@ -46,20 +51,23 @@ function inRange(val, min = -Infinity, max = Infinity) {
 /**
  * Fast error builder, it doesn't have a real stacktrace but is x10 faster than
  * new Error().
- * @param {String} [message=''] The error message.
- * @param {Function} [constructor=Error] Optional constructor for custom errors.
- * @return {Error} An Error instance.
+ * @param message The error message. Default to empty string.
+ * @param constructor Optional constructor for custom errors. Defaults to ErrorConstructor.
+ * @return An Error instance.
  */
-function error(message, constructor) {
+export function error(
+  message?: string | ErrorConstructor,
+  constructor?: ErrorConstructor
+) {
   if (isFunction(message)) {
     constructor = message;
     message = undefined;
   }
 
-  message = message || '';
-  constructor = constructor || Error;
+  message = message ?? '';
+  constructor = constructor ?? Error;
 
-  const object = {
+  const object: Error = {
     name: constructor.name,
     message,
     stack: `${constructor.name}: ${message}`,

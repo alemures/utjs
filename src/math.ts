@@ -1,12 +1,10 @@
-// Math
-
 /**
  * Calculate the log using a given base and value.
- * @param {Number} base The base.
- * @param {Number} value The value.
- * @return {Number} The log result.
+ * @param base The base.
+ * @param value The value.
+ * @return The log result.
  */
-function logN(base, value) {
+export function logN(base: number, value: number) {
   const i = base === 2 ? Math.LN2 : base === 10 ? Math.LN10 : Math.log(base);
   return Math.log(value) / i;
 }

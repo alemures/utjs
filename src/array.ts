@@ -1,3 +1,6 @@
+import { randomNumber } from './number';
+import { isBoolean, isNumber } from './type';
+
 /**
  * Split an array into chunks.
  * @param array The array.
@@ -18,11 +21,11 @@ export function arrayChunk(array: unknown[], chunkSize: number) {
 /**
  * Recursive quicksort using Hoare partitioning with random pivot and cut off to insertion sort.
  * @param array The array to sort.
- * @param comparator It will be called
+ * @param comparator An optional comparator, it will be called
  *   with two values and must return 1 if the first is greater than the second, 0 if they are
  *   equals or -1 if the second is greater than the first one. Defaults to a numerical comparator.
  * @param left The left index. Defaults to 0.
- * @param right the right index. Defaults to array length - 1.
+ * @param right The right index. Defaults to array length - 1.
  */
 export function sort(
   array: unknown[],
@@ -30,7 +33,7 @@ export function sort(
   left?: number,
   right?: number
 ) {
-  if (typeof comparator === 'number') {
+  if (isNumber(comparator)) {
     right = left;
     left = comparator;
     comparator = undefined;
@@ -38,7 +41,7 @@ export function sort(
 
   left = left ?? 0;
   right = right ?? array.length - 1;
-  comparator = comparator ?? _numericComparator;
+  comparator = comparator ?? (_numericComparator as Comparator);
 
   _quickSort(array, comparator, left, right);
 }
@@ -164,18 +167,22 @@ export function clearArray(array: unknown[]) {
   array.length = 0;
 }
 
-function _defaultDataGenerator() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _defaultDataGenerator(index: number) {
   return randomNumber(1, 100);
 }
 
 /**
  * Return a random array of generated elements by dataGenerator.
- * @param {Number} length The length.
- * @param {Function} [dataGenerator=_defaultDataGenerator] The data generator.
- * @return {Array} The array.
+ * @param length The length.
+ * @param dataGenerator The data generator. Defaults to a RNG from 1 to 100.
+ * @return The array.
  */
-function randomArray(length, dataGenerator = _defaultDataGenerator) {
-  const array = new Array(length);
+export function randomArray(
+  length: number,
+  dataGenerator: DataGenerator = _defaultDataGenerator
+) {
+  const array: unknown[] = new Array(length);
 
   for (let i = 0; i < length; i++) {
     array[i] = dataGenerator(i);
@@ -186,18 +193,22 @@ function randomArray(length, dataGenerator = _defaultDataGenerator) {
 
 /**
  * Intersect two sorted arrays.
- * @param {Array} array1 The first array.
- * @param {Array} array2 The second array.
- * @return {Array} The interected array.
- * @param {Function} [comparator=_numericComparator] An optional comparator, it will be called
+ * @param array1 The first array.
+ * @param array2 The second array.
+ * @return The intersected array.
+ * @param comparator An optional comparator, it will be called
  *   with two values and must return 1 if the first is greater than the second, 0 if they are
- *   equals or -1 if the second is greater than the first one.
+ *   equals or -1 if the second is greater than the first one. Defaults to a numerical comparator.
  */
-function intersectSorted(array1, array2, comparator = _numericComparator) {
+export function intersectSorted(
+  array1: unknown[],
+  array2: unknown[],
+  comparator = _numericComparator as Comparator
+) {
   let i1 = 0;
   let i2 = 0;
   const result = [];
-  let previous = Infinity;
+  let previous = undefined as unknown;
 
   while (i1 < array1.length && i2 < array2.length) {
     if (comparator(array1[i1], array2[i2]) < 0) {
@@ -221,10 +232,10 @@ function intersectSorted(array1, array2, comparator = _numericComparator) {
 /**
  * About 1.5x faster than the two-arg version of Array#splice(). This
  * algorithm was taken from the core of Node.js.
- * @param {Array} array The array.
- * @param {Number} index The element to remove.
+ * @param array The array.
+ * @param index The element to remove.
  */
-function spliceOne(array, index) {
+export function spliceOne(array: unknown[], index: number) {
   if (index === 0) {
     array.shift();
     return;
@@ -241,21 +252,26 @@ function spliceOne(array, index) {
  * Inserts a value into a sorted array using an iterative binary search to find
  * the insertion index. 'rejectDuplicates' defines the behaviour when the value
  * that will be inserted is already in the array.
- * @param {*} value The value to insert.
- * @param {Array} array The array.
- * @param {Function} [comparator=_numericComparator] An optional comparator, it will be called
+ * @param value The value to insert.
+ * @param array The array.
+ * @param comparator An optional comparator, it will be called
  *   with two values and must return 1 if the first is greater than the second, 0 if they are
- *   equals or -1 if the second is greater than the first one.
- * @param {Boolean} [rejectDuplicates=false] Specify if duplicated values will be rejected.
+ *   equals or -1 if the second is greater than the first one. Defaults to a numerical comparator.
+ * @param rejectDuplicates Specify if duplicated values will be rejected. Defaults to false.
  */
-function binaryInsert(value, array, comparator, rejectDuplicates) {
+export function binaryInsert(
+  value: unknown,
+  array: unknown[],
+  comparator?: Comparator | boolean,
+  rejectDuplicates?: boolean
+) {
   if (isBoolean(comparator)) {
     rejectDuplicates = comparator;
     comparator = undefined;
   }
 
-  rejectDuplicates = rejectDuplicates || false;
-  comparator = comparator || _numericComparator;
+  rejectDuplicates = rejectDuplicates === true;
+  comparator = comparator ?? (_numericComparator as Comparator);
 
   let left = 0;
   let right = array.length - 1;
@@ -284,28 +300,34 @@ function binaryInsert(value, array, comparator, rejectDuplicates) {
 
 /**
  * Find a value into a sorted array using an iterative binary search.
- * @param {*} value The value to search.
- * @param {Array} array The array.
- * @param {Function} [comparator=_numericComparator] An optional comparator, it will be called
+ * @param value The value to search.
+ * @param array The array.
+ * @param comparator An optional comparator, it will be called
  *   with two values and must return 1 if the first is greater than the second, 0 if they are
- *   equals or -1 if the second is greater than the first one.
- * @param {Number} [left=0] The left index.
- * @param {Number} [right=array.length-1] The right index.
- * @return {Number} The index if the value was found or -1.
+ *   equals or -1 if the second is greater than the first one. Defaults to a numerical comparator.
+ * @param left The left index. Defaults to 0.
+ * @param right The right index. Defaults to array length - 1.
+ * @return The index if the value was found or -1.
  */
-function binarySearch(value, array, comparator, left, right) {
+export function binarySearch(
+  value: unknown,
+  array: unknown[],
+  comparator?: Comparator,
+  left?: number,
+  right?: number
+) {
   if (isNumber(comparator)) {
     right = left;
     left = comparator;
     comparator = undefined;
   }
 
-  left = left || 0;
-  right = right || array.length - 1;
-  comparator = comparator || _numericComparator;
+  left = left ?? 0;
+  right = right ?? array.length - 1;
+  comparator = comparator ?? (_numericComparator as Comparator);
 
   while (left <= right) {
-    const middle = (left + right) >>> 1;
+    const middle: number = (left + right) >>> 1;
     const computed = array[middle];
     const cmpValue = comparator(computed, value);
 
@@ -325,12 +347,16 @@ function binarySearch(value, array, comparator, left, right) {
 
 /**
  * Returns a random value within the provided array.
- * @param {Array} array The array.
- * @param {Number} [start=0] The start inclusive index.
- * @param {Number} [end=array.length] The end exclusive index.
- * @return {*} A random item.
+ * @param array The array.
+ * @param start The start inclusive index. Defaults to 0.
+ * @param end The end exclusive index. Defaults to array length.
+ * @return A random item.
  */
-function randomArrayItem(array, start = 0, end = array.length) {
+export function randomArrayItem(
+  array: unknown[],
+  start = 0,
+  end = array.length
+) {
   if (end > array.length) {
     end = array.length;
   }

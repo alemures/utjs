@@ -1,32 +1,32 @@
-// Number
+import { logN } from './math';
 
 /**
  * Convert a number to string.
- * @param {Number} number The number.
- * @return {String} The string.
+ * @param number The number.
+ * @return The string.
  */
-function numberToString(number) {
+export function numberToString(number: number) {
   return `${number}`;
 }
 
 /**
  * Get a random number.
- * @param {Number} min The inclusive min value.
- * @param {Number} max The exclusive max value.
- * @return {Number} The random number.
+ * @param min The inclusive min value.
+ * @param max The exclusive max value.
+ * @return The random number.
  */
-function randomNumber(min, max) {
+export function randomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
 /**
  * Get the middle value.
- * @param {Number} a The first number.
- * @param {Number} b The second number.
- * @param {Number} c The third number.
- * @return {Number} The middle number.
+ * @param a The first number.
+ * @param b The second number.
+ * @param c The third number.
+ * @return The middle number.
  */
-function getMiddleNumber(a, b, c) {
+export function getMiddleNumber(a: number, b: number, c: number) {
   if ((a > b && b > c) || (c > b && b > a)) return b;
   if ((b > a && a > c) || (c > a && a > b)) return a;
   return c;
@@ -36,29 +36,29 @@ function getMiddleNumber(a, b, c) {
  * Get the number of digits in a number. See
  * <a href="http://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript/
  * 28203456#28203456">link</a>.
- * @param {Number} integer The integer.
- * @param {Number} [base=10] The base of the number.
- * @return {Number} The number of digits.
+ * @param integer The integer.
+ * @param base The base of the number. Defaults to 10.
+ * @return The number of digits.
  */
-function numDigits(integer, base = 10) {
+export function numDigits(integer: number, base = 10) {
   return Math.max(Math.floor(logN(base, Math.abs(integer))), 0) + 1;
 }
 
 /**
  * Check if a number is an integer or not.
- * @param {Number} number The number to check.
- * @return {Boolean} If the number is an integer.
+ * @param number The number to check.
+ * @return If the number is an integer.
  */
-function isInteger(number) {
+export function isInteger(number: number) {
   return number % 1 === 0;
 }
 
 /**
  * Checks if a number is NaN. Taken from <a href="http://jacksondunstan.com/articles/983">link</a>.
- * @param {number} number The number to ckeck.
- * @return {Boolean} If the number is NaN.
+ * @param number The number to ckeck.
+ * @return If the number is NaN.
  */
-function isNaN(number) {
+export function isNaN(number: number) {
   // eslint-disable-next-line no-self-compare
   return number !== number;
 }
@@ -66,19 +66,19 @@ function isNaN(number) {
 /**
  * Checks if a number is NaN, Infinity or -Infinity.
  * Taken from <a href="http://jacksondunstan.com/articles/983">link</a>.
- * @param {Number} number The number to ckeck.
- * @return {Boolean} If the number is NaN, Infinity or -Infinity.
+ * @param number The number to ckeck.
+ * @return If the number is NaN, Infinity or -Infinity.
  */
-function isNaNOrInfinity(number) {
+export function isNaNOrInfinity(number: number) {
   return number * 0 !== 0;
 }
 
 /**
  * Truncates the number. This method is as fast as "number | 0" but it's
  * able to handle correctly numbers greater than 2^31 or lower than -2^31.
- * @param {Number} number The number to be truncated.
- * @return {Number} The truncated number.
+ * @param number The number to be truncated.
+ * @return The truncated number.
  */
-function truncateNumber(number) {
+export function truncateNumber(number: number) {
   return number - (number % 1);
 }

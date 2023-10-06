@@ -1,3 +1,6 @@
+import { numberToString } from './number';
+import { paddingLeft } from './string';
+
 const MONTHS = [
   'Jan',
   'Feb',

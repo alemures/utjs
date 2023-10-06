@@ -1,9 +1,7 @@
-// Boolean
-
 /**
  * Returns a random boolean.
- * @return {Boolean} The random boolean.
+ * @return The random boolean.
  */
-function randomBoolean() {
+export function randomBoolean() {
   return Math.random() < 0.5;
 }
