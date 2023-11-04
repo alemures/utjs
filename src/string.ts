@@ -179,7 +179,7 @@ export function stringChunk(string: string, chunkSize: number) {
  * @return The path tokens.
  * @function
  */
-export const splitPath = _memoize((path: string) => {
+export const splitPath = _memoize<string, string[]>((path: string) => {
   const arr = [];
   let first = 0;
   let last = 0;
@@ -203,20 +203,23 @@ export const splitPath = _memoize((path: string) => {
   return arr;
 });
 
-function _memoize(fn: CallableFunction, maxSize = MEMOIZE_MAX_SIZE) {
-  function memoize(...args) {
-    if (memoize.cache[args[0]] !== undefined) return memoize.cache[args[0]];
+function _memoize<T, R>(fn: (...args: T[]) => R, maxSize = MEMOIZE_MAX_SIZE) {
+  function memoize(...args: T[]): R {
+    const firstArg = args[0] as string;
+    if (memoize.cache[firstArg] !== undefined) {
+      return memoize.cache[firstArg] as R;
+    }
     const result = fn(...args);
     if (memoize.size === maxSize) {
       memoize.cache = {};
       memoize.size = 0;
     }
-    memoize.cache[args[0]] = result;
+    memoize.cache[firstArg] = result;
     memoize.size++;
     return result;
   }
 
-  memoize.cache = {};
+  memoize.cache = {} as PlainObject;
   memoize.size = 0;
   return memoize;
 }

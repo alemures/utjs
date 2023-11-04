@@ -5,7 +5,7 @@ import { isNaNOrInfinity } from './number';
  * @param value The value.
  * @return If has a numeric value or not.
  */
-export function isNumeric(value: unknown) {
+export function isNumeric(value: number | string) {
   return !isNaNOrInfinity(parseFloat(value as string));
 }
 
@@ -55,7 +55,7 @@ export function isObject(value: unknown): value is object {
  * @param value The value.
  * @return If is an Object and not an Array.
  */
-export function isPlainObject(value: unknown): value is object {
+export function isPlainObject(value: unknown): value is PlainObject {
   if (isObject(value)) {
     const proto = Object.getPrototypeOf(value) as unknown;
     return proto === Object.prototype || proto === null;
@@ -63,6 +63,7 @@ export function isPlainObject(value: unknown): value is object {
 
   return false;
 }
+
 /**
  * If is a Boolean or not.
  * @param {*} value The value.
@@ -89,7 +90,7 @@ export function isFunction(value: unknown): value is CallableFunction {
  * @param value The value.
  * @return If is a RegExp or not.
  */
-export function isRegExp(value: unknown) {
+export function isRegExp(value: unknown): value is RegExp {
   return value instanceof RegExp;
 }
 
@@ -98,7 +99,7 @@ export function isRegExp(value: unknown) {
  * @param value The value.
  * @return If is a Date or not.
  */
-export function isDate(value: unknown) {
+export function isDate(value: unknown): value is Date {
   return value instanceof Date;
 }
 
