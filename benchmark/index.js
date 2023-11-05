@@ -207,9 +207,46 @@ function copyArray(suite) {
 
   suite.add('current copyArray', () => {
     ut.copyArray(arr);
-  }).add('custom copyArray', () => {
+  }).add('Array#slice', () => {
     arr.slice();
-  });
+  }).add('copyArgs', () => {
+    copyArgs(arr);
+  }).add('spread', () => {
+    // eslint-disable-next-line no-unused-expressions
+    [...arr];
+  })
+    .add('Array.from', () => {
+      Array.from(arr);
+    });
+}
+
+function copyArgs(args) {
+  const { length } = args;
+  switch (length) {
+    case 0:
+      return [];
+    case 1:
+      return [args[0]];
+    case 2:
+      return [args[0], args[1]];
+    case 3:
+      return [args[0], args[1], args[2]];
+    case 4:
+      return [args[0], args[1], args[2], args[3]];
+    case 5:
+      return [args[0], args[1], args[2], args[3], args[4]];
+    case 6:
+      return [args[0], args[1], args[2], args[3], args[4], args[5]];
+    case 7:
+      return [args[0], args[1], args[2], args[3], args[4], args[5], args[6]];
+    default:
+      // eslint-disable-next-line no-case-declarations
+      const arr = new Array(length);
+      for (let i = 0; i < length; i++) {
+        arr[i] = args[i];
+      }
+      return arr;
+  }
 }
 
 function sort(suite) {
