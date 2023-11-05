@@ -833,14 +833,14 @@ describe('utjs', () => {
   describe('logger.setUsingDate', () => {
     it('should enable or disable the date in logs', () => {
       ut.logger.setUsingDate(true);
-      expect(ut.logger._usingDate).to.be.equal(true);
+      expect(ut.logger._usingDate).to.be.true;
     });
   });
 
   describe('logger.setPrettify', () => {
     it('should enable or disable the prettifying in logs', () => {
       ut.logger.setPrettify(true);
-      expect(ut.logger._prettify).to.be.equal(true);
+      expect(ut.logger._prettify).to.be.true;
     });
   });
 });
