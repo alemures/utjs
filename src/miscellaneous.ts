@@ -1,6 +1,8 @@
 import { objectLength } from './object';
 import { isArray, isFunction, isNumber, isPlainObject, isString } from './type';
 
+const MEMOIZE_MAX_SIZE = 500;
+
 /**
  * Execute a function N times and print the execution time.
  * @param fn The function to execute.
@@ -74,4 +76,34 @@ export function error(
   };
   Object.setPrototypeOf(object, constructor.prototype);
   return object;
+}
+
+/**
+ * Memoizes a function using the first received argument as cache key coerced to string.
+ * @param fn The function to memoize.
+ * @param maxSize Max size for the internal cache. Defaults to 500.
+ * @returns The memoized function.
+ */
+export function memoize<T, R>(
+  fn: (...args: T[]) => R,
+  maxSize = MEMOIZE_MAX_SIZE
+) {
+  function memoize(...args: T[]): R {
+    const firstArg = String(args[0]);
+    if (memoize.cache[firstArg] !== undefined) {
+      return memoize.cache[firstArg] as R;
+    }
+    const result = fn(...args);
+    if (memoize.size === maxSize) {
+      memoize.cache = {};
+      memoize.size = 0;
+    }
+    memoize.cache[firstArg] = result;
+    memoize.size++;
+    return result;
+  }
+
+  memoize.cache = {} as PlainObject;
+  memoize.size = 0;
+  return memoize;
 }

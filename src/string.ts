@@ -1,11 +1,11 @@
 import { logN } from './math';
+import { memoize } from './miscellaneous';
 import { randomNumber } from './number';
 
 const ALPHANUMERIC =
   '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const ESCAPE_REGEX = /[-/\\^$*+?.()|[\]{}]/g;
 const HEXADECIMAL_REGEX = /^[0-9a-f]+$/i;
-const MEMOIZE_MAX_SIZE = 500;
 
 /**
  * Return a random alphanumeric string.
@@ -179,7 +179,7 @@ export function stringChunk(string: string, chunkSize: number) {
  * @return The path tokens.
  * @function
  */
-export const splitPath = _memoize<string, string[]>((path: string) => {
+export const splitPath = memoize<string, string[]>((path: string) => {
   const arr = [];
   let first = 0;
   let last = 0;
@@ -202,24 +202,3 @@ export const splitPath = _memoize<string, string[]>((path: string) => {
 
   return arr;
 });
-
-function _memoize<T, R>(fn: (...args: T[]) => R, maxSize = MEMOIZE_MAX_SIZE) {
-  function memoize(...args: T[]): R {
-    const firstArg = args[0] as string;
-    if (memoize.cache[firstArg] !== undefined) {
-      return memoize.cache[firstArg] as R;
-    }
-    const result = fn(...args);
-    if (memoize.size === maxSize) {
-      memoize.cache = {};
-      memoize.size = 0;
-    }
-    memoize.cache[firstArg] = result;
-    memoize.size++;
-    return result;
-  }
-
-  memoize.cache = {} as PlainObject;
-  memoize.size = 0;
-  return memoize;
-}
