@@ -28,11 +28,7 @@ export function test(fn: DataGenerator, times = 1, label = 'Default label') {
  * @param max Max inclusive value. Defaults to Infinity.
  * @return If the value is inside of the given range or not.
  */
-export function inRange(
-  val: string | number | unknown[] | object,
-  min = -Infinity,
-  max = Infinity
-) {
+export function inRange(val: unknown, min = -Infinity, max = Infinity) {
   if (isNumber(val)) {
     return val >= min && val <= max;
   }
