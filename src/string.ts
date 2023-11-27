@@ -1,5 +1,4 @@
 import { logN } from './math';
-import { memoize } from './miscellaneous';
 import { randomNumber } from './number';
 
 const ALPHANUMERIC =
@@ -175,11 +174,10 @@ export function stringChunk(string: string, chunkSize: number) {
 
 /**
  * Splits an object path into an array of tokens.
- * @param path the object path.
+ * @param path The object path.
  * @return The path tokens.
- * @function
  */
-export const splitPath = memoize<string, string[]>((path: string) => {
+export function splitPath(path: string) {
   const arr = [];
   let first = 0;
   let last = 0;
@@ -201,4 +199,4 @@ export const splitPath = memoize<string, string[]>((path: string) => {
   }
 
   return arr;
-});
+}

@@ -105,7 +105,6 @@ function logN(base, value)
 function test(fn, [times=1], [label='Default label'])
 function inRange(val, [min=-Infinity], [max=Infinity])
 function error([message=''], [constructor=Error])
-function memoize(fn, [maxSize=500])
 ```
 
 #### Objects
