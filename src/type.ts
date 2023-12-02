@@ -108,6 +108,6 @@ export function isDate(value: unknown): value is Date {
  * @param value The value.
  * @return If is a Number or not.
  */
-export function isValidNumber(value: unknown) {
+export function isValidNumber(value: unknown): value is number {
   return isNumber(value) && !isNaNOrInfinity(value);
 }
