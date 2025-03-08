@@ -24,15 +24,20 @@ const benchmarks = {
 if (benchmarks[benchName] !== undefined) {
   benchmarks[benchName](suite);
 } else {
-  console.error(`Invalid benchmark name, valid names: ${Object.keys(benchmarks)}`);
+  console.error(
+    `Invalid benchmark name, valid names: ${Object.keys(benchmarks)}`,
+  );
   process.exit(1);
 }
 
-suite.on('cycle', (event) => {
-  console.log(String(event.target));
-}).on('complete', () => {
-  console.log(`Fastest is ${suite.filter('fastest').map('name')}`);
-}).run();
+suite
+  .on('cycle', (event) => {
+    console.log(String(event.target));
+  })
+  .on('complete', () => {
+    console.log(`Fastest is ${suite.filter('fastest').map('name')}`);
+  })
+  .run();
 
 function splitPath(suite) {
   const path = 'a.b[2][2223332].zzxcsdf.ff[0].asf.ww[1][2][551].xx';
@@ -75,7 +80,8 @@ function splitPath(suite) {
     return path.split(sep);
   }
 
-  const rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+  const rePropName =
+    /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
   const reEscapeChar = /\\(\\)?/g;
   function lodashSplitPath(string) {
     const result = [];
@@ -83,20 +89,26 @@ function splitPath(suite) {
       result.push('');
     }
     string.replace(rePropName, (match, number, quote, subString) => {
-      result.push(quote ? subString.replace(reEscapeChar, '$1') : (number || match));
+      result.push(
+        quote ? subString.replace(reEscapeChar, '$1') : number || match,
+      );
     });
     return result;
   }
 
-  suite.add('current splitPath', () => {
-    ut.splitPath(path);
-  }).add('custom splitPath', () => {
-    splitPath(path);
-  }).add('custom splitPath2', () => {
-    splitPath2(path);
-  }).add('custom splitPath3', () => {
-    splitPath3(path);
-  })
+  suite
+    .add('current splitPath', () => {
+      ut.splitPath(path);
+    })
+    .add('custom splitPath', () => {
+      splitPath(path);
+    })
+    .add('custom splitPath2', () => {
+      splitPath2(path);
+    })
+    .add('custom splitPath3', () => {
+      splitPath3(path);
+    })
     .add('lodashSplitPath', () => {
       lodashSplitPath(path);
     });
@@ -104,20 +116,24 @@ function splitPath(suite) {
 
 function stringToNumber(suite) {
   const string = '25532';
-  suite.add('current stringToNumber', () => {
-    ut.stringToNumber(string);
-  }).add('custom stringToNumber', () => {
-    Number(string);
-  });
+  suite
+    .add('current stringToNumber', () => {
+      ut.stringToNumber(string);
+    })
+    .add('custom stringToNumber', () => {
+      Number(string);
+    });
 }
 
 function startsWith(suite) {
   const string = 'the beautiful string';
-  suite.add('current startsWith', () => {
-    ut.startsWith(string, 'the');
-  }).add('custom startsWith', () => {
-    string.startsWith('the');
-  });
+  suite
+    .add('current startsWith', () => {
+      ut.startsWith(string, 'the');
+    })
+    .add('custom startsWith', () => {
+      string.startsWith('the');
+    });
 }
 
 function getMiddleNumber(suite) {
@@ -131,11 +147,13 @@ function getMiddleNumber(suite) {
     return a + b + c - max - min;
   }
 
-  suite.add('current getMiddleNumber', () => {
-    ut.getMiddleNumber(a, b, c);
-  }).add('custom getMiddleNumber', () => {
-    getMiddleNumber(a, b, c);
-  });
+  suite
+    .add('current getMiddleNumber', () => {
+      ut.getMiddleNumber(a, b, c);
+    })
+    .add('custom getMiddleNumber', () => {
+      getMiddleNumber(a, b, c);
+    });
 }
 
 function objectLength(suite) {
@@ -145,11 +163,13 @@ function objectLength(suite) {
     return Object.keys(obj).length;
   }
 
-  suite.add('current objectLength', () => {
-    ut.objectLength(obj);
-  }).add('custom objectLength', () => {
-    objectLength(obj);
-  });
+  suite
+    .add('current objectLength', () => {
+      ut.objectLength(obj);
+    })
+    .add('custom objectLength', () => {
+      objectLength(obj);
+    });
 }
 
 function objectLengthFastProperties(suite) {
@@ -159,11 +179,13 @@ function objectLengthFastProperties(suite) {
     return Object.keys(obj).length;
   }
 
-  suite.add('current objectLength', () => {
-    ut.objectLength(obj);
-  }).add('custom objectLength', () => {
-    objectLength(obj);
-  });
+  suite
+    .add('current objectLength', () => {
+      ut.objectLength(obj);
+    })
+    .add('custom objectLength', () => {
+      objectLength(obj);
+    });
 }
 
 function get(suite) {
@@ -171,15 +193,19 @@ function get(suite) {
   const path = 'a.b[2].c';
   const pathArr = ['a', 'b', '2', 'c'];
 
-  suite.add('current get string', () => {
-    ut.get(obj, path);
-  }).add('current get array', () => {
-    ut.get(obj, pathArr);
-  }).add('lodash get string', () => {
-    _.get(obj, path);
-  }).add('lodash get array', () => {
-    _.get(obj, pathArr);
-  });
+  suite
+    .add('current get string', () => {
+      ut.get(obj, path);
+    })
+    .add('current get array', () => {
+      ut.get(obj, pathArr);
+    })
+    .add('lodash get string', () => {
+      _.get(obj, path);
+    })
+    .add('lodash get array', () => {
+      _.get(obj, pathArr);
+    });
 }
 
 function updateObject(suite) {
@@ -187,13 +213,16 @@ function updateObject(suite) {
   const path = 'a.b[2].c';
   const pathArr = ['a', 'b', '2', 'c'];
 
-  suite.add('current updateObject string', () => {
-    ut.updateObject(ut.cloneObject(obj), false, path);
-  }).add('current updateObject array', () => {
-    ut.updateObject(ut.cloneObject(obj), false, pathArr);
-  }).add('old updateObject string', () => {
-    oldut.updateObject(ut.cloneObject(obj), false, path);
-  })
+  suite
+    .add('current updateObject string', () => {
+      ut.updateObject(ut.cloneObject(obj), false, path);
+    })
+    .add('current updateObject array', () => {
+      ut.updateObject(ut.cloneObject(obj), false, pathArr);
+    })
+    .add('old updateObject string', () => {
+      oldut.updateObject(ut.cloneObject(obj), false, path);
+    })
     .add('lodash set string', () => {
       _.set(ut.cloneObject(obj), path, false);
     })
@@ -205,16 +234,19 @@ function updateObject(suite) {
 function copyArray(suite) {
   const arr = ut.randomArray(125);
 
-  suite.add('current copyArray', () => {
-    ut.copyArray(arr);
-  }).add('Array#slice', () => {
-    arr.slice();
-  }).add('copyArgs', () => {
-    copyArgs(arr);
-  }).add('spread', () => {
-    // eslint-disable-next-line no-unused-expressions
-    [...arr];
-  })
+  suite
+    .add('current copyArray', () => {
+      ut.copyArray(arr);
+    })
+    .add('Array#slice', () => {
+      arr.slice();
+    })
+    .add('copyArgs', () => {
+      copyArgs(arr);
+    })
+    .add('spread', () => {
+      [...arr];
+    })
     .add('Array.from', () => {
       Array.from(arr);
     });
@@ -256,27 +288,33 @@ function sort(suite) {
     return number1 - number2;
   }
 
-  suite.add('current sort', () => {
-    ut.sort(arr.slice());
-  }).add('custom sort', () => {
-    arr.slice().sort(_numericComparator);
-  });
+  suite
+    .add('current sort', () => {
+      ut.sort(arr.slice());
+    })
+    .add('custom sort', () => {
+      arr.slice().sort(_numericComparator);
+    });
 }
 
 function concatArrays(suite) {
   const arr = ut.randomArray(125);
 
-  suite.add('current concatArrays', () => {
-    ut.concatArrays(arr.slice(), arr);
-  }).add('custom concatArrays', () => {
-    arr.slice().concat(arr);
-  });
+  suite
+    .add('current concatArrays', () => {
+      ut.concatArrays(arr.slice(), arr);
+    })
+    .add('custom concatArrays', () => {
+      arr.slice().concat(arr);
+    });
 }
 
 function paddingBoth(suite) {
-  suite.add('current paddingBoth', () => {
-    ut.paddingBoth('string', '.', 19);
-  }).add('lodash pad', () => {
-    _.pad('string', 19, '.');
-  });
+  suite
+    .add('current paddingBoth', () => {
+      ut.paddingBoth('string', '.', 19);
+    })
+    .add('lodash pad', () => {
+      _.pad('string', 19, '.');
+    });
 }

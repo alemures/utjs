@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outFile": "index.d.ts"
+  },
+  "files": ["index.js"]
+}

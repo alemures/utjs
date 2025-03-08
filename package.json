@@ -2,33 +2,47 @@
   "name": "utjs",
   "version": "4.0.0",
   "description": "utjs is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.",
+  "author": "Alejandro Santiago Nieto",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/chai": "^5.2.0",
+    "@types/chai-as-promised": "^8.0.2",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^22.13.9",
+    "chai": "^5.2.0",
+    "chai-as-promised": "^8.0.1",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "globals": "^16.0.0",
+    "mocha": "^11.1.0",
+    "nyc": "^17.1.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "type": "commonjs",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "index.js",
+    "index.d.ts",
     "lib"
   ],
   "scripts": {
-    "test": "mocha test/*.js",
-    "test:cover": "nyc --reporter=lcov --reporter=text-summary npm test",
+    "test": "mocha --require test/setup.js --ignore test/setup.js test/**/*.js",
+    "test:cover": "nyc --reporter=lcov --reporter=text-summary --all --include \"lib/**/*.js\" npm test",
     "benchmark": "node benchmark/index.js",
-    "lint": "eslint index.js lib/*.js test/*.js benchmark/*.js",
-    "lint:fix": "eslint index.js lib/*.js test/*.js benchmark/*.js --fix",
-    "check": "npm test && npm run lint && npm outdated",
-    "doc": "jsdoc ./lib/ ./package.json ./README.md -d ./doc"
-  },
-  "author": "Alejandro Santiago Nieto",
-  "license": "MIT",
-  "devDependencies": {
-    "chai": "^4.3.0",
-    "eslint": "^8.36.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.22.1",
-    "jsdoc": "^4.0.2",
-    "mocha": "^10.2.0",
-    "nyc": "^15.1.0"
+    "lint": "eslint *.js lib/**/*.js test/**/*.js scripts/**/*.js benchmark/**/*.js",
+    "lint:fix": "npm run lint -- --fix",
+    "types": "tsc",
+    "types:generate": "tsc -p tsconfig.types.json && node scripts/fix-declaration.js",
+    "check": "npm test && npm run lint && npm run types",
+    "doc": "jsdoc ./lib/ ./package.json ./README.md -d ./doc",
+    "prepublishOnly": "npm run check"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alemures/utjs"
+    "url": "https://github.com/alemures/utjs.git"
   }
 }

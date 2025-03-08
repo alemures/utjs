@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "strict": true,
+    "target": "ES2015",
+    "moduleResolution": "Node",
+    "noEmit": true,
+    "resolveJsonModule": true
+  },
+  "files": ["index.js"],
+  "include": ["lib", "test", "scripts", "benchmark"]
+}

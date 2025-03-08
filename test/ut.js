@@ -73,7 +73,12 @@ describe('utjs', () => {
     it('should sort the array of objects', () => {
       const arr = [{ age: 25 }, { age: 22 }, { age: 26 }, { age: 18 }];
       ut.sort(arr, (a, b) => a.age - b.age);
-      expect(arr).to.be.deep.equal([{ age: 18 }, { age: 22 }, { age: 25 }, { age: 26 }]);
+      expect(arr).to.be.deep.equal([
+        { age: 18 },
+        { age: 22 },
+        { age: 25 },
+        { age: 26 },
+      ]);
     });
 
     it('should sort only the given range in the array', () => {
@@ -203,7 +208,13 @@ describe('utjs', () => {
       const arr = [{ a: 1 }, { a: 4 }, { a: 5 }, { a: 9 }];
       ut.binaryInsert({ a: 8 }, arr, (a, b) => a.a - b.a);
 
-      expect(arr).to.be.deep.equal([{ a: 1 }, { a: 4 }, { a: 5 }, { a: 8 }, { a: 9 }]);
+      expect(arr).to.be.deep.equal([
+        { a: 1 },
+        { a: 4 },
+        { a: 5 },
+        { a: 8 },
+        { a: 9 },
+      ]);
     });
   });
 
@@ -216,7 +227,7 @@ describe('utjs', () => {
       expect(ut.binarySearch(item, arr)).to.be.above(-1);
     });
 
-    it('shouldn\'t find a missing item in a sorted array', () => {
+    it("shouldn't find a missing item in a sorted array", () => {
       const arr = ut.randomArray(100);
       const missingItem = 1000;
       ut.sort(arr);
@@ -226,7 +237,9 @@ describe('utjs', () => {
 
     it('should find an object in a sorted array of objects', () => {
       const arr = [{ a: 1 }, { a: 4 }, { a: 5 }, { a: 9 }];
-      expect(ut.binarySearch({ a: 5 }, arr, (a, b) => a.a - b.a)).to.be.above(-1);
+      expect(ut.binarySearch({ a: 5 }, arr, (a, b) => a.a - b.a)).to.be.above(
+        -1,
+      );
     });
 
     it('should work using a default numeric comparator if omitted', () => {
@@ -246,8 +259,12 @@ describe('utjs', () => {
 
     it('should return a random value within the array within the sliced bounds', () => {
       const array = [1, 5, 66, 100, 101];
-      expect(ut.randomArrayItem(array, 2, array.length)).to.be.oneOf(array.slice(2, array.length));
-      expect(ut.randomArrayItem(array, 2, 100)).to.be.oneOf(array.slice(2, array.length));
+      expect(ut.randomArrayItem(array, 2, array.length)).to.be.oneOf(
+        array.slice(2, array.length),
+      );
+      expect(ut.randomArrayItem(array, 2, 100)).to.be.oneOf(
+        array.slice(2, array.length),
+      );
     });
   });
 
@@ -256,7 +273,6 @@ describe('utjs', () => {
   describe('argumentsToArray()', () => {
     it('should return an array', () => {
       function test() {
-        // eslint-disable-next-line prefer-rest-params
         const args = ut.argumentsToArray(arguments);
         expect(args).to.be.an('array');
         expect(args).to.be.deep.equal([1, 2, 3]);
@@ -313,11 +329,15 @@ describe('utjs', () => {
 
   describe('replaceAll()', () => {
     it('should replace all ocurrences of + by -', () => {
-      expect(ut.replaceAll('15 + 5 + 5 = 5', '+', '-')).to.be.equal('15 - 5 - 5 = 5');
+      expect(ut.replaceAll('15 + 5 + 5 = 5', '+', '-')).to.be.equal(
+        '15 - 5 - 5 = 5',
+      );
     });
 
     it('should replace all ocurrences of a ignoring the case by *', () => {
-      expect(ut.replaceAll(' = aaAAaa = ', 'a', 'b', true)).to.be.equal(' = bbbbbb = ');
+      expect(ut.replaceAll(' = aaAAaa = ', 'a', 'b', true)).to.be.equal(
+        ' = bbbbbb = ',
+      );
     });
   });
 
@@ -372,8 +392,13 @@ describe('utjs', () => {
       expect(ut.splitPath('')).to.deep.equal([]);
       expect(ut.splitPath('name')).to.deep.equal(['name']);
       expect(ut.splitPath('name.subname')).to.deep.equal(['name', 'subname']);
-      expect(ut.splitPath('[122].name.subname[11][22]'))
-        .to.deep.equal(['122', 'name', 'subname', '11', '22']);
+      expect(ut.splitPath('[122].name.subname[11][22]')).to.deep.equal([
+        '122',
+        'name',
+        'subname',
+        '11',
+        '22',
+      ]);
     });
   });
 
@@ -437,7 +462,10 @@ describe('utjs', () => {
       const source = { c: true, d: null };
       ut.mergeObjects(dest, source);
       expect(dest).to.be.deep.equal({
-        a: 1, b: '2', c: true, d: null,
+        a: 1,
+        b: '2',
+        c: true,
+        d: null,
       });
     });
 
@@ -452,14 +480,20 @@ describe('utjs', () => {
       const dest = { a: { b: { d: 'Hello', f: 'Bye' } } };
       const source = { a: { b: { d: [{ e: 15 }], f: { g: 'Hello' } } } };
       ut.mergeObjects(dest, source);
-      expect(dest).to.be.deep.equal({ a: { b: { d: [{ e: 15 }], f: { g: 'Hello' } } } });
+      expect(dest).to.be.deep.equal({
+        a: { b: { d: [{ e: 15 }], f: { g: 'Hello' } } },
+      });
     });
 
     it('should merge two objects with dates', () => {
       const dest = { a: 'a', b: new Date('2015-01-01') };
       const source = { a: 'a', b: new Date('2016-06-06'), c: false };
       ut.mergeObjects(dest, source);
-      expect(dest).to.be.deep.equal({ a: 'a', b: new Date('2016-06-06'), c: false });
+      expect(dest).to.be.deep.equal({
+        a: 'a',
+        b: new Date('2016-06-06'),
+        c: false,
+      });
     });
 
     it('should merge two arrays', () => {
@@ -515,14 +549,22 @@ describe('utjs', () => {
   describe('objectChunk()', () => {
     it('should return an array with the chunked object', () => {
       const object = {
-        a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7,
+        a: 1,
+        b: 2,
+        c: 3,
+        d: 4,
+        e: 5,
+        f: 6,
+        g: 7,
       };
       const { length } = Object.keys(object);
 
       for (let i = 1; i <= length; i++) {
         const chunks = ut.objectChunk(object, i);
         expect(chunks).to.be.an('array');
-        expect(chunks).to.have.lengthOf(Math.ceil(Object.keys(object).length / i));
+        expect(chunks).to.have.lengthOf(
+          Math.ceil(Object.keys(object).length / i),
+        );
       }
     });
   });
@@ -536,7 +578,10 @@ describe('utjs', () => {
     });
 
     it('should return a deeply cloned array', () => {
-      const orig = [{ d: 3, e: [4] }, { d: 5, e: [6] }];
+      const orig = [
+        { d: 3, e: [4] },
+        { d: 5, e: [6] },
+      ];
       const clone = ut.cloneObject(orig);
       expect(clone).to.not.be.equal(orig);
       expect(clone).to.be.deep.equal(orig);
@@ -564,7 +609,10 @@ describe('utjs', () => {
 
     it('should return the default value', () => {
       const object = {
-        a: 1, b: 2, c: { d: 3, e: [4] }, f: null,
+        a: 1,
+        b: 2,
+        c: { d: 3, e: [4] },
+        f: null,
       };
       expect(ut.get(object, 'a.d')).to.be.undefined;
       expect(ut.get(object, 'a.f', null)).to.be.null;
@@ -576,9 +624,14 @@ describe('utjs', () => {
 
   describe('equals()', () => {
     it('should return true validating cloned objects', () => {
-      const o1 = { };
+      const o1 = {};
       const o2 = {
-        a: 1, b: '2', c: true, d: null, e: undefined, f: NaN,
+        a: 1,
+        b: '2',
+        c: true,
+        d: null,
+        e: undefined,
+        f: NaN,
       };
       const o3 = { a: { b: [{ c: 1 }, { c: 2 }] } };
       const o4 = [];
@@ -604,28 +657,41 @@ describe('utjs', () => {
     });
 
     it('should return false validating different objects', () => {
-      expect(ut.equals({ }, { a: 1 })).to.be.false;
+      expect(ut.equals({}, { a: 1 })).to.be.false;
       expect(ut.equals({ a: 1, b: '2' }, { a: 1, b: '3' })).to.be.false;
-      expect(ut.equals(
-        { a: { b: [{ c: 1 }, { c: 2 }] } },
-        { a: { b: [{ c: 3 }, { c: 2 }] } },
-      )).to.be.false;
+      expect(
+        ut.equals(
+          { a: { b: [{ c: 1 }, { c: 2 }] } },
+          { a: { b: [{ c: 3 }, { c: 2 }] } },
+        ),
+      ).to.be.false;
       expect(ut.equals(new Date(), new Date())).to.be.false;
       expect(ut.equals([1, 2, 3], [1, 2, 3, 4])).to.be.false;
     });
   });
 
   describe('groupBy', () => {
-    const people = [{
-      name: 'alex', age: 24, lang: 'spanish', country: 'spain',
-    },
-    {
-      name: 'fran', age: 23, lang: 'english', country: 'france',
-    },
-    {
-      name: 'alex', age: 30, lang: 'english', country: 'spain',
-    },
-    { name: 'james', age: 35, country: 'france' }];
+    const people = [
+      {
+        name: 'alex',
+        age: 24,
+        lang: 'spanish',
+        country: 'spain',
+      },
+      {
+        name: 'fran',
+        age: 23,
+        lang: 'english',
+        country: 'france',
+      },
+      {
+        name: 'alex',
+        age: 30,
+        lang: 'english',
+        country: 'spain',
+      },
+      { name: 'james', age: 35, country: 'france' },
+    ];
 
     it('should group the objects by a single key', () => {
       const grouped = ut.groupBy(people, 'country');
@@ -651,16 +717,25 @@ describe('utjs', () => {
   describe('objectLength', () => {
     it('should return the number of keys of the given object', () => {
       expect(ut.objectLength({})).to.be.equal(0);
-      expect(ut.objectLength({
-        a: 1, b: 2, c: 3, d: 4, e: 5,
-      })).to.be.equal(5);
+      expect(
+        ut.objectLength({
+          a: 1,
+          b: 2,
+          c: 3,
+          d: 4,
+          e: 5,
+        }),
+      ).to.be.equal(5);
     });
   });
 
   describe('clearObject', () => {
     it('should clear the object', () => {
       const object = {
-        a: 1, b: 2, c: 3, d: 4,
+        a: 1,
+        b: 2,
+        c: 3,
+        d: 4,
       };
       ut.clearObject(object);
       expect(ut.objectLength(object)).to.be.equal(0);
@@ -688,7 +763,7 @@ describe('utjs', () => {
   describe('isNumeric', () => {
     it('should return true for valid numbers even if they are in strings', () => {
       expect(ut.isNumeric(1)).to.be.true;
-      expect(ut.isNumeric(1e+1)).to.be.true;
+      expect(ut.isNumeric(1e1)).to.be.true;
       expect(ut.isNumeric(1.25)).to.be.true;
       expect(ut.isNumeric(new Number(25))).to.be.true;
       expect(ut.isNumeric('1')).to.be.true;
@@ -702,7 +777,7 @@ describe('utjs', () => {
   describe('isNumber', () => {
     it('should return true for valid numbers', () => {
       expect(ut.isNumber(1)).to.be.true;
-      expect(ut.isNumber(1e+1)).to.be.true;
+      expect(ut.isNumber(1e1)).to.be.true;
       expect(ut.isNumber(1.25)).to.be.true;
       expect(ut.isNumber(new Number(25))).to.be.true;
     });
@@ -779,7 +854,10 @@ describe('utjs', () => {
   describe('logN', () => {
     it('should return the log n value', () => {
       expect(ut.logN(10, 25)).to.be.closeTo(Math.log10(25), 0.0000000000000005);
-      expect(ut.logN(Math.E, 25)).to.be.closeTo(Math.log(25), 0.0000000000000005);
+      expect(ut.logN(Math.E, 25)).to.be.closeTo(
+        Math.log(25),
+        0.0000000000000005,
+      );
       expect(ut.logN(2, 1024)).to.be.equal(10);
     });
   });
