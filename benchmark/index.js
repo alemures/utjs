@@ -4,7 +4,6 @@ const ut = require('../index');
 const oldut = require('./ut');
 
 const suite = new Benchmark.Suite();
-const benchName = process.argv[2];
 
 const benchmarks = {
   splitPath,
@@ -21,6 +20,8 @@ const benchmarks = {
   paddingBoth,
 };
 
+const benchName = /** @type {keyof typeof benchmarks} */ (process.argv[2]);
+
 if (benchmarks[benchName] !== undefined) {
   benchmarks[benchName](suite);
 } else {
@@ -31,7 +32,7 @@ if (benchmarks[benchName] !== undefined) {
 }
 
 suite
-  .on('cycle', (event) => {
+  .on('cycle', (/** @type {Benchmark.Event} */ event) => {
     console.log(String(event.target));
   })
   .on('complete', () => {
@@ -39,10 +40,17 @@ suite
   })
   .run();
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function splitPath(suite) {
   const path = 'a.b[2][2223332].zzxcsdf.ff[0].asf.ww[1][2][551].xx';
+  /**
+   * @param {string} path
+   */
   function splitPath(path) {
     const objs = path.split('.');
+    /** @type {string[]} */
     let tokens = [];
 
     for (let j = 0; j < objs.length; j++) {
@@ -61,6 +69,9 @@ function splitPath(suite) {
     return tokens;
   }
 
+  /**
+   * @param {string} path
+   */
   function splitPath2(path) {
     const objectPathRegex = /[^.[\]]+/g;
     const pathArr = [];
@@ -72,6 +83,9 @@ function splitPath(suite) {
     return pathArr;
   }
 
+  /**
+   * @param {string} origPath
+   */
   function splitPath3(origPath) {
     const sep = '.';
     let path = origPath.replace(/[.[]/g, sep);
@@ -83,6 +97,9 @@ function splitPath(suite) {
   const rePropName =
     /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
   const reEscapeChar = /\\(\\)?/g;
+  /**
+   * @param {string} string
+   */
   function lodashSplitPath(string) {
     const result = [];
     if (string.charCodeAt(0) === 46 /* . */) {
@@ -92,6 +109,7 @@ function splitPath(suite) {
       result.push(
         quote ? subString.replace(reEscapeChar, '$1') : number || match,
       );
+      return match;
     });
     return result;
   }
@@ -114,6 +132,9 @@ function splitPath(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function stringToNumber(suite) {
   const string = '25532';
   suite
@@ -125,6 +146,9 @@ function stringToNumber(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function startsWith(suite) {
   const string = 'the beautiful string';
   suite
@@ -136,11 +160,19 @@ function startsWith(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function getMiddleNumber(suite) {
   const a = 5;
   const b = 3;
   const c = 6;
 
+  /**
+   * @param {number} a
+   * @param {number} b
+   * @param {number} c
+   */
   function getMiddleNumber(a, b, c) {
     const max = Math.max(Math.max(a, b), c);
     const min = Math.min(Math.min(a, b), c);
@@ -156,9 +188,15 @@ function getMiddleNumber(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function objectLength(suite) {
   const obj = ut.randomObject(125);
 
+  /**
+   * @param {Object} obj
+   */
   function objectLength(obj) {
     return Object.keys(obj).length;
   }
@@ -172,9 +210,15 @@ function objectLength(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function objectLengthFastProperties(suite) {
   const obj = ut.toFastProperties(ut.randomObject(125));
 
+  /**
+   * @param {Object} obj
+   */
   function objectLength(obj) {
     return Object.keys(obj).length;
   }
@@ -188,6 +232,9 @@ function objectLengthFastProperties(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function get(suite) {
   const obj = { a: { b: [1, 2, { c: true }] } };
   const path = 'a.b[2].c';
@@ -208,6 +255,9 @@ function get(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function updateObject(suite) {
   const obj = { a: { b: [1, 2, { c: true }] } };
   const path = 'a.b[2].c';
@@ -231,6 +281,9 @@ function updateObject(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function copyArray(suite) {
   const arr = ut.randomArray(125);
 
@@ -252,6 +305,9 @@ function copyArray(suite) {
     });
 }
 
+/**
+ * @param {any[]} args
+ */
 function copyArgs(args) {
   const { length } = args;
   switch (length) {
@@ -281,9 +337,16 @@ function copyArgs(args) {
   }
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function sort(suite) {
   const arr = ut.randomArray(125);
 
+  /**
+   * @param {number} number1
+   * @param {number} number2
+   */
   function _numericComparator(number1, number2) {
     return number1 - number2;
   }
@@ -297,6 +360,9 @@ function sort(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function concatArrays(suite) {
   const arr = ut.randomArray(125);
 
@@ -309,6 +375,9 @@ function concatArrays(suite) {
     });
 }
 
+/**
+ * @param {Benchmark.Suite} suite
+ */
 function paddingBoth(suite) {
   suite
     .add('current paddingBoth', () => {
