@@ -302,6 +302,18 @@ function copyArray(suite) {
     })
     .add('Array.from', () => {
       Array.from(arr);
+    })
+    .add('Array#concat', () => {
+      arr.concat();
+    })
+    .add('[].slice.call', () => {
+      [].slice.call(arr);
+    })
+    .add('Array.prototype.slice.call', () => {
+      Array.prototype.slice.call(arr);
+    })
+    .add('_.slice', () => {
+      _.slice(arr);
     });
 }
 
