@@ -4,6 +4,6 @@
   "description": "utjs benchmarks",
   "dependencies": {
     "benchmark": "^2.1.4",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.21"
   }
 }
