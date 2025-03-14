@@ -58,16 +58,16 @@ describe('utjs', () => {
 
   describe('sort()', () => {
     it('should sort the array', () => {
-      let arr = [4, 2, 5, 1];
-      ut.sort(arr);
-      expect(arr).to.be.deep.equal([1, 2, 4, 5]);
-      arr = ['b', 'ttt', 'c', 'bb', 'aa', 'tt'];
-      ut.sort(arr, (a, b) => (a > b ? 1 : b > a ? -1 : 0));
-      expect(arr).to.be.deep.equal(['aa', 'b', 'bb', 'c', 'tt', 'ttt']);
-      arr = ut.randomArray(100);
-      const sorted = arr.slice().sort((n1, n2) => n1 - n2);
-      ut.sort(arr);
-      expect(arr).to.be.deep.equal(sorted);
+      let numberArray = [4, 2, 5, 1];
+      ut.sort(numberArray);
+      expect(numberArray).to.be.deep.equal([1, 2, 4, 5]);
+      const stringArray = ['b', 'ttt', 'c', 'bb', 'aa', 'tt'];
+      ut.sort(stringArray, (a, b) => (a > b ? 1 : b > a ? -1 : 0));
+      expect(stringArray).to.be.deep.equal(['aa', 'b', 'bb', 'c', 'tt', 'ttt']);
+      const randomArray = ut.randomArray(100);
+      const sorted = randomArray.slice().sort((n1, n2) => n1 - n2);
+      ut.sort(randomArray);
+      expect(randomArray).to.be.deep.equal(sorted);
     });
 
     it('should sort the array of objects', () => {
@@ -305,19 +305,19 @@ describe('utjs', () => {
 
   describe('paddingLeft()', () => {
     it('should return a string with a left padding', () => {
-      expect(ut.paddingLeft('TITLE', '=', '8')).to.be.equal('===TITLE');
+      expect(ut.paddingLeft('TITLE', '=', 8)).to.be.equal('===TITLE');
     });
   });
 
   describe('paddingRight()', () => {
     it('should return a string with a right padding', () => {
-      expect(ut.paddingRight('TITLE', '=', '8')).to.be.equal('TITLE===');
+      expect(ut.paddingRight('TITLE', '=', 8)).to.be.equal('TITLE===');
     });
   });
 
   describe('paddingBoth()', () => {
     it('should return a string with a padding in both sides', () => {
-      expect(ut.paddingBoth('TITLE', '=', '11')).to.be.equal('===TITLE===');
+      expect(ut.paddingBoth('TITLE', '=', 11)).to.be.equal('===TITLE===');
     });
   });
 
@@ -435,15 +435,22 @@ describe('utjs', () => {
   describe('isNaN()', () => {
     it('should return true for NaN values', () => {
       expect(ut.isNaN(NaN)).to.be.true;
-      expect(ut.isNaNOrInfinity(ut.stringToNumber('a'))).to.be.true;
+      expect(ut.isNaN(Infinity)).to.be.false;
+      expect(ut.isNaN(-Infinity)).to.be.false;
+      expect(ut.isNaN(1)).to.be.false;
+      expect(ut.isNaN(0)).to.be.false;
+      expect(ut.isNaN(-1)).to.be.false;
     });
   });
 
   describe('isNaNOrInfinity()', () => {
-    it('should return true for NaN or undefined values', () => {
+    it('should return true for NaN or infinity values', () => {
       expect(ut.isNaNOrInfinity(NaN)).to.be.true;
-      expect(ut.isNaNOrInfinity(undefined)).to.be.true;
-      expect(ut.isNaNOrInfinity(ut.stringToNumber('a'))).to.be.true;
+      expect(ut.isNaNOrInfinity(Infinity)).to.be.true;
+      expect(ut.isNaNOrInfinity(-Infinity)).to.be.true;
+      expect(ut.isNaNOrInfinity(1)).to.be.false;
+      expect(ut.isNaNOrInfinity(0)).to.be.false;
+      expect(ut.isNaNOrInfinity(-1)).to.be.false;
     });
   });
 
@@ -634,6 +641,7 @@ describe('utjs', () => {
         f: NaN,
       };
       const o3 = { a: { b: [{ c: 1 }, { c: 2 }] } };
+      /** @type {any[]} */
       const o4 = [];
       const o5 = [1, 2, 3];
 
@@ -745,6 +753,7 @@ describe('utjs', () => {
   describe('toFastProperties', () => {
     // Requires nodejs to run with flag --allow-natives-syntax but its not possible at the moment
     it('should convert an object in dictionary mode into fast mode', () => {
+      /** @type {{a?: number, b: number}} */
       const object = { a: 1, b: 2 };
       /* expect(eval('%HasFastProperties(object)')).to.be.true; */
       delete object.a;
@@ -868,7 +877,7 @@ describe('utjs', () => {
       expect(ut.inRange('abc', 1, 5)).to.be.true;
       expect(ut.inRange([1, 2, 3], 1, 5)).to.be.true;
       expect(ut.inRange({ a: 1, b: 2, c: 3 }, 1, 5)).to.be.true;
-      expect(ut.inRange(new RegExp())).to.be.false;
+      expect(ut.inRange(new RegExp(''))).to.be.false;
     });
   });
 
@@ -882,13 +891,20 @@ describe('utjs', () => {
     });
 
     it('should return custom Error instances', () => {
+      /**
+       * @param {string} [message]
+       * @this {CouchbaseError}
+       */
       function CouchbaseError(message) {
         Error.call(this, message);
       }
 
       Object.setPrototypeOf(CouchbaseError.prototype, Error.prototype);
 
-      const cbError = ut.error('snap', CouchbaseError);
+      const cbError = ut.error(
+        'snap',
+        /** @type {ErrorConstructor} */ (CouchbaseError),
+      );
       expect(cbError).to.be.instanceOf(CouchbaseError);
       expect(cbError.name).to.be.equal('CouchbaseError');
       expect(cbError.message).to.be.equal('snap');
