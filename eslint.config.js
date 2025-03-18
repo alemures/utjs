@@ -8,7 +8,7 @@ module.exports = [
     files: ['**/*.js'],
     languageOptions: { sourceType: 'commonjs', globals: globals.node },
   },
-  { files: ['test/**/*.js'], languageOptions: { globals: globals.mocha } },
+  { files: ['test/**/*.js'], languageOptions: { globals: globals.jest } },
   pluginJs.configs.recommended,
   eslintPluginPrettierRecommended,
 ];

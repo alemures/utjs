@@ -1,6 +1,6 @@
 const Benchmark = require('benchmark');
 const _ = require('lodash');
-const ut = require('../index');
+const ut = require('../lib/ut');
 const oldut = require('./ut');
 
 const suite = new Benchmark.Suite();
