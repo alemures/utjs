@@ -8,5 +8,13 @@ fs.writeFileSync(
   fs
     .readFileSync(declarationFilePath)
     .toString()
-    .replace('"index"', `"${packageJson.name}"`),
+    .replace('declare module "index"', `declare module "${packageJson.name}"`)
+    .replace(
+      /declare module "lib\//g,
+      `declare module "${packageJson.name}_internal_do_not_import/`,
+    )
+    .replace(
+      /(require|import)\("lib\//g,
+      `$1("${packageJson.name}_internal_do_not_import/`,
+    ),
 );
