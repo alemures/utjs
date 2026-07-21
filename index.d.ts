@@ -1,8 +1,10 @@
-declare module "lib/ut" {
-    export type Comparator = (value1: any, value2: any) => number;
-    export type DataGenerator = (index: number) => any;
+declare module "utjs_internal_do_not_import/ut" {
     export type PlainObject = Record<string, any>;
     export type Path = string | string[];
+    export type ValueComparator = (value1: any, value2: any) => number;
+    export type PlainObjectIteratee = (object: PlainObject) => PlainObject;
+    export type KeyGenerator = (index: number) => string;
+    export type ValueGenerator = (index: number) => any;
     /**
      * Date object to mysql date string.
      * @param {Date} [date=new Date()] The date object.
@@ -36,13 +38,13 @@ declare module "lib/ut" {
     /**
      * Recursive quicksort using Hoare partitioning with random pivot and cut off to insertion sort.
      * @param {any[]} array The array to sort.
-     * @param {Comparator|number} [comparator=_numericComparator] An optional comparator, it will be called
+     * @param {ValueComparator|number} [comparator=_numericComparator] An optional comparator, it will be called
      *   with two values and must return 1 if the first is greater than the second, 0 if they are
      *   equals or -1 if the second is greater than the first one. Defaults to a numerical comparator.
      * @param {number} [left=0] The left index. Defaults to 0.
      * @param {number} [right=array.length-1] the right index. Defaults to array length - 1.
      */
-    export function sort(array: any[], comparator?: Comparator | number, left?: number, right?: number): void;
+    export function sort(array: any[], comparator?: ValueComparator | number, left?: number, right?: number): void;
     /**
      * Swap the two values in an array.
      * @param {any[]} array The array.
@@ -70,22 +72,22 @@ declare module "lib/ut" {
      */
     export function clearArray(array: any[]): void;
     /**
-     * Return a random array of generated elements by dataGenerator.
+     * Return a random array of generated elements by valueGenerator.
      * @param {number} length The length.
-     * @param {DataGenerator} [dataGenerator=_defaultDataGenerator] The data generator. Defaults to a RNG from 1 to 100.
+     * @param {ValueGenerator} [valueGenerator=_defaultValueGenerator] The value generator. Defaults to a RNG from 1 to 1000000.
      * @return {any[]} The array.
      */
-    export function randomArray(length: number, dataGenerator?: DataGenerator): any[];
+    export function randomArray(length: number, valueGenerator?: ValueGenerator): any[];
     /**
      * Intersect two sorted arrays.
      * @param {any[]} array1 The first array.
      * @param {any[]} array2 The second array.
      * @return {any[]} The intersected array.
-     * @param {Comparator} [comparator=_numericComparator] An optional comparator, it will be called
+     * @param {ValueComparator} [comparator=_numericComparator] An optional comparator, it will be called
      *   with two values and must return 1 if the first is greater than the second, 0 if they are
      *   equals or -1 if the second is greater than the first one. Defaults to a numerical comparator.
      */
-    export function intersectSorted(array1: any[], array2: any[], comparator?: Comparator): any[];
+    export function intersectSorted(array1: any[], array2: any[], comparator?: ValueComparator): any[];
     /**
      * About 1.5x faster than the two-arg version of Array#splice(). This
      * algorithm was taken from the core of Node.js.
@@ -99,24 +101,24 @@ declare module "lib/ut" {
      * that will be inserted is already in the array.
      * @param {any} value The value to insert.
      * @param {any[]} array The array.
-     * @param {Comparator | boolean} [comparator=_numericComparator] An optional comparator, it will be called
+     * @param {ValueComparator|boolean} [comparator=_numericComparator] An optional comparator, it will be called
      *   with two values and must return 1 if the first is greater than the second, 0 if they are
      *   equals or -1 if the second is greater than the first one. Defaults to a numerical comparator.
      * @param {boolean} [rejectDuplicates=false] Specify if duplicated values will be rejected. Defaults to false.
      */
-    export function binaryInsert(value: any, array: any[], comparator?: Comparator | boolean, rejectDuplicates?: boolean): void;
+    export function binaryInsert(value: any, array: any[], comparator?: ValueComparator | boolean, rejectDuplicates?: boolean): void;
     /**
      * Find a value into a sorted array using an iterative binary search.
      * @param {any} value The value to search.
      * @param {any[]} array The array.
-     * @param {Comparator|number} [comparator=_numericComparator] An optional comparator, it will be called
+     * @param {ValueComparator|number} [comparator=_numericComparator] An optional comparator, it will be called
      *   with two values and must return 1 if the first is greater than the second, 0 if they are
      *   equals or -1 if the second is greater than the first one. Defaults to a numerical comparator.
      * @param {number} [left=0] The left index. Defaults to 0.
      * @param {number} [right=array.length-1] The right index. Defaults to array length - 1.
      * @return {number} The index if the value was found or -1.
      */
-    export function binarySearch(value: any, array: any[], comparator?: Comparator | number, left?: number, right?: number): number;
+    export function binarySearch(value: any, array: any[], comparator?: ValueComparator | number, left?: number, right?: number): number;
     /**
      * Returns a random value within the provided array.
      * @param {any[]} array The array.
@@ -127,7 +129,7 @@ declare module "lib/ut" {
     export function randomArrayItem(array: any[], start?: number, end?: number): any;
     /**
      * Convert arguments to array.
-     * @param {IArguments} args The arguments object.
+     * @param {arguments} args The arguments object.
      * @return {any[]} The array.
      */
     export function argumentsToArray(args: IArguments): any[];
@@ -295,19 +297,19 @@ declare module "lib/ut" {
     export function mergeObjects(dest: any, source: any): void;
     /**
      * Update an object or array using a given path string.
-     * @param {Object|any[]} dest The object or array to update.
+     * @param {object|any[]} dest The object or array to update.
      * @param {any} value The value to place in path.
      * @param {Path} path The path where to place the new value.
      */
-    export function updateObject(dest: any | any[], value: any, path: Path): void;
+    export function updateObject(dest: object | any[], value: any, path: Path): void;
     /**
      * Get a random object.
      * @param {number[]|number} lengths number of items per level.
-     * @param {() => string} [keyGenerator=_defaultKeyGenerator] The key generator.
-     * @param {Function} [valueGenerator=_defaultValueGenerator] The value generator.
+     * @param {KeyGenerator} [keyGenerator=_defaultKeyGenerator] The key generator. Defaults to a random string of 6 characters.
+     * @param {ValueGenerator} [valueGenerator=_defaultValueGenerator] The value generator. Defaults to a RNG from 1 to 1000000.
      * @return {PlainObject} The random object.
      */
-    export function randomObject(lengths: number[] | number, keyGenerator?: () => string, valueGenerator?: Function): PlainObject;
+    export function randomObject(lengths: number[] | number, keyGenerator?: KeyGenerator, valueGenerator?: ValueGenerator): PlainObject;
     /**
      * Divide an object into chunks by keys number.
      * @param {PlainObject} object The object.
@@ -349,10 +351,10 @@ declare module "lib/ut" {
      * </pre>
      * @param {PlainObject[]} array An array of objects.
      * @param {Path} keys The key or keys to group by.
-     * @param {(item: PlainObject) => any} [iteratee] A function to modify the final grouped objects.
+     * @param {PlainObjectIteratee} [iteratee] A function to modify the final grouped objects.
      * @return {PlainObject} The grouped object.
      */
-    export function groupBy(array: PlainObject[], keys: Path, iteratee?: (item: PlainObject) => any): PlainObject;
+    export function groupBy(array: PlainObject[], keys: Path, iteratee?: PlainObjectIteratee): PlainObject;
     /**
      * Counts and returns the length of the given object.
      * @param {PlainObject} object The object.
@@ -371,10 +373,10 @@ declare module "lib/ut" {
      * Objects are deoptimized when you use them like a hash table like deleting properties. You
      * can check it using the native function "%HasFastProperties(object)" running nodejs with
      * the flag "--allow-natives-syntax". This code was taken from the module "bluebird".
-     * @param {Object} object The object to optimize.
-     * @return {Object} Reference to the same object.
+     * @param {object} object The object to optimize.
+     * @return {object} Reference to the same object.
      */
-    export function toFastProperties(object: any): any;
+    export function toFastProperties(object: object): object;
     /**
      * Returns a random boolean.
      * @return {boolean} The random boolean.
@@ -402,9 +404,9 @@ declare module "lib/ut" {
     /**
      * If is an Object or not.
      * @param {any} value The value.
-     * @return {value is !Object} If is an Object or not.
+     * @return {value is object} If is an Object or not.
      */
-    export function isObject(value: any): value is any;
+    export function isObject(value: any): value is object;
     /**
      * If is a plain object (not an array) or not.
      * @param {any} value The value.
@@ -450,11 +452,11 @@ declare module "lib/ut" {
     export function logN(base: number, value: number): number;
     /**
      * Execute a function N times and print the execution time.
-     * @param {DataGenerator} fn The function to execute.
+     * @param {Function} fn The function to execute.
      * @param {number} [times=1] How many times to execute. Defaults to 1.
      * @param {string} [label='Default label']  A label to be used in the log string. Defaults to 'Default label'.
      */
-    export function test(fn: DataGenerator, times?: number, label?: string): void;
+    export function test(fn: Function, times?: number, label?: string): void;
     /**
      * Check if a value is inside of a given range.
      * @param {any} val The value.
@@ -474,17 +476,11 @@ declare module "lib/ut" {
     /**
      * A simple logger.
      * @namespace logger
-     * @type {{DEBUG:number, INFO: number, WARN: number, ERROR:number, NONE: number}}
+     * @type {PlainObject}
      */
-    export const logger: {
-        DEBUG: number;
-        INFO: number;
-        WARN: number;
-        ERROR: number;
-        NONE: number;
-    };
+    export const logger: PlainObject;
 }
 declare module "utjs" {
-    const _exports: typeof import("lib/ut");
+    const _exports: typeof import("utjs_internal_do_not_import/ut");
     export = _exports;
 }
