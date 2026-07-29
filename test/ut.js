@@ -1,4 +1,4 @@
-const ut = require('../lib/ut');
+import * as ut from '../lib/ut.js';
 
 describe('utjs', () => {
   // Date
@@ -259,7 +259,12 @@ describe('utjs', () => {
 
   describe('argumentsToArray()', () => {
     it('should return an array', () => {
-      function test() {
+      /**
+       *
+       * @param  {...number} args2
+       */
+      // eslint-disable-next-line no-unused-vars
+      function test(...args2) {
         const args = ut.argumentsToArray(arguments);
         expect(Array.isArray(args)).toBe(true);
         expect(args).toEqual([1, 2, 3]);
@@ -873,7 +878,7 @@ describe('utjs', () => {
     it('should return custom Error instances', () => {
       /**
        * @param {string} [message]
-       * @this {CouchbaseError}
+       * @this {typeof CouchbaseError}
        */
       function CouchbaseError(message) {
         Error.call(this, message);

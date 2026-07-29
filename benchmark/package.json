@@ -1,6 +1,7 @@
 {
   "name": "utjs-benchmark",
   "version": "1.0.0",
+  "type": "module",
   "description": "utjs benchmarks",
   "dependencies": {
     "benchmark": "^2.1.4",

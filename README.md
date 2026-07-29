@@ -1,21 +1,37 @@
-utjs
-==
+# utjs
 
 utjs is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.
 
 #### Install
-```
+
+```sh
 npm install utjs
 ```
 
 #### Usage
+
+utjs supports both ES modules and CommonJS on Node.js 18 or newer.
+
+ES modules:
+
+```js
+import { randomNumber } from 'utjs';
+
+const number = randomNumber(1, 10);
+console.log(number);
 ```
+
+CommonJS:
+
+```js
 const ut = require('utjs');
+
 const number = ut.randomNumber(1, 10);
 console.log(number);
 ```
 
 #### Functions
+
 ```
 // Date
 function dateToMysql([date=new Date()])
@@ -106,6 +122,7 @@ function error([message=''], [constructor=Error])
 ```
 
 #### Objects
+
 ```
 // Logging
 var logger = {
@@ -127,9 +144,7 @@ var logger = {
 ```
 
 #### Run benchmarks
-```
-npm run benchmark -- BENCHMARK_NAME
-```
 
-## jsdoc
-http://alemures.github.io/utjs/
+```sh
+node benchmark/index.js BENCHMARK_NAME
+```

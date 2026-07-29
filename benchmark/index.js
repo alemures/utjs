@@ -1,7 +1,7 @@
-const Benchmark = require('benchmark');
-const _ = require('lodash');
-const ut = require('../lib/ut');
-const oldut = require('./ut');
+import Benchmark from 'benchmark';
+import _ from 'lodash';
+import * as ut from '../lib/ut.js';
+import oldut from './ut.cjs';
 
 const suite = new Benchmark.Suite();
 

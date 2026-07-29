@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outFile": "index.d.ts"
+    "declarationDir": "dist/types",
+    "rootDir": "lib"
   },
-  "files": ["index.js"]
+  "files": ["lib/index.js"]
 }

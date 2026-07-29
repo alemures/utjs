@@ -2,11 +2,11 @@
   "compilerOptions": {
     "checkJs": true,
     "strict": true,
-    "target": "ES2015",
-    "moduleResolution": "Node",
+    "target": "ES2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "noEmit": true,
-    "resolveJsonModule": true
+    "types": ["node", "vitest/globals"]
   },
-  "files": ["index.js"],
-  "include": ["lib", "test", "scripts", "benchmark"]
+  "include": ["*.js", "lib", "test", "benchmark"]
 }
