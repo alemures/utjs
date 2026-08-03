@@ -1,7 +1,7 @@
 {
   "name": "utjs",
   "description": "utjs is a high performance library with some common functions like sort, concatArrays, randomString, stringToNumber, etc.",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "author": "Alejandro Santiago Nieto",
   "license": "ISC",
   "devDependencies": {
